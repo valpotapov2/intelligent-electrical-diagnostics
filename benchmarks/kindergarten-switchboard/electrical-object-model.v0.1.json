@@ -1,0 +1,1902 @@
+{
+  "schema_version": "0.1",
+  "source_documents": [
+    {
+      "id": "schema-svg",
+      "kind": "single_line_diagram",
+      "filename": "schema.svg",
+      "page": 1,
+      "media_type": "image/svg+xml",
+      "note": "SVG supplied in project conversation; viewBox 0 0 1280 925"
+    },
+    {
+      "id": "source-jpg",
+      "kind": "single_line_diagram",
+      "filename": "1000055928(2).jpg",
+      "page": 1,
+      "media_type": "image/jpeg",
+      "note": "Raster source supplied alongside SVG"
+    }
+  ],
+  "object": {
+    "name": "ВРУ — электрощит детского сада",
+    "facility_type": "детское дошкольное учреждение",
+    "supply": {
+      "voltage": "380/220 V",
+      "earthing_system": "TN-C-S",
+      "incoming_count": 2,
+      "installed_power_kw_source": 223.21,
+      "calculated_power_kw_source": 115.64,
+      "calculated_current_a_source": 176
+    }
+  },
+  "components": [
+    {
+      "id": "supply-1",
+      "kind": "supply",
+      "label": "Ввод 1",
+      "attributes": {
+        "voltage": "380/220 V",
+        "cable": "ВВГнг(A)-LSLTx 4x70",
+        "length_m": 9.8
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            1075,
+            190,
+            1090,
+            520
+          ],
+          "text": "Ввод 1"
+        }
+      ]
+    },
+    {
+      "id": "supply-2",
+      "kind": "supply",
+      "label": "Ввод 2",
+      "attributes": {
+        "voltage": "380/220 V",
+        "cable": "ВВГнг(A)-LSLTx 4x70",
+        "length_m": 9.8
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            1133,
+            190,
+            1150,
+            520
+          ],
+          "text": "Ввод 2"
+        }
+      ]
+    },
+    {
+      "id": "switchboard",
+      "kind": "switchboard",
+      "label": "ВРУ",
+      "attributes": {
+        "earthing_system": "TN-C-S"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            263,
+            10,
+            1265,
+            445
+          ],
+          "text": "ВРУ"
+        }
+      ]
+    },
+    {
+      "id": "bus-l123",
+      "kind": "busbar",
+      "label": "L1/L2/L3",
+      "attributes": {
+        "phases": [
+          "L1",
+          "L2",
+          "L3"
+        ],
+        "svg_y": 292
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            275,
+            292,
+            1240,
+            292
+          ],
+          "text": "L1/L2/L3"
+        }
+      ]
+    },
+    {
+      "id": "bus-n",
+      "kind": "busbar",
+      "label": "N",
+      "attributes": {
+        "svg_y": 315
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            275,
+            315,
+            1240,
+            315
+          ],
+          "text": "N"
+        }
+      ]
+    },
+    {
+      "id": "bus-pe",
+      "kind": "earth",
+      "label": "PE",
+      "attributes": {
+        "svg_y": 323
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            275,
+            323,
+            1240,
+            323
+          ],
+          "text": "PE"
+        }
+      ]
+    },
+    {
+      "id": "ats",
+      "kind": "ats",
+      "label": "АВР",
+      "attributes": {},
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            946,
+            125,
+            991,
+            150
+          ],
+          "text": "АВР"
+        }
+      ]
+    },
+    {
+      "id": "contactor-km1",
+      "kind": "contactor",
+      "label": "KM1",
+      "attributes": {
+        "rated_current_a": 200
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            923,
+            125,
+            958,
+            170
+          ],
+          "text": "KM1"
+        }
+      ]
+    },
+    {
+      "id": "contactor-km2",
+      "kind": "contactor",
+      "label": "KM2",
+      "attributes": {
+        "rated_current_a": 200
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            990,
+            125,
+            1025,
+            170
+          ],
+          "text": "KM2"
+        }
+      ]
+    },
+    {
+      "id": "meter",
+      "kind": "meter",
+      "label": "Меркурий 230 AR",
+      "attributes": {
+        "display_marking": "5(60)"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            978,
+            195,
+            1008,
+            250
+          ],
+          "text": "Меркурий 230 AR"
+        }
+      ]
+    },
+    {
+      "id": "ct-bank",
+      "kind": "current_transformer",
+      "label": "TA1–TA3",
+      "attributes": {
+        "ratio": "100/5"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            949,
+            241,
+            967,
+            279
+          ],
+          "text": "TA1–TA3"
+        }
+      ]
+    },
+    {
+      "id": "breaker-qf1",
+      "kind": "breaker",
+      "label": "QF1",
+      "attributes": {
+        "marking": "3C25",
+        "rated_current_a": 25,
+        "poles": 4,
+        "breaking_capacity_ka": 4.5,
+        "model_marking": "ВА47-29"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            343,
+            292,
+            355,
+            445
+          ],
+          "text": "QF1"
+        }
+      ]
+    },
+    {
+      "id": "breaker-qf2",
+      "kind": "breaker",
+      "label": "QF2",
+      "attributes": {
+        "marking": "3C25",
+        "rated_current_a": 25,
+        "poles": 4,
+        "breaking_capacity_ka": 4.5,
+        "model_marking": "ВА47-29"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            400,
+            292,
+            412,
+            445
+          ],
+          "text": "QF2"
+        }
+      ]
+    },
+    {
+      "id": "breaker-qf3",
+      "kind": "breaker",
+      "label": "QF3",
+      "attributes": {
+        "marking": "3C25",
+        "rated_current_a": 25,
+        "poles": 4,
+        "breaking_capacity_ka": 4.5,
+        "model_marking": "ВА47-29"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            458,
+            292,
+            470,
+            445
+          ],
+          "text": "QF3"
+        }
+      ]
+    },
+    {
+      "id": "breaker-qf4",
+      "kind": "breaker",
+      "label": "QF4",
+      "attributes": {
+        "marking": "3C32",
+        "rated_current_a": 32,
+        "poles": 4,
+        "breaking_capacity_ka": 4.5,
+        "model_marking": "ВА47-29"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            516,
+            292,
+            528,
+            445
+          ],
+          "text": "QF4"
+        }
+      ]
+    },
+    {
+      "id": "breaker-qf5",
+      "kind": "breaker",
+      "label": "QF5",
+      "attributes": {
+        "marking": "3C10",
+        "rated_current_a": 10,
+        "poles": 4,
+        "breaking_capacity_ka": 4.5,
+        "model_marking": "ВА47-29"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            632,
+            292,
+            644,
+            445
+          ],
+          "text": "QF5"
+        }
+      ]
+    },
+    {
+      "id": "breaker-qf6",
+      "kind": "breaker",
+      "label": "QF6",
+      "attributes": {
+        "marking": "3C10",
+        "rated_current_a": 10,
+        "poles": 4,
+        "breaking_capacity_ka": 4.5,
+        "model_marking": "ВА47-29"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            690,
+            292,
+            702,
+            445
+          ],
+          "text": "QF6"
+        }
+      ]
+    },
+    {
+      "id": "breaker-qf7",
+      "kind": "breaker",
+      "label": "QF7",
+      "attributes": {
+        "marking": "1C10",
+        "rated_current_a": 10,
+        "poles": 1,
+        "breaking_capacity_ka": 4.5,
+        "model_marking": "ВА47-29"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            748,
+            292,
+            760,
+            445
+          ],
+          "text": "QF7"
+        }
+      ]
+    },
+    {
+      "id": "breaker-qf8",
+      "kind": "breaker",
+      "label": "QF8",
+      "attributes": {
+        "marking": "1C10",
+        "rated_current_a": 10,
+        "poles": 1,
+        "breaking_capacity_ka": 4.5,
+        "model_marking": "ВА47-29"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            806,
+            292,
+            818,
+            445
+          ],
+          "text": "QF8"
+        }
+      ]
+    },
+    {
+      "id": "breaker-qf9",
+      "kind": "breaker",
+      "label": "QF9",
+      "attributes": {
+        "marking": "3C80",
+        "rated_current_a": 80,
+        "poles": 4,
+        "breaking_capacity_ka": 4.5,
+        "model_marking": "ВА47-29"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            864,
+            292,
+            876,
+            445
+          ],
+          "text": "QF9"
+        }
+      ]
+    },
+    {
+      "id": "breaker-qf10",
+      "kind": "breaker",
+      "label": "QF10",
+      "attributes": {
+        "marking": "3C10",
+        "rated_current_a": 10,
+        "poles": 4,
+        "breaking_capacity_ka": 4.5,
+        "model_marking": "ВА47-29"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            922,
+            292,
+            934,
+            445
+          ],
+          "text": "QF10"
+        }
+      ]
+    },
+    {
+      "id": "load-plan-1",
+      "kind": "load",
+      "label": "Щр1",
+      "attributes": {
+        "plan_position": 1,
+        "installed_power_kw": 25.88,
+        "calculated_current_a": 16.52
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            323,
+            708,
+            363,
+            722
+          ],
+          "text": "Щр1"
+        }
+      ]
+    },
+    {
+      "id": "load-plan-2",
+      "kind": "load",
+      "label": "Щр2",
+      "attributes": {
+        "plan_position": 2,
+        "installed_power_kw": 38.93,
+        "calculated_current_a": 19.8
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            380,
+            612,
+            420,
+            626
+          ],
+          "text": "Щр2"
+        }
+      ]
+    },
+    {
+      "id": "load-plan-3",
+      "kind": "load",
+      "label": "Щр3",
+      "attributes": {
+        "plan_position": 3,
+        "installed_power_kw": 45.26,
+        "calculated_current_a": 24.55
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            438,
+            708,
+            478,
+            722
+          ],
+          "text": "Щр3"
+        }
+      ]
+    },
+    {
+      "id": "load-plan-4",
+      "kind": "load",
+      "label": "Щр4",
+      "attributes": {
+        "plan_position": 4,
+        "installed_power_kw": 53.07,
+        "calculated_current_a": 29.86
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            496,
+            612,
+            536,
+            626
+          ],
+          "text": "Щр4"
+        }
+      ]
+    },
+    {
+      "id": "load-plan-5",
+      "kind": "load",
+      "label": "ЩОЧ — Чердачное помещение",
+      "attributes": {
+        "plan_position": 5,
+        "installed_power_kw": 4.09,
+        "calculated_current_a": 3.18
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            560,
+            590,
+            592,
+            606
+          ],
+          "text": "ЩОЧ — Чердачное помещение"
+        }
+      ]
+    },
+    {
+      "id": "load-plan-6",
+      "kind": "load",
+      "label": "ЩУВ 1",
+      "attributes": {
+        "plan_position": 6,
+        "installed_power_kw": 1.65,
+        "calculated_current_a": 2.51
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            612,
+            708,
+            652,
+            722
+          ],
+          "text": "ЩУВ 1"
+        }
+      ]
+    },
+    {
+      "id": "load-plan-7",
+      "kind": "load",
+      "label": "ЩУВ 2",
+      "attributes": {
+        "plan_position": 7,
+        "installed_power_kw": 2.6,
+        "calculated_current_a": 3.95
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            670,
+            708,
+            710,
+            722
+          ],
+          "text": "ЩУВ 2"
+        }
+      ]
+    },
+    {
+      "id": "load-plan-8",
+      "kind": "load",
+      "label": "ЩАО",
+      "attributes": {
+        "plan_position": 8,
+        "installed_power_kw": 1.37,
+        "calculated_current_a": 2.07
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            728,
+            708,
+            768,
+            722
+          ],
+          "text": "ЩАО"
+        }
+      ]
+    },
+    {
+      "id": "load-plan-9",
+      "kind": "load",
+      "label": "ЯПТ",
+      "attributes": {
+        "plan_position": 9,
+        "installed_power_kw": 0.5,
+        "calculated_current_a": 0.47
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            786,
+            708,
+            826,
+            722
+          ],
+          "text": "ЯПТ"
+        }
+      ]
+    },
+    {
+      "id": "load-plan-10",
+      "kind": "load",
+      "label": "ЩПБ",
+      "attributes": {
+        "plan_position": 10,
+        "installed_power_kw": 47.37,
+        "calculated_current_a": 68.97
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            844,
+            708,
+            884,
+            722
+          ],
+          "text": "ЩПБ"
+        }
+      ]
+    },
+    {
+      "id": "load-plan-11",
+      "kind": "load",
+      "label": "ЩСБ",
+      "attributes": {
+        "plan_position": 11,
+        "installed_power_kw": 2.5,
+        "calculated_current_a": 3.8
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            902,
+            708,
+            942,
+            722
+          ],
+          "text": "ЩСБ"
+        }
+      ]
+    },
+    {
+      "id": "cable-qf1",
+      "kind": "cable",
+      "label": "QF1 cable",
+      "attributes": {
+        "marking": "ВВГнг(A)-LSLTx",
+        "cross_section_mm2": 4,
+        "cores": 5,
+        "length_m": 10
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            545
+          ],
+          "text": "QF1 cable"
+        }
+      ]
+    },
+    {
+      "id": "cable-qf2",
+      "kind": "cable",
+      "label": "QF2 cable",
+      "attributes": {
+        "marking": "ВВГнг(A)-LSLTx",
+        "cross_section_mm2": 4,
+        "cores": 5,
+        "length_m": 15
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            545
+          ],
+          "text": "QF2 cable"
+        }
+      ]
+    },
+    {
+      "id": "cable-qf3",
+      "kind": "cable",
+      "label": "QF3 cable",
+      "attributes": {
+        "marking": "ВВГнг(A)-LSLTx",
+        "cross_section_mm2": 4,
+        "cores": 5,
+        "length_m": 26
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            545
+          ],
+          "text": "QF3 cable"
+        }
+      ]
+    },
+    {
+      "id": "cable-qf4",
+      "kind": "cable",
+      "label": "QF4 cable",
+      "attributes": {
+        "marking": "ВВГнг(A)-LSLTx",
+        "cross_section_mm2": 4,
+        "cores": 5,
+        "length_m": 30
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            545
+          ],
+          "text": "QF4 cable"
+        }
+      ]
+    },
+    {
+      "id": "cable-qf5",
+      "kind": "cable",
+      "label": "QF5 cable",
+      "attributes": {
+        "marking": "ВВГнг(A)-LSLTx",
+        "cross_section_mm2": 1.5,
+        "cores": 5,
+        "length_m": 15
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            545
+          ],
+          "text": "QF5 cable"
+        }
+      ]
+    },
+    {
+      "id": "cable-qf6",
+      "kind": "cable",
+      "label": "QF6 cable",
+      "attributes": {
+        "marking": "ВВГнг(A)-LSLTx",
+        "cross_section_mm2": 1.5,
+        "cores": 5,
+        "length_m": 15
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            545
+          ],
+          "text": "QF6 cable"
+        }
+      ]
+    },
+    {
+      "id": "cable-qf7",
+      "kind": "cable",
+      "label": "QF7 cable",
+      "attributes": {
+        "marking": "ВВГнг(A)-LSLTx",
+        "cross_section_mm2": 1.5,
+        "cores": 5,
+        "length_m": 10
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            545
+          ],
+          "text": "QF7 cable"
+        }
+      ]
+    },
+    {
+      "id": "cable-qf8",
+      "kind": "cable",
+      "label": "QF8 cable",
+      "attributes": {
+        "marking": "ВВГнг(A)-LSLTx",
+        "cross_section_mm2": 1.5,
+        "cores": 5,
+        "length_m": 5
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            545
+          ],
+          "text": "QF8 cable"
+        }
+      ]
+    },
+    {
+      "id": "cable-qf9",
+      "kind": "cable",
+      "label": "QF9 cable",
+      "attributes": {
+        "marking": "ВВГнг(A)-LSLTx",
+        "cross_section_mm2": 25,
+        "cores": 5,
+        "length_m": 21.5
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            545
+          ],
+          "text": "QF9 cable"
+        }
+      ]
+    },
+    {
+      "id": "cable-qf10",
+      "kind": "cable",
+      "label": "QF10 cable",
+      "attributes": {
+        "marking": "ВВГнг(A)-LSLTx",
+        "cross_section_mm2": 1.5,
+        "cores": 5,
+        "length_m": 33.8
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            545
+          ],
+          "text": "QF10 cable"
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "edge-qf1-to-cable",
+      "from": "breaker-qf1",
+      "to": "cable-qf1",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            365,
+            0,
+            545
+          ],
+          "text": "QF1; SVG shows continuous outgoing feeder and cable label"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf2-to-cable",
+      "from": "breaker-qf2",
+      "to": "cable-qf2",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            365,
+            0,
+            545
+          ],
+          "text": "QF2; SVG shows continuous outgoing feeder and cable label"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf3-to-cable",
+      "from": "breaker-qf3",
+      "to": "cable-qf3",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            365,
+            0,
+            545
+          ],
+          "text": "QF3; SVG shows continuous outgoing feeder and cable label"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf4-to-cable",
+      "from": "breaker-qf4",
+      "to": "cable-qf4",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            365,
+            0,
+            545
+          ],
+          "text": "QF4; SVG shows continuous outgoing feeder and cable label"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf5-to-cable",
+      "from": "breaker-qf5",
+      "to": "cable-qf5",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            365,
+            0,
+            545
+          ],
+          "text": "QF5; SVG shows continuous outgoing feeder and cable label"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf6-to-cable",
+      "from": "breaker-qf6",
+      "to": "cable-qf6",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            365,
+            0,
+            545
+          ],
+          "text": "QF6; SVG shows continuous outgoing feeder and cable label"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf7-to-cable",
+      "from": "breaker-qf7",
+      "to": "cable-qf7",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            365,
+            0,
+            545
+          ],
+          "text": "QF7; SVG shows continuous outgoing feeder and cable label"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf8-to-cable",
+      "from": "breaker-qf8",
+      "to": "cable-qf8",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            365,
+            0,
+            545
+          ],
+          "text": "QF8; SVG shows continuous outgoing feeder and cable label"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf9-to-cable",
+      "from": "breaker-qf9",
+      "to": "cable-qf9",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            365,
+            0,
+            545
+          ],
+          "text": "QF9; SVG shows continuous outgoing feeder and cable label"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf10-to-cable",
+      "from": "breaker-qf10",
+      "to": "cable-qf10",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            365,
+            0,
+            545
+          ],
+          "text": "QF10; SVG shows continuous outgoing feeder and cable label"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf1-load-1",
+      "from": "cable-qf1",
+      "to": "load-plan-1",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            722
+          ],
+          "text": "QF1 feeder to plan position 1; explicit SVG line/branch geometry"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf2-load-2",
+      "from": "cable-qf2",
+      "to": "load-plan-2",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            722
+          ],
+          "text": "QF2 feeder to plan position 2; explicit SVG line/branch geometry"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf3-load-3",
+      "from": "cable-qf3",
+      "to": "load-plan-3",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            722
+          ],
+          "text": "QF3 feeder to plan position 3; explicit SVG line/branch geometry"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf4-load-4",
+      "from": "cable-qf4",
+      "to": "load-plan-4",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            722
+          ],
+          "text": "QF4 feeder to plan position 4; explicit SVG line/branch geometry"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf4-load-5",
+      "from": "cable-qf4",
+      "to": "load-plan-5",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            516,
+            590,
+            592,
+            606
+          ],
+          "text": "QF4 feeder to plan position 5; explicit SVG line/branch geometry"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf5-load-6",
+      "from": "cable-qf5",
+      "to": "load-plan-6",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            722
+          ],
+          "text": "QF5 feeder to plan position 6; explicit SVG line/branch geometry"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf6-load-7",
+      "from": "cable-qf6",
+      "to": "load-plan-7",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            722
+          ],
+          "text": "QF6 feeder to plan position 7; explicit SVG line/branch geometry"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf7-load-8",
+      "from": "cable-qf7",
+      "to": "load-plan-8",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            722
+          ],
+          "text": "QF7 feeder to plan position 8; explicit SVG line/branch geometry"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf8-load-9",
+      "from": "cable-qf8",
+      "to": "load-plan-9",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            722
+          ],
+          "text": "QF8 feeder to plan position 9; explicit SVG line/branch geometry"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf9-load-10",
+      "from": "cable-qf9",
+      "to": "load-plan-10",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            722
+          ],
+          "text": "QF9 feeder to plan position 10; explicit SVG line/branch geometry"
+        }
+      ]
+    },
+    {
+      "id": "edge-qf10-load-11",
+      "from": "cable-qf10",
+      "to": "load-plan-11",
+      "conductor": "outgoing feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            445,
+            0,
+            722
+          ],
+          "text": "QF10 feeder to plan position 11; explicit SVG line/branch geometry"
+        }
+      ]
+    }
+  ],
+  "circuits": [
+    {
+      "id": "circuit-qf1",
+      "label": "QF1",
+      "protective_device_id": "breaker-qf1",
+      "load_ids": [
+        "load-plan-1"
+      ],
+      "cable_id": "cable-qf1",
+      "attributes": {
+        "plan_positions": [
+          1
+        ]
+      },
+      "status": "recognized",
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            292,
+            0,
+            722
+          ],
+          "text": "QF1 outgoing feeder"
+        }
+      ]
+    },
+    {
+      "id": "circuit-qf2",
+      "label": "QF2",
+      "protective_device_id": "breaker-qf2",
+      "load_ids": [
+        "load-plan-2"
+      ],
+      "cable_id": "cable-qf2",
+      "attributes": {
+        "plan_positions": [
+          2
+        ]
+      },
+      "status": "recognized",
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            292,
+            0,
+            722
+          ],
+          "text": "QF2 outgoing feeder"
+        }
+      ]
+    },
+    {
+      "id": "circuit-qf3",
+      "label": "QF3",
+      "protective_device_id": "breaker-qf3",
+      "load_ids": [
+        "load-plan-3"
+      ],
+      "cable_id": "cable-qf3",
+      "attributes": {
+        "plan_positions": [
+          3
+        ]
+      },
+      "status": "recognized",
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            292,
+            0,
+            722
+          ],
+          "text": "QF3 outgoing feeder"
+        }
+      ]
+    },
+    {
+      "id": "circuit-qf4",
+      "label": "QF4",
+      "protective_device_id": "breaker-qf4",
+      "load_ids": [
+        "load-plan-4",
+        "load-plan-5"
+      ],
+      "cable_id": "cable-qf4",
+      "attributes": {
+        "plan_positions": [
+          4,
+          5
+        ]
+      },
+      "status": "recognized",
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            292,
+            0,
+            722
+          ],
+          "text": "QF4 outgoing feeder"
+        }
+      ]
+    },
+    {
+      "id": "circuit-qf5",
+      "label": "QF5",
+      "protective_device_id": "breaker-qf5",
+      "load_ids": [
+        "load-plan-6"
+      ],
+      "cable_id": "cable-qf5",
+      "attributes": {
+        "plan_positions": [
+          6
+        ]
+      },
+      "status": "recognized",
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            292,
+            0,
+            722
+          ],
+          "text": "QF5 outgoing feeder"
+        }
+      ]
+    },
+    {
+      "id": "circuit-qf6",
+      "label": "QF6",
+      "protective_device_id": "breaker-qf6",
+      "load_ids": [
+        "load-plan-7"
+      ],
+      "cable_id": "cable-qf6",
+      "attributes": {
+        "plan_positions": [
+          7
+        ]
+      },
+      "status": "recognized",
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            292,
+            0,
+            722
+          ],
+          "text": "QF6 outgoing feeder"
+        }
+      ]
+    },
+    {
+      "id": "circuit-qf7",
+      "label": "QF7",
+      "protective_device_id": "breaker-qf7",
+      "load_ids": [
+        "load-plan-8"
+      ],
+      "cable_id": "cable-qf7",
+      "attributes": {
+        "plan_positions": [
+          8
+        ]
+      },
+      "status": "recognized",
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            292,
+            0,
+            722
+          ],
+          "text": "QF7 outgoing feeder"
+        }
+      ]
+    },
+    {
+      "id": "circuit-qf8",
+      "label": "QF8",
+      "protective_device_id": "breaker-qf8",
+      "load_ids": [
+        "load-plan-9"
+      ],
+      "cable_id": "cable-qf8",
+      "attributes": {
+        "plan_positions": [
+          9
+        ]
+      },
+      "status": "recognized",
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            292,
+            0,
+            722
+          ],
+          "text": "QF8 outgoing feeder"
+        }
+      ]
+    },
+    {
+      "id": "circuit-qf9",
+      "label": "QF9",
+      "protective_device_id": "breaker-qf9",
+      "load_ids": [
+        "load-plan-10"
+      ],
+      "cable_id": "cable-qf9",
+      "attributes": {
+        "plan_positions": [
+          10
+        ]
+      },
+      "status": "recognized",
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            292,
+            0,
+            722
+          ],
+          "text": "QF9 outgoing feeder"
+        }
+      ]
+    },
+    {
+      "id": "circuit-qf10",
+      "label": "QF10",
+      "protective_device_id": "breaker-qf10",
+      "load_ids": [
+        "load-plan-11"
+      ],
+      "cable_id": "cable-qf10",
+      "attributes": {
+        "plan_positions": [
+          11
+        ]
+      },
+      "status": "recognized",
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            0,
+            292,
+            0,
+            722
+          ],
+          "text": "QF10 outgoing feeder"
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "id": "SVG-001",
+      "severity": "medium",
+      "description": "SVG-derived graph represents drawing geometry, not verified as-built wiring or internal device terminal topology.",
+      "status": "open",
+      "related_ids": [
+        "switchboard",
+        "ats",
+        "breaker-qf1",
+        "breaker-qf10"
+      ]
+    },
+    {
+      "id": "SVG-002",
+      "severity": "medium",
+      "description": "The source table's installed-power row sums to 223.22 kW while the drawing summary states 223.21 kW; preserve both values pending source-author clarification.",
+      "status": "open",
+      "related_ids": [
+        "load-plan-1",
+        "load-plan-2",
+        "load-plan-3",
+        "load-plan-4",
+        "load-plan-5",
+        "load-plan-6",
+        "load-plan-7",
+        "load-plan-8",
+        "load-plan-9",
+        "load-plan-10",
+        "load-plan-11"
+      ]
+    },
+    {
+      "id": "SVG-003",
+      "severity": "high",
+      "description": "No safe measurement points, live-work procedure, or authorization for work on the energized switchboard are established by this drawing.",
+      "status": "open",
+      "related_ids": [
+        "switchboard",
+        "bus-l123",
+        "bus-n",
+        "bus-pe"
+      ]
+    },
+    {
+      "id": "SVG-004",
+      "severity": "low",
+      "description": "The exact meaning/expansion of downstream panel abbreviations (Щр, ЩУВ, ЩАО, ЯПТ, ЩПБ, ЩСБ, ЩОЧ) is not specified in the SVG.",
+      "status": "open",
+      "related_ids": [
+        "load-plan-1",
+        "load-plan-2",
+        "load-plan-3",
+        "load-plan-4",
+        "load-plan-5",
+        "load-plan-6",
+        "load-plan-7",
+        "load-plan-8",
+        "load-plan-9",
+        "load-plan-10",
+        "load-plan-11"
+      ]
+    }
+  ],
+  "totals": {
+    "installed_power_kw_source": 223.21,
+    "installed_power_kw_sum_of_rows": 223.22,
+    "calculated_power_kw_source": 115.64,
+    "calculated_current_a_source": 176,
+    "calculated_current_a_sum_of_rows": 175.68
+  },
+  "extraction": {
+    "tool_version": "manual-svg-review-1",
+    "review_status": "partially_reviewed"
+  }
+}
