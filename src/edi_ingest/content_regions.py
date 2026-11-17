@@ -211,6 +211,8 @@ def _table_regions(
                 "text_token_count": len(inside),
                 "text_row_band_count": len(bands),
                 "grid_intersection_count": grid["evidence"]["intersection_count"],
+                "horizontal_segment_count": grid["evidence"]["horizontal_segment_count"],
+                "vertical_segment_count": grid["evidence"]["vertical_segment_count"],
             },
             "status": "content_region_candidate",
             "limitations": ["Repeated text bands and line intersections are only table evidence; cell structure is not yet reconstructed."],
