@@ -665,7 +665,8 @@
           "page": 5,
           "text": "Utility feeder 1 supplies transformer T1"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E02",
@@ -680,7 +681,8 @@
           "page": 5,
           "text": "Transformer T1 supplies SWGR 1"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E03",
@@ -695,7 +697,8 @@
           "page": 5,
           "text": "Utility feeder 2 supplies transformer T2"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E04",
@@ -710,7 +713,8 @@
           "page": 5,
           "text": "Transformer T2 supplies SWGR 2"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E05",
@@ -725,7 +729,8 @@
           "page": 5,
           "text": "Commercial main incomer 1M1"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E06",
@@ -740,7 +745,8 @@
           "page": 5,
           "text": "Commercial main incomer 2M1"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E07",
@@ -755,7 +761,8 @@
           "page": 5,
           "text": "SWGR 1 tie connection"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E08",
@@ -770,7 +777,8 @@
           "page": 5,
           "text": "SWGR 2 tie connection"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E09",
@@ -785,7 +793,8 @@
           "page": 5,
           "text": "Generator outputs connect to common generator bus"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E10",
@@ -800,7 +809,8 @@
           "page": 5,
           "text": "Standby source path to SWGR 1"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E11",
@@ -815,7 +825,8 @@
           "page": 5,
           "text": "Standby source path to SWGR 2"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E12",
@@ -830,7 +841,8 @@
           "page": 5,
           "text": "Standby incomer to SWGR 1"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E13",
@@ -845,7 +857,8 @@
           "page": 5,
           "text": "Standby incomer to SWGR 2"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E14",
@@ -860,7 +873,8 @@
           "page": 5,
           "text": "Essential distribution path"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E15",
@@ -875,7 +889,8 @@
           "page": 5,
           "text": "Redundant essential distribution path"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E16",
@@ -890,7 +905,8 @@
           "page": 5,
           "text": "Essential switchboard feeds MCC"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E17",
@@ -905,7 +921,8 @@
           "page": 5,
           "text": "MCC feeds essential loads"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E18",
@@ -920,7 +937,8 @@
           "page": 5,
           "text": "Critical power supply path"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E19",
@@ -935,7 +953,8 @@
           "page": 5,
           "text": "Redundant critical power supply path"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E20",
@@ -950,7 +969,8 @@
           "page": 5,
           "text": "UPS input supply"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E21",
@@ -965,7 +985,8 @@
           "page": 5,
           "text": "UPS conditioned outputs"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E22",
@@ -980,7 +1001,8 @@
           "page": 5,
           "text": "Critical bus A supply"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E23",
@@ -995,7 +1017,8 @@
           "page": 5,
           "text": "Critical bus B supply"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E24",
@@ -1010,7 +1033,8 @@
           "page": 5,
           "text": "Critical bus A distribution"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E25",
@@ -1025,7 +1049,8 @@
           "page": 5,
           "text": "Critical bus B distribution"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E26",
@@ -1040,7 +1065,8 @@
           "page": 5,
           "text": "PDU/SATS critical distribution relationship"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E27",
@@ -1055,7 +1081,8 @@
           "page": 5,
           "text": "SATS outputs feed critical distribution panels"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E28",
@@ -1070,7 +1097,8 @@
           "page": 5,
           "text": "CDP feeds critical loads"
         }
-      ]
+      ],
+      "connection_type": "power"
     },
     {
       "id": "E29",
@@ -1082,10 +1110,11 @@
       "sources": [
         {
           "document_id": "faa-jo-6480-22",
-          "page": "faa-jo-6480-22-block",
+          "page": 4,
           "text": "PMCS monitors and controls distribution equipment"
         }
-      ]
+      ],
+      "connection_type": "control_monitoring"
     },
     {
       "id": "E30",
@@ -1097,10 +1126,11 @@
       "sources": [
         {
           "document_id": "faa-jo-6480-22",
-          "page": "faa-jo-6480-22-block",
+          "page": 4,
           "text": "PMCS monitors and controls distribution equipment"
         }
-      ]
+      ],
+      "connection_type": "control_monitoring"
     },
     {
       "id": "E31",
@@ -1112,10 +1142,11 @@
       "sources": [
         {
           "document_id": "faa-jo-6480-22",
-          "page": "faa-jo-6480-22-block",
+          "page": 4,
           "text": "PMCS monitors and controls standby generation"
         }
-      ]
+      ],
+      "connection_type": "control_monitoring"
     },
     {
       "id": "E32",
@@ -1127,10 +1158,11 @@
       "sources": [
         {
           "document_id": "faa-jo-6480-22",
-          "page": "faa-jo-6480-22-block",
+          "page": 4,
           "text": "PMCS monitors critical power subsystems"
         }
-      ]
+      ],
+      "connection_type": "control_monitoring"
     },
     {
       "id": "E33",
@@ -1142,10 +1174,11 @@
       "sources": [
         {
           "document_id": "faa-jo-6480-22",
-          "page": "faa-jo-6480-22-block",
+          "page": 4,
           "text": "DC control power supports control and monitoring subsystems"
         }
-      ]
+      ],
+      "connection_type": "auxiliary_power"
     },
     {
       "id": "E34",
@@ -1160,7 +1193,8 @@
           "page": 4,
           "text": "Load bank can be connected to PSG through load bank switchboard"
         }
-      ]
+      ],
+      "connection_type": "test_power"
     },
     {
       "id": "E35",
@@ -1175,7 +1209,8 @@
           "page": 4,
           "text": "Load bank can be connected to UPS output switchboards through load bank switchboard"
         }
-      ]
+      ],
+      "connection_type": "test_power"
     },
     {
       "id": "E36",
@@ -1190,7 +1225,8 @@
           "page": 4,
           "text": "Load bank switchboard supplies load bank"
         }
-      ]
+      ],
+      "connection_type": "test_power"
     }
   ],
   "circuits": [],
