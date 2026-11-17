@@ -1,0 +1,100 @@
+{
+  "schema_version": "0.1",
+  "model_id": "faa-drpds-core-crosswalk",
+  "title": "FAA DRPDS architecture questions to synthetic diagnostic-core coverage",
+  "execution_mode": "test_traceability_only",
+  "architecture_model": "diagnostics/scenarios/faa-drpds-diagnostic-dependencies.v0.1.json",
+  "synthetic_core_module": "benchmarks/faa-drpds/diagnostic-core-module.synthetic.yaml",
+  "semantics": {
+    "executable_mapping": false,
+    "physical_equivalence": false,
+    "field_measurement_plan": false,
+    "purpose": "Records which architecture questions are represented, partially represented, or not represented by the current synthetic core fixture."
+  },
+  "coverage_levels": {
+    "partial": "A synthetic mode exercises a related endpoint or simplified fault shape, but does not cover the full evidence requirements or distinguish all hypotheses in the architecture question.",
+    "none": "The synthetic fixture has no defensible analogue for this architecture question."
+  },
+  "mappings": [
+    {
+      "question_id": "DQ-SOURCE-AVAILABILITY",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The fixture has two virtual utility observations but no source-loss mode, transformer model, sensing-channel fault, or independent source evidence."
+    },
+    {
+      "question_id": "DQ-GENERATOR-AVAILABILITY",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "No generator, generator bus, output breaker, capacity, or load-shed behavior is represented."
+    },
+    {
+      "question_id": "DQ-SWGR-SECTION-SUPPLY",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The fixture does not model SWGR sections, incomers, tie logic, selected source paths, or switching feedback."
+    },
+    {
+      "question_id": "DQ-SWGR-STANDBY-TRANSFER",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "No standby-transfer sequence, generator readiness, permissives, breaker actuation, or transfer feedback is modeled."
+    },
+    {
+      "question_id": "DQ-ESSENTIAL-FEED",
+      "coverage": "partial",
+      "synthetic_modes": [
+        "Essential_feed_loss"
+      ],
+      "rationale": "A single virtual essential-output loss is exercised; upstream feeder protection, MCC/control causes, and local-load causes are not distinguished."
+    },
+    {
+      "question_id": "DQ-UPS-HEALTH",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "UPS input, rectifier, inverter, bypass, battery/DC subsystem, and output-switchboard states are not modeled."
+    },
+    {
+      "question_id": "DQ-CRITICAL-BUS",
+      "coverage": "partial",
+      "synthetic_modes": [
+        "Critical_A_path_loss",
+        "Critical_B_path_loss",
+        "Dual_critical_path_loss"
+      ],
+      "rationale": "Synthetic A/B endpoint path-loss patterns are exercised, but assigned UPS outputs, output breakers, sensing validity, and actual bus topology are not modeled."
+    },
+    {
+      "question_id": "DQ-PDU-INPUT-OUTPUT",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "No PDU input, protection, or documented outgoing-feeder boundary exists in the fixture."
+    },
+    {
+      "question_id": "DQ-SATS-SOURCE-SELECTION",
+      "coverage": "partial",
+      "synthetic_modes": [
+        "SATS_output_loss"
+      ],
+      "rationale": "Only a generic downstream output-loss pattern is exercised; dual inputs, source selection, transfer event, and transfer state are absent."
+    },
+    {
+      "question_id": "DQ-CDP-OUTGOING-CIRCUIT",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "No CDP incomer, outgoing protective device, circuit identity, or individual critical load is modeled."
+    },
+    {
+      "question_id": "DQ-PMCS-TRUSTWORTHINESS",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The fixture has no telemetry freshness, I/O, PLC, communications, DC control-power, or independent cross-check fault modes."
+    }
+  ],
+  "constraints": [
+    "A partial mapping is test-shape correspondence only; it is not evidence that the synthetic mode diagnoses the architecture question.",
+    "No architecture question is converted into a MeasurementRequest by this crosswalk.",
+    "Synthetic fixture points and values remain software-only and must not be mapped to physical FAA terminals or measurements.",
+    "Unmapped questions are explicit coverage gaps, not healthy states or negative diagnoses."
+  ]
+}
