@@ -40,7 +40,7 @@ def test_shape_density_groups_nearby_candidates_without_naming_them():
     shapes = {"candidates": [
         {"center": [40, 40], "bbox": [30, 30, 50, 50]},
         {"center": [55, 45], "bbox": [45, 35, 65, 55]},
-        {"center": [58, 58], "bbox": [48, 48, 68, 68]},
+        {"center": [58, 55], "bbox": [48, 45, 68, 65]},
     ]}
     result = propose_content_regions(300, 200, [], {}, shapes)
     cluster = next(item for item in result["regions"] if item["kind"] == "graphic_shape_cluster")
