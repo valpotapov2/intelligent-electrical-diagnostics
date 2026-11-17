@@ -57,7 +57,7 @@ def _grid_regions(geometry: dict[str, Any], width: int, height: int) -> list[dic
         return []
 
     # Spatial bins keep distant drawing-frame intersections from becoming one page-wide ROI.
-    cell = max(24, int(min(width, height) * 0.10))
+    cell = max(24, int(min(width, height) * 0.50))
     bins: dict[tuple[int, int], list[int]] = {}
     for index, (x, y, _, _) in enumerate(points):
         bins.setdefault((x // cell, y // cell), []).append(index)
