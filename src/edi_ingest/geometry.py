@@ -34,7 +34,7 @@ def detect_geometry(image: Image.Image, min_line_length: int = 35, max_line_gap:
         result = []
         if lines is None:
             return result
-        for index, line in enumerate(lines[:, 0, :]):
+        for index, line in enumerate(np.asarray(lines).reshape(-1, 4)):
             x1, y1, x2, y2 = (int(value) for value in line)
             result.append({
                 "id": f"{orientation}-{index + 1}",
