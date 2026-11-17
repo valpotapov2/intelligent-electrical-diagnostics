@@ -322,6 +322,18 @@
           "items": {
             "$ref": "#/$defs/sourceRef"
           }
+        },
+        "connection_type": {
+          "type": "string",
+          "enum": [
+            "power",
+            "auxiliary_power",
+            "control",
+            "monitoring",
+            "control_monitoring",
+            "test_power"
+          ],
+          "description": "Semantic domain of the connection. Keep power paths separate from control/monitoring links and test-only paths."
         }
       },
       "additionalProperties": false
