@@ -31,7 +31,7 @@ def test_all_benchmark_scenarios_are_accounted_for():
     source = json.loads(SCENARIOS_PATH.read_text(encoding="utf-8"))
     source_ids = {item["id"] for item in source["scenarios"]}
     assert set(SCENARIO_MODES).issubset(source_ids)
-    assert "KSW-UNKNOWN-TOPOLOGY-001" in source_ids
+    assert {"KSW-INSTRUMENT-INVALID-001", "KSW-UNKNOWN-TOPOLOGY-001"}.issubset(source_ids)
 
 
 @pytest.mark.parametrize(
@@ -72,6 +72,9 @@ def test_instrument_error_scenario_is_rejected_and_never_becomes_evidence():
 
 
 def test_unknown_ats_internal_logic_is_not_invented_as_a_fault_mode():
+    source = json.loads(SCENARIOS_PATH.read_text(encoding="utf-8"))
+    scenario = next(item for item in source["scenarios"] if item["id"] == "KSW-UNKNOWN-TOPOLOGY-001")
+    assert scenario["injection"]["target_id"] == "ats"
     diagnostic_model = build_model()
     session = engine.Session(diagnostic_model, instruments={"ats-internal-logic-probe-not-installed"})
     decision = session.step()
