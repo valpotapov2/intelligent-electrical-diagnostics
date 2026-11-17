@@ -43,21 +43,21 @@
 <text x="305" y="582" text-anchor="middle" class="small">Essential loads may be shed during limited standby capacity</text>
 <rect x="650" y="465" width="470" height="140" class="box critical"/>
 <text x="885" y="500" text-anchor="middle" class="h">Critical power supply</text>
-<text x="885" y="530" text-anchor="middle" class="t">UPS supply switchgear</text>
-<text x="885" y="557" text-anchor="middle" class="t">UPS 1..n • battery strings • output SWBDs</text>
+<text x="885" y="530" text-anchor="middle" class="t">UPS supply switchgear (A/B buses)</text>
+<text x="885" y="557" text-anchor="middle" class="t">UPS 1 = bypass for UPS 2/3 • UPS 2 → A • UPS 3 → B</text>
 <text x="885" y="582" text-anchor="middle" class="small">Conditioned uninterruptible supply</text>
 
 <!-- critical buses -->
 <path d="M885 605 V655" class="line"/>
 <rect x="650" y="655" width="210" height="82" class="box critical"/>
-<text x="755" y="688" text-anchor="middle" class="h">Critical Bus A</text><text x="755" y="714" text-anchor="middle" class="small">Redundant path A</text>
+<text x="755" y="688" text-anchor="middle" class="h">Critical Bus A (UPS 2)</text><text x="755" y="714" text-anchor="middle" class="small">Redundant path A</text>
 <rect x="910" y="655" width="210" height="82" class="box critical"/>
-<text x="1015" y="688" text-anchor="middle" class="h">Critical Bus B</text><text x="1015" y="714" text-anchor="middle" class="small">Redundant path B</text>
+<text x="1015" y="688" text-anchor="middle" class="h">Critical Bus B (UPS 3)</text><text x="1015" y="714" text-anchor="middle" class="small">Redundant path B</text>
 <path d="M885 637 H755 V655 M885 637 H1015 V655" class="line"/>
 <rect x="650" y="790" width="210" height="90" class="box critical"/>
-<text x="755" y="825" text-anchor="middle" class="h">PDU / SATS</text><text x="755" y="850" text-anchor="middle" class="small">Path A distribution</text>
+<text x="755" y="825" text-anchor="middle" class="h">PDU pair / 2 SATS</text><text x="755" y="850" text-anchor="middle" class="small">A-side PDU feeds SATS source 1</text>
 <rect x="910" y="790" width="210" height="90" class="box critical"/>
-<text x="1015" y="825" text-anchor="middle" class="h">PDU / SATS</text><text x="1015" y="850" text-anchor="middle" class="small">Path B / transfer</text>
+<text x="1015" y="825" text-anchor="middle" class="h">PDU / SATS</text><text x="1015" y="850" text-anchor="middle" class="small">B-side PDU feeds SATS source 2</text>
 <path d="M755 737 V790 M1015 737 V790" class="line" marker-end="url(#arr)"/>
 <rect x="760" y="930" width="260" height="85" class="box critical"/>
 <text x="890" y="963" text-anchor="middle" class="h">CDP panels</text><text x="890" y="989" text-anchor="middle" class="small">Critical electronic loads</text>
@@ -78,6 +78,6 @@
 <text x="1355" y="862" text-anchor="middle" class="small">Relay / trip / close / controller supply</text>
 <path d="M1355 700 V770" class="line dashed" marker-end="url(#arr)"/>
 
-<text x="70" y="1060" class="small">* Voltage shown as described in the historical FAA handbook; transformer primary and site ratings vary. Exact topology, quantities, breaker labels and interlocks are site-specific.</text>
+<text x="70" y="1060" class="small">* Voltage shown as described in the historical FAA handbook; transformer primary and site ratings vary. Historical generic configuration: 3 UPS (UPS 1 bypasses UPS 2/3), 8 PDUs (6 at HCF), 4 CDPs (3 at HCF). Exact site topology and interlocks must be verified.</text>
 <text x="70" y="1085" class="small">Solid lines: functional power paths. Dashed lines: control/monitoring relationships. Conceptual architecture only; not an operating or switching instruction.</text>
 </svg>
