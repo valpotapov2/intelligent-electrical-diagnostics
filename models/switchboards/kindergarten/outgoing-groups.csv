@@ -1,0 +1,13 @@
+group,plan_label,breaker_ref,installed_power_kw,calculated_current_a,cable,length_m,mapping_confidence
+1,ЩР1,QF1,25.88,16.52,ВВГнг(A)-LSLTx5x4,10,medium
+2,ЩР2,QF2,38.93,19.8,ВВГнг(A)-LSLTx5x4,15,medium
+3,ЩР3,QF3,45.26,24.55,ВВГнг(A)-LSLTx5x6,26,medium
+4,ЩР4,QF4,53.07,29.86,ВВГнг(A)-LSLTx5x6,30,medium
+5,ЩОЧ / чердачное помещение (предположительно),,4.09,3.18,,,low
+6,ЩВ1,QF5,1.65,2.51,ВВГнг(A)-LSLTx5x1.5,15,medium
+7,ЩВ2,QF6,2.6,3.95,ВВГнг(A)-LSLTx5x1.5,15,medium
+8,ЩАО,QF7,1.37,2.07,ВВГнг(A)-LSLTx5x1.5,10,medium
+9,ЯПТ (неуверенное чтение),QF8,0.5,0.47,ВВГнг(A)-LSLTx5x1.5,5,low
+10,ЩПБ (неуверенное чтение),QF9,47.37,68.97,ВВГнг(A)-LSLTx5x25,21.5,medium
+11,ЩСБ (неуверенное чтение),QF10,2.5,3.8,ВВГнг(A)-LSLTx5x1.5,33.8,medium
+12,,,,,,,high
