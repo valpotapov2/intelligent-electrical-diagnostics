@@ -1,0 +1,352 @@
+{
+  "schema_version": "0.1-draft",
+  "source": {
+    "type": "user_supplied_single_line_diagram_image",
+    "basis": "Visual interpretation of the diagram and user-provided notes",
+    "limitations": [
+      "Raster source; some labels and ratings are ambiguous.",
+      "Design model from the drawing, not an as-built verification."
+    ]
+  },
+  "object": {
+    "name": "Kindergarten distribution board",
+    "facility_type": "kindergarten",
+    "installation_year": 2026,
+    "supply": {
+      "phases": 3,
+      "voltage_v": 380,
+      "voltage_phase_neutral_v": 220,
+      "frequency_hz": 50,
+      "earthing_system": "TN-C-S",
+      "inlets": 2,
+      "automatic_transfer_switch": true
+    }
+  },
+  "diagram_totals": {
+    "installed_power_kw": 223.21,
+    "calculated_power_kw": 115.64,
+    "calculated_current_a": 176
+  },
+  "topology": {
+    "main_elements": [
+      {
+        "ref": "ВРУ",
+        "type": "main_distribution_board"
+      },
+      {
+        "ref": "Ввод 1",
+        "type": "incoming_supply"
+      },
+      {
+        "ref": "Ввод 2",
+        "type": "incoming_supply"
+      },
+      {
+        "ref": "АВР",
+        "type": "automatic_transfer_switch"
+      },
+      {
+        "ref": "KM1",
+        "type": "contactor",
+        "rated_current_a": 200
+      },
+      {
+        "ref": "KM2",
+        "type": "contactor",
+        "rated_current_a": 200
+      },
+      {
+        "ref": "TA1-TA3",
+        "type": "current_transformers",
+        "ratio": "100/5"
+      },
+      {
+        "ref": "Меркурий 230 AR 5(60)",
+        "type": "electricity_meter"
+      },
+      {
+        "ref": "L1,L2,L3,N,PE",
+        "type": "distribution_busbars"
+      }
+    ]
+  },
+  "branch_breakers": [
+    {
+      "ref": "QF1",
+      "visible_marking": "3C25; 4.5 kA; ВА47-29",
+      "phases": 3,
+      "rated_current_a": 25,
+      "breaking_capacity_ka": 4.5,
+      "confidence": "medium"
+    },
+    {
+      "ref": "QF2",
+      "visible_marking": "3C25; 4.5 kA; ВА47-29",
+      "phases": 3,
+      "rated_current_a": 25,
+      "breaking_capacity_ka": 4.5,
+      "confidence": "medium"
+    },
+    {
+      "ref": "QF3",
+      "visible_marking": "3C25; 4.5 kA; ВА47-29",
+      "phases": 3,
+      "rated_current_a": 25,
+      "breaking_capacity_ka": 4.5,
+      "confidence": "medium"
+    },
+    {
+      "ref": "QF4",
+      "visible_marking": "3C32; 4.5 kA; ВА47-29",
+      "phases": 3,
+      "rated_current_a": 32,
+      "breaking_capacity_ka": 4.5,
+      "confidence": "medium"
+    },
+    {
+      "ref": "QF5",
+      "visible_marking": "3C10; 4.5 kA; ВА47-29",
+      "phases": 3,
+      "rated_current_a": 10,
+      "breaking_capacity_ka": 4.5,
+      "confidence": "medium"
+    },
+    {
+      "ref": "QF6",
+      "visible_marking": "3C10; 4.5 kA; ВА47-29",
+      "phases": 3,
+      "rated_current_a": 10,
+      "breaking_capacity_ka": 4.5,
+      "confidence": "medium"
+    },
+    {
+      "ref": "QF7",
+      "visible_marking": "3C10; 4.5 kA; ВА47-29",
+      "phases": 3,
+      "rated_current_a": 10,
+      "breaking_capacity_ka": 4.5,
+      "confidence": "medium"
+    },
+    {
+      "ref": "QF8",
+      "visible_marking": "3C10; 4.5 kA; ВА47-29",
+      "phases": 3,
+      "rated_current_a": 10,
+      "breaking_capacity_ka": 4.5,
+      "confidence": "medium"
+    },
+    {
+      "ref": "QF9",
+      "visible_marking": "3C80?; 4.5 kA; ВА47-29",
+      "phases": 3,
+      "rated_current_a": 80,
+      "breaking_capacity_ka": 4.5,
+      "confidence": "low"
+    },
+    {
+      "ref": "QF10",
+      "visible_marking": "3C10?; 4.5 kA; ВА47-29",
+      "phases": 3,
+      "rated_current_a": 10,
+      "breaking_capacity_ka": 4.5,
+      "confidence": "low"
+    }
+  ],
+  "outgoing_groups": [
+    {
+      "number": 1,
+      "plan_label": "ЩР1",
+      "breaker_ref": "QF1",
+      "installed_power_kw": 25.88,
+      "calculated_current_a": 16.52,
+      "cable": "ВВГнг(A)-LSLTx5x4",
+      "length_m": 10,
+      "mapping_confidence": "medium"
+    },
+    {
+      "number": 2,
+      "plan_label": "ЩР2",
+      "breaker_ref": "QF2",
+      "installed_power_kw": 38.93,
+      "calculated_current_a": 19.8,
+      "cable": "ВВГнг(A)-LSLTx5x4",
+      "length_m": 15,
+      "mapping_confidence": "medium"
+    },
+    {
+      "number": 3,
+      "plan_label": "ЩР3",
+      "breaker_ref": "QF3",
+      "installed_power_kw": 45.26,
+      "calculated_current_a": 24.55,
+      "cable": "ВВГнг(A)-LSLTx5x6",
+      "length_m": 26,
+      "mapping_confidence": "medium"
+    },
+    {
+      "number": 4,
+      "plan_label": "ЩР4",
+      "breaker_ref": "QF4",
+      "installed_power_kw": 53.07,
+      "calculated_current_a": 29.86,
+      "cable": "ВВГнг(A)-LSLTx5x6",
+      "length_m": 30,
+      "mapping_confidence": "medium"
+    },
+    {
+      "number": 5,
+      "plan_label": "ЩОЧ / чердачное помещение (предположительно)",
+      "breaker_ref": null,
+      "installed_power_kw": 4.09,
+      "calculated_current_a": 3.18,
+      "cable": null,
+      "length_m": null,
+      "mapping_confidence": "low"
+    },
+    {
+      "number": 6,
+      "plan_label": "ЩВ1",
+      "breaker_ref": "QF5",
+      "installed_power_kw": 1.65,
+      "calculated_current_a": 2.51,
+      "cable": "ВВГнг(A)-LSLTx5x1.5",
+      "length_m": 15,
+      "mapping_confidence": "medium"
+    },
+    {
+      "number": 7,
+      "plan_label": "ЩВ2",
+      "breaker_ref": "QF6",
+      "installed_power_kw": 2.6,
+      "calculated_current_a": 3.95,
+      "cable": "ВВГнг(A)-LSLTx5x1.5",
+      "length_m": 15,
+      "mapping_confidence": "medium"
+    },
+    {
+      "number": 8,
+      "plan_label": "ЩАО",
+      "breaker_ref": "QF7",
+      "installed_power_kw": 1.37,
+      "calculated_current_a": 2.07,
+      "cable": "ВВГнг(A)-LSLTx5x1.5",
+      "length_m": 10,
+      "mapping_confidence": "medium"
+    },
+    {
+      "number": 9,
+      "plan_label": "ЯПТ (неуверенное чтение)",
+      "breaker_ref": "QF8",
+      "installed_power_kw": 0.5,
+      "calculated_current_a": 0.47,
+      "cable": "ВВГнг(A)-LSLTx5x1.5",
+      "length_m": 5,
+      "mapping_confidence": "low"
+    },
+    {
+      "number": 10,
+      "plan_label": "ЩПБ (неуверенное чтение)",
+      "breaker_ref": "QF9",
+      "installed_power_kw": 47.37,
+      "calculated_current_a": 68.97,
+      "cable": "ВВГнг(A)-LSLTx5x25",
+      "length_m": 21.5,
+      "mapping_confidence": "medium"
+    },
+    {
+      "number": 11,
+      "plan_label": "ЩСБ (неуверенное чтение)",
+      "breaker_ref": "QF10",
+      "installed_power_kw": 2.5,
+      "calculated_current_a": 3.8,
+      "cable": "ВВГнг(A)-LSLTx5x1.5",
+      "length_m": 33.8,
+      "mapping_confidence": "medium"
+    },
+    {
+      "number": 12,
+      "plan_label": null,
+      "breaker_ref": null,
+      "installed_power_kw": null,
+      "calculated_current_a": null,
+      "cable": null,
+      "length_m": null,
+      "mapping_confidence": "high"
+    }
+  ],
+  "equipment_model_codes_as_supplied": [
+    "SVA30-3-0200",
+    "SVA30-3-0200",
+    "KKT50-225-230-10",
+    "KKT50-225-230-10",
+    "DRF-3-7N",
+    "MVA20-3-006-C",
+    "MVA20-1-006-C",
+    "ITT10-2-05-0100",
+    "ITT10-2-05-0100",
+    "ITT10-2-05-0100",
+    "MVA20-3-025-C",
+    "MVA20-3-025-C",
+    "MVA20-3-025-C",
+    "MVA20-3-032-C",
+    "MVA20-3-010-C",
+    "MVA20-3-010-C",
+    "MVA20-3-010-C",
+    "MVA20-1-010-C",
+    "MVA20-1-010-C",
+    "MVA40-3-080-C",
+    "KPK10-11"
+  ],
+  "known_operational_state": {
+    "reported_defects": "No defects reported",
+    "measurement_protocol": "A standard protocol is reported to exist; numerical results have not been supplied."
+  },
+  "reconciliation_checks": {
+    "sum_installed_power_groups_1_11_kw": 223.22,
+    "diagram_installed_power_kw": 223.21,
+    "sum_calculated_currents_groups_1_11_a": 175.68,
+    "diagram_calculated_current_a": 176,
+    "status": "Consistent within rounding"
+  },
+  "open_issues": [
+    {
+      "id": "ISS-01",
+      "severity": "high",
+      "description": "Schedule lists 11 populated groups; diagram visibly shows QF1-QF10. Separate protection for group 5 is not identified.",
+      "status": "unresolved"
+    },
+    {
+      "id": "ISS-02",
+      "severity": "medium",
+      "description": "QF9 marking is tentatively read as 3C80; QF10 marking is unclear.",
+      "status": "unresolved"
+    },
+    {
+      "id": "ISS-03",
+      "severity": "medium",
+      "description": "Supplied equipment model codes are not yet mapped unambiguously to diagram references.",
+      "status": "unresolved"
+    },
+    {
+      "id": "ISS-04",
+      "severity": "medium",
+      "description": "Some outgoing panel labels are uncertain due to raster resolution.",
+      "status": "unresolved"
+    },
+    {
+      "id": "ISS-05",
+      "severity": "low",
+      "description": "Schedule column 12 is blank; no separate outgoing circuit identified.",
+      "status": "unresolved"
+    }
+  ],
+  "diagnostic_readiness": {
+    "can_build_preliminary_model": true,
+    "can_claim_fault_diagnosis_without_measurements": false,
+    "recommended_virtual_scenarios": [
+      "group protective device trip",
+      "overheating of device or connection",
+      "supply parameter deviation"
+    ]
+  }
+}
