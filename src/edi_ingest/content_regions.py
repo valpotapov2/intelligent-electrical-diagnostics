@@ -103,7 +103,7 @@ def _grid_regions(geometry: dict[str, Any], width: int, height: int) -> list[dic
             continue
         if raw[0] <= width * 0.015 and raw[1] <= height * 0.015:
             continue
-        bbox = _union_box([raw], pad=max(6, int(min(width, height) * 0.008)), width=width, height=height)
+        bbox = _union_box([raw], pad=max(8, int(min(width, height) * 0.008)), width=width, height=height)
         regions.append({
             "id": f"grid-component-{group_index}",
             "kind": "line_grid_candidate",
@@ -170,8 +170,8 @@ def _table_regions(
     for grid in grid_regions:
         x1, y1, x2, y2 = grid["bbox"]
         inside = [token for token in tokens
-                  if x1 <= token["bbox"][0] and token["bbox"][2] <= x2
-                  and y1 <= token["bbox"][1] and token["bbox"][3] <= y2]
+                  if x1 <= (token["bbox"][0] + token["bbox"][2]) / 2 <= x2
+                  and y1 <= (token["bbox"][1] + token["bbox"][3]) / 2 <= y2]
         if len(inside) < 8:
             continue
         row_centers = sorted((token["bbox"][1] + token["bbox"][3]) / 2 for token in inside)
