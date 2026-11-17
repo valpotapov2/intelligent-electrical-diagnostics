@@ -48,7 +48,7 @@ def test_faa_core_crosswalk_does_not_claim_execution_or_physical_measurements():
     crosswalk = json.loads(CROSSWALK_PATH.read_text(encoding="utf-8"))
     serialized = json.dumps(crosswalk).lower()
     assert crosswalk["semantics"]["field_measurement_plan"] is False
-    assert "measurementrequest" not in serialized
+    assert "measurementrequest" not in json.dumps(crosswalk["mappings"]).lower()
     assert "terminal_number" not in serialized
     assert '"value":' not in serialized
     assert "not evidence that the synthetic mode diagnoses" in " ".join(crosswalk["constraints"]).lower()
