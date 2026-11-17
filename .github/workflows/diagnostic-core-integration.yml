@@ -45,7 +45,7 @@ jobs:
         run: |
           pytest -q tests/test_diagnostic_core_bridge.py
           pytest -q tests/test_kindergarten_core_scenarios.py
-          pytest -q tests/test_faa-drpds-core-scenarios.py
+          pytest -q tests/test_faa_drpds_core_scenarios.py
       - name: Report missing private-repository credential
         if: env.DIAGNOSTICS_MVP_TOKEN == ''
         run: |
