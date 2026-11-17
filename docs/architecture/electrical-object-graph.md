@@ -44,3 +44,16 @@ A graph is not simply “complete” or “incomplete”. It is sufficient or in
 ## Relationship to the existing diagnostic core
 
 This model is an input/context layer. It does not replace `MeasurementRequest`, `MeasurementResult`, `InstrumentAdapter`, `SafetyGateway` or `Session`. Integration should map a scenario's requested observation to the existing measurement contracts after validating the required graph context and safety constraints.
+
+## Connection domains
+
+Connections carry a `connection_type` so that graph traversal does not conflate electrical energy paths with automation and evidence channels:
+
+- `power` — normal power-distribution path;
+- `auxiliary_power` — auxiliary supply for control or monitoring equipment;
+- `control` — command/control path;
+- `monitoring` — telemetry or status acquisition path;
+- `control_monitoring` — a documented relationship that combines command and feedback/telemetry where the source does not separate the conductors;
+- `test_power` — temporary or test-only power path.
+
+The type describes the semantic role of the relationship, not its voltage, conductor, safety class, or physical wiring details. Those remain separate attributes and require source evidence. Do not infer a missing connection type from typical practice.
