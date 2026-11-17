@@ -100,7 +100,7 @@ def test_synthetic_drpds_mode_updates_real_core_posterior(mode):
         core_root=CORE,
         module_path=VIRTUAL_MODULE,
         adapter=adapter,
-        overrides={"policy.selection": "spike"},
+        overrides={"policy.selection": "spike", "policy.max_checks": 12},
         max_steps=100,
     )
 
