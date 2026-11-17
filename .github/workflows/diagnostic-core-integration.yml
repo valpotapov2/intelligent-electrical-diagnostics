@@ -1,0 +1,41 @@
+name: Diagnostic core integration
+
+on:
+  push:
+    branches: [main, "integration/**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  core-integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check private dependency credential
+        env:
+          DIAGNOSTICS_MVP_TOKEN: ${{ secrets.DIAGNOSTICS_MVP_TOKEN }}
+        run: |
+          if [ -z "$DIAGNOSTICS_MVP_TOKEN" ]; then
+            echo "::error::Configure the DIAGNOSTICS_MVP_TOKEN repository secret with read access to leverty93/diagnostics-mvp."
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+        with:
+          repository: leverty93/diagnostics-mvp
+          ref: 048587b527342f4dc178e8c99e115c974113fbed
+          path: .deps/diagnostics-mvp
+          token: ${{ secrets.DIAGNOSTICS_MVP_TOKEN }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13.15"
+          cache: pip
+      - name: Install pinned core runtime
+        run: python -m pip install -r .deps/diagnostics-mvp/requirements.txt
+      - name: Install integration project
+        run: python -m pip install -e ".[dev]"
+      - name: Run real-core integration tests
+        env:
+          DIAGNOSTICS_CORE_PATH: ${{ github.workspace }}/.deps/diagnostics-mvp
+        run: python -m pytest -q tests/integration

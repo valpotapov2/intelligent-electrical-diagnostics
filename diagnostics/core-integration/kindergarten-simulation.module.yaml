@@ -1,0 +1,95 @@
+schema_version: "1.3"
+manifest:
+  id: kindergarten_switchboard_sim
+  version: 0.1.0
+  title: "Kindergarten switchboard — simulation fixture"
+  domain: electrical_switchboard_simulation
+  description: "Тестовая модель для интеграции; не физическая модель щита."
+  sources:
+    - "benchmarks/kindergarten-switchboard/scenarios.v0.1.json"
+    - "benchmarks/kindergarten-switchboard/electrical-object-model.v0.1.json"
+objects:
+  components:
+    breaker-qf4: {type: breaker}
+    cable-qf4-branch: {type: cable}
+    breaker-qf9: {type: breaker}
+  nodes: [node-qf4-common, node-qf4-branch, node-qf9]
+  points:
+    TP-QF4-COMMON: {node: node-qf4-common, location: "Виртуальная точка общей ветви QF4"}
+    TP-QF4-BRANCH: {node: node-qf4-branch, location: "Виртуальная точка ответвления QF4"}
+    TP-QF9: {node: node-qf9, location: "Виртуальная точка ветви QF9"}
+links:
+  - {component: breaker-qf4, pin: output, node: node-qf4-common}
+  - {component: cable-qf4-branch, pin: output, node: node-qf4-branch}
+  - {component: breaker-qf9, pin: output, node: node-qf9}
+quantities:
+  qf4_common_code: {title: "Синтетический код общей ветви QF4", unit: sim-code, kind: numeric}
+  qf4_branch_code: {title: "Синтетический код ответвления QF4", unit: sim-code, kind: numeric}
+  qf9_code: {title: "Синтетический код ветви QF9", unit: sim-code, kind: numeric}
+instruments:
+  virtual_bench:
+    title: "Виртуальный стенд — только тесты"
+    version: 1
+    input: "Нет физического электрического подключения"
+    time: {first: 1.0, next: 1.0}
+    connection:
+      input_type: isolated
+      common_earthed: false
+      isolation_confirmed: true
+      safe_connection_confirmed: true
+      basis: "Программный адаптер без физического подключения; только offline-тест"
+    profiles:
+      qf4_common_code: {range: [0.0, 1.0], unit: sim-code, resolution: 0.01, accuracy: {pct: 0.0, abs: 0.01}}
+      qf4_branch_code: {range: [0.0, 1.0], unit: sim-code, resolution: 0.01, accuracy: {pct: 0.0, abs: 0.01}}
+      qf9_code: {range: [0.0, 1.0], unit: sim-code, resolution: 0.01, accuracy: {pct: 0.0, abs: 0.01}}
+checks:
+  - {quantity: qf4_common_code, points: [TP-QF4-COMMON], powered: false, method: "Синтетический код: 1=connected, 0=open"}
+  - {quantity: qf4_branch_code, points: [TP-QF4-BRANCH], powered: false, method: "Синтетический код: 1=connected, 0=open"}
+  - {quantity: qf9_code, points: [TP-QF9], powered: false, method: "Синтетический код: 1=normal, 0=anomaly"}
+faults:
+  modes:
+    Healthy: {component: null, basis: "Тест KSW-BASE-001; синтетические коды равны 1"}
+    QF4_COMMON_OPEN: {component: breaker-qf4, basis: "Тест KSW-QF4-OPEN-001; обе ветви имеют код 0"}
+    QF4_BRANCH_OPEN: {component: cable-qf4-branch, basis: "Тест KSW-QF4-BRANCH-001; только ответвление имеет код 0"}
+    QF9_ANOMALY: {component: breaker-qf9, basis: "Тест KSW-QF9-OBS-001; ветвь QF9 имеет код 0"}
+  priors:
+    values: {Healthy: 0.25, QF4_COMMON_OPEN: 0.25, QF4_BRANCH_OPEN: 0.25, QF9_ANOMALY: 0.25}
+    basis: "Равномерные тестовые веса; не статистика и не оценка вероятностей неисправностей объекта"
+symptoms:
+  Healthy:
+    qf4_common_code: {node-qf4-common: {value: 1, source: "Синтетическое правило KSW-BASE-001"}}
+    qf4_branch_code: {node-qf4-branch: {value: 1, source: "Синтетическое правило KSW-BASE-001"}}
+    qf9_code: {node-qf9: {value: 1, source: "Синтетическое правило KSW-BASE-001"}}
+  QF4_COMMON_OPEN:
+    qf4_common_code: {node-qf4-common: {value: 0, source: "Синтетическое правило KSW-QF4-OPEN-001"}}
+    qf4_branch_code: {node-qf4-branch: {value: 0, source: "Синтетическое правило KSW-QF4-OPEN-001"}}
+    qf9_code: {node-qf9: {value: 1, source: "Вне затронутой области KSW-QF4-OPEN-001"}}
+  QF4_BRANCH_OPEN:
+    qf4_common_code: {node-qf4-common: {value: 1, source: "Вне затронутой области KSW-QF4-BRANCH-001"}}
+    qf4_branch_code: {node-qf4-branch: {value: 0, source: "Синтетическое правило KSW-QF4-BRANCH-001"}}
+    qf9_code: {node-qf9: {value: 1, source: "Вне затронутой области KSW-QF4-BRANCH-001"}}
+  QF9_ANOMALY:
+    qf4_common_code: {node-qf4-common: {value: 1, source: "Вне затронутой области KSW-QF9-OBS-001"}}
+    qf4_branch_code: {node-qf4-branch: {value: 1, source: "Вне затронутой области KSW-QF9-OBS-001"}}
+    qf9_code: {node-qf9: {value: 0, source: "Синтетическое правило KSW-QF9-OBS-001"}}
+connection_error:
+  prior: 0.05
+  basis: "Тестовая вероятность ошибки подключения; не оценка для физического щита"
+  reading: {qf4_common_code: 0.5, qf4_branch_code: 0.5, qf9_code: 0.5}
+  reading_basis: "Синтетический код между состояниями 0 и 1"
+conclusion:
+  requirements: {no_fault: [], fault: [], outside: []}
+  basis: "Только тесты вероятностного механизма; не заключение по реальному щиту"
+safety:
+  limits: {}
+  nodes:
+    node-qf4-common: {level: 0, unit: V, zone: safe, basis: "Виртуальный узел; не физический проводник"}
+    node-qf4-branch: {level: 0, unit: V, zone: safe, basis: "Виртуальный узел; не физический проводник"}
+    node-qf9: {level: 0, unit: V, zone: safe, basis: "Виртуальный узел; не физический проводник"}
+  procedures:
+    qf4_common_code: {qualification: qualified, basis: "Только программный адаптер; не допуск к полевой процедуре"}
+    qf4_branch_code: {qualification: qualified, basis: "Только программный адаптер; не допуск к полевой процедуре"}
+    qf9_code: {qualification: qualified, basis: "Только программный адаптер; не допуск к полевой процедуре"}
+  connection_confirmation: required
+  rules: []
+costs: {default: 1.0, basis: "Условная стоимость теста; не время электрика"}
