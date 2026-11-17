@@ -84,7 +84,7 @@ The source table's rows for starting current and mechanism name are not filled i
 
 - Preserve source text, normalized interpretation, source coordinates and review status separately.
 - Keep all load schedule values as source-transcribed candidates until cell-level review.
-- Keep the eleven load positions separate from the ten QF devices until the feeder-to-load association is established.
+- Preserve eleven load positions and ten QF devices as separate entity sets; the SVG-derived mapping links positions 1–4 to QF1–QF4, positions 5 as a branch from QF4, and positions 6–11 to QF5–QF10.
 - Represent unresolved links as issues or unknown relations; do not fill them using typical wiring practice.
 - Treat the model as an offline diagnostic-software benchmark only. It is not authorization to measure or operate the live switchboard.
 - Any future measurement scenario must pass a qualified electrical safety review and the project's SafetyGateway; this source review does not define safe live test points.
