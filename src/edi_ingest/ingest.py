@@ -15,6 +15,7 @@ from .symbols import detect_symbol_candidates
 from .roi import run_roi_ocr
 from .content_regions import propose_content_regions, run_content_region_ocr
 from .table_structure import extract_table_structures
+from .table_ocr import read_table_cells
 
 
 SUPPORTED_IMAGES = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".bmp"}
@@ -128,6 +129,9 @@ def ingest_document(path: str | Path, lang: str = "rus+eng", dpi: int = 220, psm
             page_result["table_structures"] = extract_table_structures(
                 image, page_result["content_regions"]
             )
+            page_result["table_cell_ocr"] = read_table_cells(
+                image, page_result["table_structures"], lang=lang
+            )
             page_result["pdf_vector_geometry"] = _extract_pdf_vector_primitives(page, render_scale=dpi / 72)
             page_result["source_page_size"] = [page.rect.width, page.rect.height]
             pages.append(page_result)
@@ -146,6 +150,9 @@ def ingest_document(path: str | Path, lang: str = "rus+eng", dpi: int = 220, psm
         )
         page_result["table_structures"] = extract_table_structures(
             image, page_result["content_regions"]
+        )
+        page_result["table_cell_ocr"] = read_table_cells(
+            image, page_result["table_structures"], lang=lang
         )
         pages.append(page_result)
     else:
