@@ -94,3 +94,15 @@ It supports a feeder-level graph for the drawn outgoing lines and resolves the a
 - device condition, actual installed ratings, conductor condition or safe test points.
 
 Keep this as a source-derived diagram graph with provenance, not an as-built certification or permission to perform live measurements.
+
+## Machine-readable graph
+
+The corresponding graph is stored in `electrical-object-model.v0.1.json` and follows `schema/electrical-object-model.schema.json` version 0.1.
+
+- 42 components: two supplies, ВРУ, three bus entities, ATS, two contactors, meter, CT bank, ten outgoing breakers, eleven loads and ten cable objects.
+- 31 source-traced connections: ten phase-bus-to-breaker, ten breaker-to-cable and eleven cable-to-load edges. QF4's cable feeds both plan positions 4 and 5.
+- 10 outgoing circuit records, one per QF1–QF10.
+- SVG coordinate boxes and source text are retained on components and connections.
+- Unverified as-built and safety matters remain explicit issues; the graph is not a live-work instruction.
+
+The graph captures the SVG's feeder-level relationships. It deliberately does not invent internal ATS/contactors wiring, three-phase terminal pin detail, or the electrical function of abbreviated downstream panels.
