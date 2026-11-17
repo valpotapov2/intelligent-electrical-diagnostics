@@ -389,7 +389,8 @@ symptoms:
       N_SWGR_1_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
       N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
       N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
-      N_STANDBY_TRANSFER_EVIDENCE: {value: 0.0, source: Synthetic virtual standby-transfer evidence loss}connection_error:
+      N_STANDBY_TRANSFER_EVIDENCE: {value: 0.0, source: Synthetic virtual standby-transfer evidence loss}
+connection_error:
   prior: 0.01
   basis: Synthetic virtual model parameter
   reading:
