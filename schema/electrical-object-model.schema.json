@@ -1,0 +1,433 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/valpotapov2/intelligent-electrical-diagnostics/blob/main/schema/electrical-object-model.schema.json",
+  "title": "Electrical Object Model",
+  "description": "Partial, source-traceable graph model extracted from an electrical diagram. Unknown and ambiguous data must remain explicit.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "source_documents",
+    "object",
+    "components",
+    "connections",
+    "circuits",
+    "issues"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "source_documents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sourceDocument"
+      },
+      "minItems": 1
+    },
+    "object": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "facility_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "supply": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "installation_year": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/component"
+      }
+    },
+    "connections": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/connection"
+      }
+    },
+    "circuits": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/circuit"
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/issue"
+      }
+    },
+    "totals": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "extraction": {
+      "type": "object",
+      "properties": {
+        "tool_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "created_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "review_status": {
+          "enum": [
+            "unreviewed",
+            "partially_reviewed",
+            "reviewed"
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "sourceDocument": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "single_line_diagram",
+            "wiring_diagram",
+            "specification",
+            "photo",
+            "measurement_protocol",
+            "other"
+          ]
+        },
+        "filename": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "page": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "media_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "sourceRef": {
+      "type": "object",
+      "required": [
+        "document_id"
+      ],
+      "properties": {
+        "document_id": {
+          "type": "string"
+        },
+        "page": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "bbox": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "component": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "label",
+        "status",
+        "sources"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "supply",
+            "switchboard",
+            "busbar",
+            "breaker",
+            "fuse",
+            "rcd",
+            "rcbo",
+            "contactor",
+            "ats",
+            "meter",
+            "current_transformer",
+            "surge_protection",
+            "relay",
+            "load",
+            "cable",
+            "terminal",
+            "earth",
+            "unknown"
+          ]
+        },
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "manufacturer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "status": {
+          "enum": [
+            "recognized",
+            "ambiguous",
+            "unknown",
+            "not_in_source"
+          ]
+        },
+        "confidence": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceRef"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "connection": {
+      "type": "object",
+      "required": [
+        "id",
+        "from",
+        "to",
+        "status",
+        "sources"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "conductor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "recognized",
+            "ambiguous",
+            "inferred",
+            "unknown"
+          ]
+        },
+        "confidence": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceRef"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "circuit": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "status",
+        "sources"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "protective_device_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "load_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cable_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "status": {
+          "enum": [
+            "recognized",
+            "ambiguous",
+            "partial",
+            "unknown"
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceRef"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "issue": {
+      "type": "object",
+      "required": [
+        "id",
+        "severity",
+        "description",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "open",
+            "resolved",
+            "accepted"
+          ]
+        },
+        "related_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "resolution": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
