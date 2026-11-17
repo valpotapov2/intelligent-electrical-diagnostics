@@ -40,13 +40,13 @@ The following ratings are transcribed from the labels next to the drawn outgoing
 | Device | Readable current marking |
 |---|---:|
 | QF1 | C25 |
-| QF2 | C32 |
-| QF3 | C32 |
+| QF2 | C25 |
+| QF3 | C25 |
 | QF4 | C32 |
 | QF5 | C10 |
 | QF6 | C10 |
-| QF7 | C10 |
-| QF8 | C10 |
+| QF7 | 1C10 (single-pole marking) |
+| QF8 | 1C10 (single-pole marking) |
 | QF9 | C80 |
 | QF10 | C10 |
 
@@ -75,12 +75,10 @@ The source table's rows for starting current and mechanism name are not filled i
 
 ## Open interpretation issues
 
-1. **Ten outgoing breakers versus eleven populated load positions.** The drawing alone does not establish a one-to-one mapping between QF1–QF10 and plan positions 1–11. Do not synthesize a missing breaker or merge two loads.
-2. **Branch labelled “Чердачное помещение”.** A branch/connection is drawn near the fourth outgoing feeder area, but its exact electrical association and whether it is a separate load position are not resolved in this review.
-3. **Cable inscriptions and lengths.** Cable text is present beside the outgoing lines, but must be transcribed and aligned to feeder IDs in a separate coordinate-based review. Do not infer feeder identity from proximity alone.
-4. **QF9 C80.** The visible marking reads C80. This is a drawing transcription, not confirmation of the installed device.
-5. **Physical implementation.** The drawing does not prove that the real panel matches the design, that the devices are currently installed, or that the circuit is energized as drawn.
-6. **Connection graph.** No electrical connection should be marked as validated solely because raster lines touch or cross. Junctions, device terminals and bus connections need explicit trace review.
+1. **Feeder/load count is now explained by the SVG.** There are ten outgoing breakers and eleven populated plan positions because QF4 has a drawn branch to the separate plan-position-5 load ЩОЧ (labelled “Чердачное помещение”). This is not evidence of an omitted eleventh breaker.
+2. **QF9 C80.** The visible SVG marking reads 3C80. This is a drawing transcription, not confirmation of the installed device.
+3. **Physical implementation.** The drawing does not prove that the real panel matches the design, that the devices are currently installed, or that the circuit is energized as drawn.
+4. **Terminal-level graph.** The SVG gives explicit drawn line geometry and supports feeder-level relationships. It does not establish all internal device terminals, hidden junction semantics, or as-built wiring. Preserve those as unverified until separately reviewed.
 
 ## Modeling rules for the benchmark
 
