@@ -51,3 +51,15 @@ Before any real diagnostic use, a site-specific module would need:
 - real operating/event records or engineering-approved priors.
 
 No live measurement or switching is enabled by this integration.
+
+## Architecture-question crosswalk
+
+`diagnostics/scenarios/faa-drpds-core-crosswalk.v0.1.json` records coverage between all 11 architecture-level diagnostic questions and the current six-mode synthetic engine fixture.
+
+Current coverage is deliberately limited:
+- **Partial synthetic analogues:** essential-feed endpoint loss, Critical Bus A/B path-loss patterns, and a generic SATS output-loss pattern.
+- **Not represented:** commercial-source diagnosis, generator availability, SWGR section supply, standby transfer, UPS health, PDU input/output, CDP outgoing circuits, and PMCS trustworthiness.
+
+“Partial” means only that a simplified software fault shape is exercised. It does not mean the engine can resolve the corresponding architecture question or distinguish its required hypotheses. “Not represented” is a coverage gap, not a healthy result.
+
+The crosswalk is traceability metadata only. It does not create executable mappings, generate MeasurementRequests, or bind architecture-level component IDs to virtual points. The real-core integration continues to test only the explicitly synthetic module and its software-only adapter.
