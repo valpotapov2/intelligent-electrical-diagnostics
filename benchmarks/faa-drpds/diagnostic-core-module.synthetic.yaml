@@ -306,38 +306,6 @@ symptoms:
       N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
       N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
       N_STANDBY_TRANSFER_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
-connection_error:
-  prior: 0.01
-  basis: Synthetic virtual model parameter
-  reading:
-    dc_voltage: 2.5
-  reading_basis: Synthetic value used only to exercise virtual connection-error handling
-conclusion:
-  requirements:
-    no_fault: []
-    fault: []
-    outside: []
-  basis: Engine posterior is the test target; this is not a physical acceptance criterion
-safety:
-  limits:
-    V: 5.5
-  nodes:
-    N_UTILITY_1: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
-    N_UTILITY_2: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
-    N_BUS_A: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
-    N_BUS_B: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
-    N_CRITICAL_OUT: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
-    N_ESSENTIAL_OUT: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
-    GND: {level: 0.0, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
-  procedures:
-    dc_voltage:
-      qualification: none
-      basis: Software-only virtual observation; no field procedure exists
-  connection_confirmation: required
-  rules: []
-costs:
-  default: 1.0
-  basis: Synthetic cost per virtual check
 
   Source_1_evidence_loss:
     dc_voltage:
@@ -428,3 +396,36 @@ costs:
       N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
       N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
       N_STANDBY_TRANSFER_EVIDENCE: {value: 0.0, source: Synthetic virtual standby-transfer evidence loss}
+
+connection_error:
+  prior: 0.01
+  basis: Synthetic virtual model parameter
+  reading:
+    dc_voltage: 2.5
+  reading_basis: Synthetic value used only to exercise virtual connection-error handling
+conclusion:
+  requirements:
+    no_fault: []
+    fault: []
+    outside: []
+  basis: Engine posterior is the test target; this is not a physical acceptance criterion
+safety:
+  limits:
+    V: 5.5
+  nodes:
+    N_UTILITY_1: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_UTILITY_2: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_BUS_A: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_BUS_B: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_CRITICAL_OUT: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_ESSENTIAL_OUT: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    GND: {level: 0.0, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+  procedures:
+    dc_voltage:
+      qualification: none
+      basis: Software-only virtual observation; no field procedure exists
+  connection_confirmation: required
+  rules: []
+costs:
+  default: 1.0
+  basis: Synthetic cost per virtual check
