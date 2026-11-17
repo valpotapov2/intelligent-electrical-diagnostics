@@ -128,7 +128,7 @@ def test_grid_components_do_not_chain_across_page():
             {"id": f"v{i}", "start": [x, 90], "end": [x, 150]}
             for i, x in enumerate([150, 250, 350])
         ] + [
-            {"id": f"bv{i}", "start": [x, 690], "end": [x, 750])
+            {"id": f"bv{i}", "start": [x, 690], "end": [x, 750]}
             for i, x in enumerate([950, 1050, 1150])
         ],
     }
