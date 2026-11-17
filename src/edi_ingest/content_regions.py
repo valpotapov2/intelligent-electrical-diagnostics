@@ -20,11 +20,12 @@ def _text_regions(tokens: list[dict[str, Any]], width: int, height: int) -> list
     groups: dict[tuple[int, int], list[list[int]]] = {}
     for token in tokens:
         block, paragraph = token.get("block_num"), token.get("par_num")
-        if block is None or paragraph is None:
-            continue
         box = token.get("bbox")
-        if isinstance(box, list) and len(box) == 4:
-            groups.setdefault((int(block), int(paragraph)), []).append(box)
+        if block is None or paragraph is None or not isinstance(box, list) or len(box) != 4:
+            continue
+        x1, y1, x2, y2 = (int(value) for value in box)
+        if 0 <= x1 < x2 <= width and 0 <= y1 < y2 <= height:
+            groups.setdefault((int(block), int(paragraph)), []).append([x1, y1, x2, y2])
     regions = []
     for (block, paragraph), boxes in groups.items():
         if len(boxes) < 2:
@@ -42,49 +43,26 @@ def _text_regions(tokens: list[dict[str, Any]], width: int, height: int) -> list
 
 
 def _grid_regions(geometry: dict[str, Any], width: int, height: int) -> list[dict[str, Any]]:
-    horizontal = geometry.get("horizontal_segments", [])
-    vertical = geometry.get("vertical_segments", [])
-    points: list[tuple[int, int]] = []
-    used_h: set[str] = set()
-    used_v: set[str] = set()
-    for h in horizontal:
+    """Find bounded local groups of line intersections; discard page-frame-sized groups."""
+    points: list[tuple[int, int, str, str]] = []
+    for h in geometry.get("horizontal_segments", []):
         hy = int(h["start"][1])
         hx1, hx2 = sorted((int(h["start"][0]), int(h["end"][0])))
-        for v in vertical:
+        for v in geometry.get("vertical_segments", []):
             vx = int(v["start"][0])
             vy1, vy2 = sorted((int(v["start"][1]), int(v["end"][1])))
             if hx1 <= vx <= hx2 and vy1 <= hy <= vy2:
-                points.append((vx, hy))
-                used_h.add(str(h.get("id")))
-                used_v.add(str(v.get("id")))
-    if len(points) < 6 or len(used_h) < 3 or len(used_v) < 2:
+                points.append((vx, hy, str(h.get("id")), str(v.get("id"))))
+    if len(points) < 6:
         return []
-    xs, ys = [point[0] for point in points], [point[1] for point in points]
-    bbox = _union_box(
-        [[min(xs), min(ys), max(xs) + 1, max(ys) + 1]],
-        pad=max(8, int(min(width, height) * 0.008)), width=width, height=height
-    )
-    return [{
-        "id": "grid-intersection-region-1",
-        "kind": "line_grid_candidate",
-        "bbox": bbox,
-        "evidence": {
-            "intersection_count": len(points),
-            "horizontal_segment_count": len(used_h),
-            "vertical_segment_count": len(used_v),
-        },
-        "status": "content_region_candidate",
-        "limitations": ["A line grid may be a table, drawing frame, or other orthogonal graphic."],
-    }]
 
+    # Spatial bins keep distant drawing-frame intersections from becoming one page-wide ROI.
+    cell = max(24, int(min(width, height) * 0.50))
+    bins: dict[tuple[int, int], list[int]] = {}
+    for index, (x, y, _, _) in enumerate(points):
+        bins.setdefault((x // cell, y // cell), []).append(index)
 
-def _shape_clusters(shapes: dict[str, Any], width: int, height: int) -> list[dict[str, Any]]:
-    candidates = shapes.get("candidates", [])
-    if len(candidates) < 3:
-        return []
-    centers = [item.get("center", [0, 0]) for item in candidates]
-    radius = max(36, int(width * 0.075))
-    parent = list(range(len(candidates)))
+    parent = list(range(len(points)))
 
     def find(index: int) -> int:
         while parent[index] != index:
@@ -92,31 +70,133 @@ def _shape_clusters(shapes: dict[str, Any], width: int, height: int) -> list[dic
             index = parent[index]
         return index
 
-    for i, (x1, y1) in enumerate(centers):
-        for j in range(i + 1, len(centers)):
-            x2, y2 = centers[j]
-            if (x1 - x2) ** 2 + (y1 - y2) ** 2 <= radius ** 2:
-                a, b = find(i), find(j)
-                if a != b:
-                    parent[b] = a
+    for (gx, gy), indices in bins.items():
+        nearby = [idx for dx in (-1, 0, 1) for dy in (-1, 0, 1)
+                  for idx in bins.get((gx + dx, gy + dy), [])]
+        for i in indices:
+            x1, y1 = points[i][0], points[i][1]
+            for j in nearby:
+                if j <= i:
+                    continue
+                x2, y2 = points[j][0], points[j][1]
+                if abs(x1 - x2) <= cell and abs(y1 - y2) <= cell:
+                    a, b = find(i), find(j)
+                    if a != b:
+                        parent[b] = a
 
-    groups: dict[int, list[list[int]]] = {}
-    for index, item in enumerate(candidates):
-        groups.setdefault(find(index), []).append(item["bbox"])
+    groups: dict[int, list[int]] = {}
+    for index in range(len(points)):
+        groups.setdefault(find(index), []).append(index)
+
     regions = []
-    for index, boxes in enumerate(groups.values(), start=1):
-        if len(boxes) < 3:
+    for group_index, indices in enumerate(groups.values(), start=1):
+        if len(indices) < 6:
             continue
-        bbox = _union_box(boxes, pad=max(16, int(width * 0.012)), width=width, height=height)
+        selected = [points[index] for index in indices]
+        xs, ys = [point[0] for point in selected], [point[1] for point in selected]
+        raw = [min(xs), min(ys), max(xs) + 1, max(ys) + 1]
+        box_w, box_h = raw[2] - raw[0], raw[3] - raw[1]
+        # A candidate occupying most of the sheet is almost certainly a drawing frame/network.
+        if box_w > width * 0.85 or box_h > height * 0.75:
+            continue
+        if box_w * box_h > width * height * 0.45:
+            continue
+        if raw[0] <= width * 0.015 and raw[1] <= height * 0.015:
+            continue
+        bbox = _union_box([raw], pad=max(8, int(min(width, height) * 0.008)), width=width, height=height)
         regions.append({
-            "id": f"shape-cluster-{index}",
-            "kind": "graphic_shape_cluster",
+            "id": f"grid-component-{group_index}",
+            "kind": "line_grid_candidate",
             "bbox": bbox,
-            "evidence": {"shape_candidate_count": len(boxes), "cluster_radius_px": radius},
+            "evidence": {
+                "intersection_count": len(selected),
+                "horizontal_segment_count": len({point[2] for point in selected}),
+                "vertical_segment_count": len({point[3] for point in selected}),
+            },
             "status": "content_region_candidate",
-            "limitations": ["Shape density is not evidence of an electrical component or device class."],
+            "limitations": ["A bounded line grid may still be a table, symbol group, or other orthogonal graphic."],
         })
     return regions
+
+
+def _shape_clusters(shapes: dict[str, Any], width: int, height: int) -> list[dict[str, Any]]:
+    """Use bounded neighborhoods rather than transitive chain-link clustering."""
+    candidates = shapes.get("candidates", [])
+    if len(candidates) < 3:
+        return []
+    radius = max(28, int(min(width, height) * 0.045))
+    centers = [item.get("center", [0, 0]) for item in candidates]
+    assigned: set[int] = set()
+    groups: list[list[int]] = []
+    for seed in range(len(candidates)):
+        if seed in assigned:
+            continue
+        sx, sy = centers[seed]
+        members = [seed]
+        for index, (x, y) in enumerate(centers):
+            if index == seed or index in assigned:
+                continue
+            if (x - sx) ** 2 + (y - sy) ** 2 <= radius ** 2:
+                members.append(index)
+        if len(members) >= 3:
+            groups.append(members)
+            assigned.update(members)
+
+    regions = []
+    for group_index, indices in enumerate(groups, start=1):
+        boxes = [candidates[index]["bbox"] for index in indices]
+        bbox = _union_box(boxes, pad=max(12, int(width * 0.008)), width=width, height=height)
+        box_w, box_h = bbox[2] - bbox[0], bbox[3] - bbox[1]
+        if box_w > width * 0.32 or box_h > height * 0.30:
+            continue
+        if box_w * box_h > width * height * 0.10:
+            continue
+        regions.append({
+            "id": f"shape-cluster-{group_index}",
+            "kind": "graphic_shape_cluster",
+            "bbox": bbox,
+            "evidence": {"shape_candidate_count": len(boxes), "seed_radius_px": radius},
+            "status": "content_region_candidate",
+            "limitations": ["A local shape cluster is not evidence of an electrical component or device class."],
+        })
+    return regions
+
+
+def _table_regions(
+    tokens: list[dict[str, Any]], grid_regions: list[dict[str, Any]], width: int, height: int
+) -> list[dict[str, Any]]:
+    """Promote bounded grid candidates only when OCR text occupies repeated row-like bands."""
+    result = []
+    for grid in grid_regions:
+        x1, y1, x2, y2 = grid["bbox"]
+        inside = [token for token in tokens
+                  if x1 <= (token["bbox"][0] + token["bbox"][2]) / 2 <= x2
+                  and y1 <= (token["bbox"][1] + token["bbox"][3]) / 2 <= y2]
+        if len(inside) < 8:
+            continue
+        row_centers = sorted((token["bbox"][1] + token["bbox"][3]) / 2 for token in inside)
+        bands: list[list[float]] = []
+        tolerance = max(5, int((y2 - y1) * 0.035))
+        for center in row_centers:
+            if not bands or center - bands[-1][-1] > tolerance:
+                bands.append([center])
+            else:
+                bands[-1].append(center)
+        if len(bands) < 3:
+            continue
+        result.append({
+            "id": f"table-{grid['id']}",
+            "kind": "table_candidate",
+            "bbox": [x1, y1, x2, y2],
+            "evidence": {
+                "text_token_count": len(inside),
+                "text_row_band_count": len(bands),
+                "grid_intersection_count": grid["evidence"]["intersection_count"],
+            },
+            "status": "content_region_candidate",
+            "limitations": ["Repeated text bands and line intersections are only table evidence; cell structure is not yet reconstructed."],
+        })
+    return result
 
 
 def propose_content_regions(
@@ -126,22 +206,25 @@ def propose_content_regions(
     geometry: dict[str, Any],
     shape_candidates: dict[str, Any],
 ) -> dict[str, Any]:
-    """Propose OCR/text, orthogonal-grid, and graphic-density regions without semantic labels."""
+    """Propose text, bounded grid, table-like, and local shape regions without semantic claims."""
+    grids = _grid_regions(geometry, width, height)
     regions = (
         _text_regions(ocr_tokens, width, height)
-        + _grid_regions(geometry, width, height)
+        + grids
+        + _table_regions(ocr_tokens, grids, width, height)
         + _shape_clusters(shape_candidates, width, height)
     )
     regions.sort(key=lambda item: (item["bbox"][1], item["bbox"][0], item["kind"]))
     return {
-        "method": "ocr_blocks_line_intersections_and_shape_density",
+        "method": "ocr_blocks_bounded_line_grid_text_bands_and_local_shape_density",
         "coordinate_space": "source_page_pixels",
         "regions": regions,
         "limitations": [
-            "Proposals are geometric/content candidates, not verified equipment or table classifications.",
-            "OCR text blocks depend on the whole-page OCR segmentation.",
-            "Grid intersections can belong to drawing frames or non-table graphics.",
-            "Shape clusters can merge unrelated nearby graphics and are not electrical objects.",
+            "Proposals are content candidates, not verified equipment or table classifications.",
+            "OCR text blocks depend on whole-page OCR segmentation.",
+            "Line-grid components may still be non-table graphics.",
+            "Shape neighborhoods are seed-centered and may omit nearby candidates outside the radius.",
+            "No electrical class, terminal, connectivity, or topology is inferred.",
         ],
     }
 
