@@ -2,12 +2,15 @@ name: Diagnostic core integration
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, integration/diagnostic-core-contracts-v1]
     paths:
       - "src/edi_ingest/diagnostic_core.py"
       - "tests/test_diagnostic_core_bridge.py"
       - "tests/test_kindergarten_core_scenarios.py"
+      - "tests/test_faa_drpds_core_scenarios.py"
       - "benchmarks/kindergarten-switchboard/diagnostic-core-module.synthetic.yaml"
+      - "benchmarks/faa-drpds/diagnostic-core-module.synthetic.yaml"
+      - "docs/objects/faa-drpds-core-integration.md"
       - "docs/architecture/diagnostic-core-integration.md"
       - ".github/workflows/diagnostic-core-integration.yml"
   workflow_dispatch:
@@ -43,7 +46,9 @@ jobs:
         run: |
           pytest -q tests/test_diagnostic_core_bridge.py
           pytest -q tests/test_kindergarten_core_scenarios.py
-      - name: Report missing private-repository credential
+          pytest -q tests/test_faa_drpds_core_scenarios.py
+      - name: Fail when private-repository credential is missing
         if: env.DIAGNOSTICS_MVP_TOKEN == ''
         run: |
-          echo "::warning::Set repository secret DIAGNOSTICS_MVP_TOKEN to enable the real diagnostic-core integration tests."
+          echo "::error::Repository secret DIAGNOSTICS_MVP_TOKEN is required. Configure a read-only token for leverty93/diagnostics-mvp to run the real diagnostic-core tests."
+          exit 1

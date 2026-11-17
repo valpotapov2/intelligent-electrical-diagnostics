@@ -6,15 +6,20 @@ skipped in the ordinary ingestion-only environment.
 from __future__ import annotations
 
 import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
 
+CORE = os.environ.get("DIAGNOSTICS_MVP_PATH")
+if CORE:
+    core_path = str(Path(CORE).resolve())
+    if core_path not in sys.path:
+        sys.path.insert(0, core_path)
+
 from edi_ingest.diagnostic_core import run_diagnostic_session
 
-
-CORE = os.environ.get("DIAGNOSTICS_MVP_PATH")
 pytestmark = pytest.mark.skipif(not CORE, reason="DIAGNOSTICS_MVP_PATH is not configured")
 
 
