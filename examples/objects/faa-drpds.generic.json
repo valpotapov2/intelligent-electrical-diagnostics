@@ -225,7 +225,11 @@
       "model": null,
       "attributes": {
         "equipment_type": "standby_generator_group",
-        "site_specific": true
+        "site_specific": true,
+        "typical_units": 4,
+        "engine_generator_count_site_specific": true,
+        "parallel_operation": true,
+        "extra_capacity_requirement": "at least two more than required for facility load in historical handbook"
       },
       "status": "recognized",
       "confidence": null,
@@ -365,7 +369,14 @@
       "model": null,
       "attributes": {
         "equipment_type": "uninterruptible_power_supply_group",
-        "site_specific": true
+        "site_specific": true,
+        "working_units": 3,
+        "test_unit_present": true,
+        "architecture": "isolated_redundant",
+        "ups_1_role": "bypass_source_for_ups_2_and_ups_3",
+        "ups_2_output": "critical_bus_A",
+        "ups_3_output": "critical_bus_B",
+        "ratings_site_specific": true
       },
       "status": "recognized",
       "confidence": null,
@@ -385,7 +396,11 @@
       "model": null,
       "attributes": {
         "equipment_type": "ups_output_distribution",
-        "site_specific": true
+        "site_specific": true,
+        "units": 3,
+        "ups_1_output_to_bypass_inputs_ups_2_ups_3": true,
+        "ups_2_output_to_critical_bus_A": true,
+        "ups_3_output_to_critical_bus_B": true
       },
       "status": "recognized",
       "confidence": null,
@@ -445,7 +460,13 @@
       "model": null,
       "attributes": {
         "equipment_type": "pdu_group",
-        "site_specific": true
+        "site_specific": true,
+        "typical_count": 8,
+        "hcf_count": 6,
+        "input": "480/277 V three-wire",
+        "output": "208/120 V four-wire",
+        "paired_for_maintenance": true,
+        "each_pdu_feeds_two_sats": true
       },
       "status": "recognized",
       "confidence": null,
@@ -465,7 +486,11 @@
       "model": null,
       "attributes": {
         "equipment_type": "static_automatic_transfer_switch_group",
-        "site_specific": true
+        "site_specific": true,
+        "dual_source": true,
+        "source_1": "PDU fed from Critical Bus A",
+        "source_2": "PDU fed from Critical Bus B",
+        "automatic_transfer_on_source_failure": true
       },
       "status": "recognized",
       "confidence": null,
@@ -485,7 +510,11 @@
       "model": null,
       "attributes": {
         "equipment_type": "critical_distribution_panel_group",
-        "site_specific": true
+        "site_specific": true,
+        "typical_count": 4,
+        "hcf_count": 3,
+        "distribution": "modified MCC design",
+        "upstream_sats_isolation_for_maintenance": true
       },
       "status": "recognized",
       "confidence": null,
@@ -574,6 +603,50 @@
           "document_id": "faa-jo-6480-22-block",
           "page": 4,
           "text": "125 V DC control power system"
+        }
+      ]
+    },
+    {
+      "id": "LOADBANK-SWBD",
+      "kind": "switchboard",
+      "label": "Load bank switchboard",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "test_load_distribution_switchboard",
+        "connections_to_psg_and_ups_outputs": true,
+        "interlocked_to_prevent_multiple_sources": true,
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Load bank distribution equipment described in system block diagram and paragraph 204d"
+        }
+      ]
+    },
+    {
+      "id": "LOADBANK",
+      "kind": "load",
+      "label": "Load bank",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "resistive_or_linear_test_load_bank",
+        "historical_typical_rating_kw": 1000,
+        "hcf_rating_kw": 1500,
+        "used_for_generator_and_ups_load_testing": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Load bank described in paragraph 204d"
         }
       ]
     }
@@ -1071,6 +1144,51 @@
           "document_id": "faa-jo-6480-22",
           "page": "faa-jo-6480-22-block",
           "text": "DC control power supports control and monitoring subsystems"
+        }
+      ]
+    },
+    {
+      "id": "E34",
+      "from": "PSG",
+      "to": "LOADBANK-SWBD",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Load bank can be connected to PSG through load bank switchboard"
+        }
+      ]
+    },
+    {
+      "id": "E35",
+      "from": "UPS-SWBD",
+      "to": "LOADBANK-SWBD",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Load bank can be connected to UPS output switchboards through load bank switchboard"
+        }
+      ]
+    },
+    {
+      "id": "E36",
+      "from": "LOADBANK-SWBD",
+      "to": "LOADBANK",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Load bank switchboard supplies load bank"
         }
       ]
     }
