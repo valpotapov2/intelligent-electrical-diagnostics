@@ -1,0 +1,232 @@
+# Synthetic-only module for exercising the real diagnostics-mvp engine on DRPDS-like redundancy.
+# No node, level, point or value in this fixture corresponds to an energized facility.
+schema_version: '1.3'
+manifest:
+  id: faa_drpds_virtual
+  version: 0.1.0
+  title: FAA DRPDS virtual diagnostic scenarios
+  domain: Electrical power distribution — synthetic software fixture
+  description: >
+    Virtual-only low-voltage analog fixture to test posterior updates and safety-gateway
+    contracts for a dual-path distribution architecture. It is not a site drawing,
+    electrical model, measurement plan, or procedure for a real FAA facility.
+  sources:
+    - docs/objects/faa-drpds-technical-description.md
+    - examples/objects/faa-drpds.generic.json
+    - Synthetic test values are generated solely for software verification
+objects:
+  components:
+    virtual_critical_bus_a:
+      type: virtual_connection_locus
+      title: Synthetic Critical Bus A path fault locus
+    virtual_critical_bus_b:
+      type: virtual_connection_locus
+      title: Synthetic Critical Bus B path fault locus
+    virtual_dual_critical:
+      type: virtual_connection_locus
+      title: Synthetic simultaneous critical path fault locus
+    virtual_sats_output:
+      type: virtual_connection_locus
+      title: Synthetic SATS output fault locus
+    virtual_essential_feed:
+      type: virtual_connection_locus
+      title: Synthetic essential distribution fault locus
+  nodes:
+    - N_UTILITY_1
+    - N_UTILITY_2
+    - N_BUS_A
+    - N_BUS_B
+    - N_CRITICAL_OUT
+    - N_ESSENTIAL_OUT
+    - GND
+  points:
+    P_UTILITY_1:
+      node: N_UTILITY_1
+      location: Virtual source observation 1; no physical point exists
+    P_UTILITY_2:
+      node: N_UTILITY_2
+      location: Virtual source observation 2; no physical point exists
+    P_BUS_A:
+      node: N_BUS_A
+      location: Virtual Critical Bus A observation; no physical point exists
+    P_BUS_B:
+      node: N_BUS_B
+      location: Virtual Critical Bus B observation; no physical point exists
+    P_CRITICAL_OUT:
+      node: N_CRITICAL_OUT
+      location: Virtual critical-load output observation; no physical point exists
+    P_ESSENTIAL_OUT:
+      node: N_ESSENTIAL_OUT
+      location: Virtual essential-load output observation; no physical point exists
+links: []
+quantities:
+  dc_voltage:
+    title: Synthetic virtual signal level
+    unit: V
+    kind: numeric
+instruments:
+  virtual_meter:
+    title: Synthetic software-only meter
+    version: 1
+    input: Programmatic adapter only; no physical instrument is connected
+    time:
+      first: 1.0
+      next: 1.0
+    connection:
+      input_type: isolated
+      common_earthed: false
+      isolation_confirmed: true
+      safe_connection_confirmed: true
+      basis: Virtual software channel; no physical connection exists
+      max_input: 10.0
+      max_input_unit: V
+      input_resistance_ohm: 1000000.0
+    profiles:
+      dc_voltage:
+        range: [0.0, 5.5]
+        unit: V
+        resolution: 0.01
+        accuracy:
+          pct: 0.0
+          abs: 0.01
+checks:
+  - quantity: dc_voltage
+    points: [P_UTILITY_1, P_UTILITY_2, P_BUS_A, P_BUS_B, P_CRITICAL_OUT, P_ESSENTIAL_OUT]
+    powered: true
+    requirements:
+      N_UTILITY_1: &virtual_requirement
+        unit: V
+        range: [0.0, 5.5]
+        accuracy:
+          max_error: 0.05
+          at_value: 2.5
+          basis: Synthetic tolerance for distinguishing virtual values only
+        connection:
+          common_node: GND
+          isolation_required: false
+          earthed_common_ok: true
+          max_level: 5.5
+          level_unit: V
+          min_input_resistance_ohm: 1000.0
+          basis: Virtual connection within software fixture
+        basis: Synthetic virtual-signal range
+      N_UTILITY_2: *virtual_requirement
+      N_BUS_A: *virtual_requirement
+      N_BUS_B: *virtual_requirement
+      N_CRITICAL_OUT: *virtual_requirement
+      N_ESSENTIAL_OUT: *virtual_requirement
+faults:
+  modes:
+    Healthy:
+      component: null
+      basis: Baseline mode of synthetic virtual fixture
+    Critical_A_path_loss:
+      component: virtual_critical_bus_a
+      basis: Synthetic fault mode, not a physical fault declaration
+    Critical_B_path_loss:
+      component: virtual_critical_bus_b
+      basis: Synthetic fault mode, not a physical fault declaration
+    Dual_critical_path_loss:
+      component: virtual_dual_critical
+      basis: Synthetic fault mode, not a physical fault declaration
+    SATS_output_loss:
+      component: virtual_sats_output
+      basis: Synthetic fault mode, not a physical fault declaration
+    Essential_feed_loss:
+      component: virtual_essential_feed
+      basis: Synthetic fault mode, not a physical fault declaration
+    outside_model:
+      component: null
+      outside: true
+      basis: Explicit outside-model hypothesis for virtual fixture
+  priors:
+    values:
+      Healthy: 0.142857
+      Critical_A_path_loss: 0.142857
+      Critical_B_path_loss: 0.142857
+      Dual_critical_path_loss: 0.142857
+      SATS_output_loss: 0.142857
+      Essential_feed_loss: 0.142857
+      outside_model: 0.142858
+    basis: Equal synthetic priors; not empirical failure rates
+symptoms:
+  Healthy:
+    dc_voltage:
+      N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
+      N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_A: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
+      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+  Critical_A_path_loss:
+    dc_voltage:
+      N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
+      N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_A: {value: 0.0, source: Synthetic virtual A-path fault}
+      N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
+      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual redundant transfer}
+      N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+  Critical_B_path_loss:
+    dc_voltage:
+      N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
+      N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_A: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_B: {value: 0.0, source: Synthetic virtual B-path fault}
+      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual redundant transfer}
+      N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+  Dual_critical_path_loss:
+    dc_voltage:
+      N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
+      N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_A: {value: 0.0, source: Synthetic virtual dual-path fault}
+      N_BUS_B: {value: 0.0, source: Synthetic virtual dual-path fault}
+      N_CRITICAL_OUT: {value: 0.0, source: Synthetic virtual dual-path fault}
+      N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+  SATS_output_loss:
+    dc_voltage:
+      N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
+      N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_A: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
+      N_CRITICAL_OUT: {value: 0.0, source: Synthetic virtual SATS output fault}
+      N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+  Essential_feed_loss:
+    dc_voltage:
+      N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
+      N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_A: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
+      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_ESSENTIAL_OUT: {value: 0.0, source: Synthetic virtual essential-feed fault}
+connection_error:
+  prior: 0.01
+  basis: Synthetic virtual model parameter
+  reading:
+    dc_voltage: 2.5
+  reading_basis: Synthetic value used only to exercise virtual connection-error handling
+conclusion:
+  requirements:
+    no_fault: []
+    fault: []
+    outside: []
+  basis: Engine posterior is the test target; this is not a physical acceptance criterion
+safety:
+  limits:
+    V: 5.5
+  nodes:
+    N_UTILITY_1: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_UTILITY_2: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_BUS_A: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_BUS_B: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_CRITICAL_OUT: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_ESSENTIAL_OUT: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    GND: {level: 0.0, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+  procedures:
+    dc_voltage:
+      qualification: none
+      basis: Software-only virtual observation; no field procedure exists
+  connection_confirmation: required
+  rules: []
+costs:
+  default: 1.0
+  basis: Synthetic cost per virtual check
