@@ -124,7 +124,7 @@ def ingest_document(path: str | Path, lang: str = "rus+eng", dpi: int = 220, psm
         page_result = _ocr_image(image, 1, lang, psm)
         page_result["geometry"] = detect_geometry(image)
         page_result["symbol_candidates"] = detect_symbol_candidates(image, page_result["tokens"])
-            page_result["roi_ocr"] = run_roi_ocr(image, lang=lang, psm=psm)
+        page_result["roi_ocr"] = run_roi_ocr(image, lang=lang, psm=psm)
         pages.append(page_result)
     else:
         raise ValueError(f"Unsupported input format: {suffix}")
