@@ -53,9 +53,7 @@ def detect_symbol_candidates(
         circularity = min(1.0, float(4 * np.pi * area / (perimeter * perimeter)))
         aspect_ratio = width / max(1, height)
 
-        if circularity >= 0.72:
-            family = "circular_outline"
-        elif vertices == 4:
+        if vertices == 4:
             points = approximation.reshape(-1, 2).astype(float)
             angles = []
             for point_index in range(4):
@@ -69,6 +67,8 @@ def detect_symbol_candidates(
                 family = "rectangular_outline"
             else:
                 family = "quadrilateral_outline"
+        elif circularity >= 0.72:
+            family = "circular_outline"
         elif vertices >= 5:
             family = "polygonal_outline"
         else:
