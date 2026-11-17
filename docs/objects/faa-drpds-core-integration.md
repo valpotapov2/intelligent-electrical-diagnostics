@@ -9,14 +9,18 @@ The integration follows the same contract path as the kindergarten benchmark:
 
 ## Synthetic module
 
-`benchmarks/faa-drpds/diagnostic-core-module.synthetic.yaml` defines six virtual observation points and six synthetic modes:
+`benchmarks/faa-drpds/diagnostic-core-module.synthetic.yaml` defines twelve virtual observation points and twelve synthetic modes:
 
 - Healthy;
 - Critical A path loss;
 - Critical B path loss;
 - simultaneous loss of both critical paths;
 - SATS output loss;
-- essential feed loss.
+- essential feed loss;
+- source-1 and source-2 evidence-channel loss;
+- SWGR-1 and SWGR-2 section-evidence-channel loss;
+- generator-bus evidence-channel loss;
+- standby-transfer evidence-channel loss.
 
 The fixture uses only synthetic 0–5.5 V software values and a virtual adapter. These are not AC voltages, not values measured on FAA equipment, not validated measurement bands, not a physical circuit model and not a field test plan. Priors are equal synthetic test weights, not historical failure probabilities.
 
@@ -54,12 +58,13 @@ No live measurement or switching is enabled by this integration.
 
 ## Architecture-question crosswalk
 
-`diagnostics/scenarios/faa-drpds-core-crosswalk.v0.1.json` records coverage between all 11 architecture-level diagnostic questions and the current six-mode synthetic engine fixture.
+`diagnostics/scenarios/faa-drpds-core-crosswalk.v0.1.json` records coverage between all 11 architecture-level diagnostic questions and the current twelve-mode synthetic engine fixture.
 
 Current coverage is deliberately limited:
 - **Partial synthetic analogues:** essential-feed endpoint loss, Critical Bus A/B path-loss patterns, and a generic SATS output-loss pattern.
-- **Not represented:** commercial-source diagnosis, generator availability, SWGR section supply, standby transfer, UPS health, PDU input/output, CDP outgoing circuits, and PMCS trustworthiness.
+- **Partial synthetic analogues:** commercial-source evidence channels, generator-bus evidence channel, SWGR-1/2 section-evidence channels, and a standby-transfer evidence channel. These are isolated virtual signal patterns only.
+- **Still not represented:** transformer and sensing-channel discrimination, generator capacity and individual readiness, SWGR incomer/tie/interlock logic, an actual standby-transfer sequence, UPS health, PDU input/output, CDP outgoing circuits, and PMCS trustworthiness.
 
 “Partial” means only that a simplified software fault shape is exercised. It does not mean the engine can resolve the corresponding architecture question or distinguish its required hypotheses. “Not represented” is a coverage gap, not a healthy result.
 
-The crosswalk is traceability metadata only. It does not create executable mappings, generate MeasurementRequests, or bind architecture-level component IDs to virtual points. The real-core integration continues to test only the explicitly synthetic module and its software-only adapter.
+The crosswalk is traceability metadata only. It does not create executable mappings, generate MeasurementRequests, or bind architecture-level component IDs to virtual points. The real-core integration continues to test only the explicitly synthetic module and its software-only adapter. The new source/SWGR channels do not encode source-to-section wiring, causal propagation, breaker logic, or transfer timing.

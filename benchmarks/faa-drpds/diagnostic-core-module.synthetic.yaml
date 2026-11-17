@@ -3,7 +3,7 @@
 schema_version: '1.3'
 manifest:
   id: faa_drpds_virtual
-  version: 0.1.0
+  version: 0.2.0
   title: FAA DRPDS virtual diagnostic scenarios
   domain: Electrical power distribution — synthetic software fixture
   description: >
@@ -31,6 +31,24 @@ objects:
     virtual_essential_feed:
       type: virtual_connection_locus
       title: Synthetic essential distribution fault locus
+    virtual_source_1:
+      type: virtual_connection_locus
+      title: Synthetic source-1 evidence channel pattern
+    virtual_source_2:
+      type: virtual_connection_locus
+      title: Synthetic source-2 evidence channel pattern
+    virtual_swgr_1:
+      type: virtual_connection_locus
+      title: Synthetic SWGR-section-1 evidence channel pattern
+    virtual_swgr_2:
+      type: virtual_connection_locus
+      title: Synthetic SWGR-section-2 evidence channel pattern
+    virtual_generator_bus:
+      type: virtual_connection_locus
+      title: Synthetic generator-bus readiness evidence channel pattern
+    virtual_standby_transfer:
+      type: virtual_connection_locus
+      title: Synthetic standby-transfer evidence channel pattern
   nodes:
     - N_UTILITY_1
     - N_UTILITY_2
@@ -38,6 +56,12 @@ objects:
     - N_BUS_B
     - N_CRITICAL_OUT
     - N_ESSENTIAL_OUT
+    - N_SOURCE_1_EVIDENCE
+    - N_SOURCE_2_EVIDENCE
+    - N_SWGR_1_SECTION_EVIDENCE
+    - N_SWGR_2_SECTION_EVIDENCE
+    - N_GENERATOR_BUS_EVIDENCE
+    - N_STANDBY_TRANSFER_EVIDENCE
     - GND
   points:
     P_UTILITY_1:
@@ -58,6 +82,24 @@ objects:
     P_ESSENTIAL_OUT:
       node: N_ESSENTIAL_OUT
       location: Virtual essential-load output observation; no physical point exists
+    P_SOURCE_1_EVIDENCE:
+      node: N_SOURCE_1_EVIDENCE
+      location: Virtual source-1 evidence channel; no physical point exists
+    P_SOURCE_2_EVIDENCE:
+      node: N_SOURCE_2_EVIDENCE
+      location: Virtual source-2 evidence channel; no physical point exists
+    P_SWGR_1_SECTION_EVIDENCE:
+      node: N_SWGR_1_SECTION_EVIDENCE
+      location: Virtual SWGR-section-1 evidence channel; no physical point exists
+    P_SWGR_2_SECTION_EVIDENCE:
+      node: N_SWGR_2_SECTION_EVIDENCE
+      location: Virtual SWGR-section-2 evidence channel; no physical point exists
+    P_GENERATOR_BUS_EVIDENCE:
+      node: N_GENERATOR_BUS_EVIDENCE
+      location: Virtual generator-bus evidence channel; no physical point exists
+    P_STANDBY_TRANSFER_EVIDENCE:
+      node: N_STANDBY_TRANSFER_EVIDENCE
+      location: Virtual standby-transfer evidence channel; no physical point exists
 links: []
 quantities:
   dc_voltage:
@@ -91,7 +133,7 @@ instruments:
           abs: 0.01
 checks:
   - quantity: dc_voltage
-    points: [P_UTILITY_1, P_UTILITY_2, P_BUS_A, P_BUS_B, P_CRITICAL_OUT, P_ESSENTIAL_OUT]
+    points: [P_UTILITY_1, P_UTILITY_2, P_BUS_A, P_BUS_B, P_CRITICAL_OUT, P_ESSENTIAL_OUT, P_SOURCE_1_EVIDENCE, P_SOURCE_2_EVIDENCE, P_SWGR_1_SECTION_EVIDENCE, P_SWGR_2_SECTION_EVIDENCE, P_GENERATOR_BUS_EVIDENCE, P_STANDBY_TRANSFER_EVIDENCE]
     powered: true
     requirements:
       N_UTILITY_1: &virtual_requirement
@@ -115,6 +157,12 @@ checks:
       N_BUS_B: *virtual_requirement
       N_CRITICAL_OUT: *virtual_requirement
       N_ESSENTIAL_OUT: *virtual_requirement
+      N_SOURCE_1_EVIDENCE: *virtual_requirement
+      N_SOURCE_2_EVIDENCE: *virtual_requirement
+      N_SWGR_1_SECTION_EVIDENCE: *virtual_requirement
+      N_SWGR_2_SECTION_EVIDENCE: *virtual_requirement
+      N_GENERATOR_BUS_EVIDENCE: *virtual_requirement
+      N_STANDBY_TRANSFER_EVIDENCE: *virtual_requirement
 faults:
   modes:
     Healthy:
@@ -135,20 +183,44 @@ faults:
     Essential_feed_loss:
       component: virtual_essential_feed
       basis: Synthetic fault mode, not a physical fault declaration
+    Source_1_evidence_loss:
+      component: virtual_source_1
+      basis: Synthetic source-1 evidence-channel pattern; not a source diagnosis
+    Source_2_evidence_loss:
+      component: virtual_source_2
+      basis: Synthetic source-2 evidence-channel pattern; not a source diagnosis
+    SWGR_1_section_evidence_loss:
+      component: virtual_swgr_1
+      basis: Synthetic SWGR-1 evidence-channel pattern; not a section-supply diagnosis
+    SWGR_2_section_evidence_loss:
+      component: virtual_swgr_2
+      basis: Synthetic SWGR-2 evidence-channel pattern; not a section-supply diagnosis
+    Generator_bus_evidence_loss:
+      component: virtual_generator_bus
+      basis: Synthetic generator-bus evidence-channel pattern; not generator-capacity diagnosis
+    Standby_transfer_evidence_loss:
+      component: virtual_standby_transfer
+      basis: Synthetic standby-transfer evidence-channel pattern; not a transfer-sequence diagnosis
     outside_model:
       component: null
       outside: true
       basis: Explicit outside-model hypothesis for virtual fixture
   priors:
     values:
-      Healthy: 0.142857
-      Critical_A_path_loss: 0.142857
-      Critical_B_path_loss: 0.142857
-      Dual_critical_path_loss: 0.142857
-      SATS_output_loss: 0.142857
-      Essential_feed_loss: 0.142857
-      outside_model: 0.142858
-    basis: Equal synthetic priors; not empirical failure rates
+      Healthy: 0.076923
+      Critical_A_path_loss: 0.076923
+      Critical_B_path_loss: 0.076923
+      Dual_critical_path_loss: 0.076923
+      SATS_output_loss: 0.076923
+      Essential_feed_loss: 0.076923
+      Source_1_evidence_loss: 0.076923
+      Source_2_evidence_loss: 0.076923
+      SWGR_1_section_evidence_loss: 0.076923
+      SWGR_2_section_evidence_loss: 0.076923
+      Generator_bus_evidence_loss: 0.076923
+      Standby_transfer_evidence_loss: 0.076923
+      outside_model: 0.076924
+    basis: Equal synthetic priors for software discrimination only; not empirical failure rates
 symptoms:
   Healthy:
     dc_voltage:
@@ -158,30 +230,54 @@ symptoms:
       N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
       N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
       N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_1_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_2_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_1_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_STANDBY_TRANSFER_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
   Critical_A_path_loss:
     dc_voltage:
       N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
       N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
       N_BUS_A: {value: 0.0, source: Synthetic virtual A-path fault}
       N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
-      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual redundant transfer}
+      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
       N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_1_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_2_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_1_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_STANDBY_TRANSFER_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
   Critical_B_path_loss:
     dc_voltage:
       N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
       N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
       N_BUS_A: {value: 5.0, source: Synthetic virtual fixture value}
       N_BUS_B: {value: 0.0, source: Synthetic virtual B-path fault}
-      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual redundant transfer}
+      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
       N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_1_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_2_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_1_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_STANDBY_TRANSFER_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
   Dual_critical_path_loss:
     dc_voltage:
       N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
       N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
-      N_BUS_A: {value: 0.0, source: Synthetic virtual dual-path fault}
-      N_BUS_B: {value: 0.0, source: Synthetic virtual dual-path fault}
-      N_CRITICAL_OUT: {value: 0.0, source: Synthetic virtual dual-path fault}
+      N_BUS_A: {value: 0.0, source: Synthetic virtual dual-critical-path fault}
+      N_BUS_B: {value: 0.0, source: Synthetic virtual dual-critical-path fault}
+      N_CRITICAL_OUT: {value: 0.0, source: Synthetic virtual dual-critical-path fault}
       N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_1_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_2_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_1_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_STANDBY_TRANSFER_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
   SATS_output_loss:
     dc_voltage:
       N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
@@ -190,6 +286,12 @@ symptoms:
       N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
       N_CRITICAL_OUT: {value: 0.0, source: Synthetic virtual SATS output fault}
       N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_1_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_2_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_1_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_STANDBY_TRANSFER_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
   Essential_feed_loss:
     dc_voltage:
       N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
@@ -198,6 +300,96 @@ symptoms:
       N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
       N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
       N_ESSENTIAL_OUT: {value: 0.0, source: Synthetic virtual essential-feed fault}
+      N_SOURCE_1_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_2_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_1_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_STANDBY_TRANSFER_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+  Source_1_evidence_loss:
+    dc_voltage:
+      N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
+      N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_A: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
+      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_1_EVIDENCE: {value: 0.0, source: Synthetic virtual source-1 evidence loss}
+      N_SOURCE_2_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_1_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_STANDBY_TRANSFER_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+  Source_2_evidence_loss:
+    dc_voltage:
+      N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
+      N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_A: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
+      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_1_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_2_EVIDENCE: {value: 0.0, source: Synthetic virtual source-2 evidence loss}
+      N_SWGR_1_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_STANDBY_TRANSFER_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+  SWGR_1_section_evidence_loss:
+    dc_voltage:
+      N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
+      N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_A: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
+      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_1_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_2_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_1_SECTION_EVIDENCE: {value: 0.0, source: Synthetic virtual SWGR-1 section evidence loss}
+      N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_STANDBY_TRANSFER_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+  SWGR_2_section_evidence_loss:
+    dc_voltage:
+      N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
+      N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_A: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
+      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_1_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_2_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_1_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_2_SECTION_EVIDENCE: {value: 0.0, source: Synthetic virtual SWGR-2 section evidence loss}
+      N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_STANDBY_TRANSFER_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+  Generator_bus_evidence_loss:
+    dc_voltage:
+      N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
+      N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_A: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
+      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_1_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_2_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_1_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_GENERATOR_BUS_EVIDENCE: {value: 0.0, source: Synthetic virtual generator-bus evidence loss}
+      N_STANDBY_TRANSFER_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+  Standby_transfer_evidence_loss:
+    dc_voltage:
+      N_UTILITY_1: {value: 5.0, source: Synthetic virtual fixture value}
+      N_UTILITY_2: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_A: {value: 5.0, source: Synthetic virtual fixture value}
+      N_BUS_B: {value: 5.0, source: Synthetic virtual fixture value}
+      N_CRITICAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_ESSENTIAL_OUT: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_1_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SOURCE_2_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_1_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_SWGR_2_SECTION_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_GENERATOR_BUS_EVIDENCE: {value: 5.0, source: Synthetic virtual fixture value}
+      N_STANDBY_TRANSFER_EVIDENCE: {value: 0.0, source: Synthetic virtual standby-transfer evidence loss}
 connection_error:
   prior: 0.01
   basis: Synthetic virtual model parameter
@@ -220,6 +412,12 @@ safety:
     N_BUS_B: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
     N_CRITICAL_OUT: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
     N_ESSENTIAL_OUT: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_SOURCE_1_EVIDENCE: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_SOURCE_2_EVIDENCE: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_SWGR_1_SECTION_EVIDENCE: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_SWGR_2_SECTION_EVIDENCE: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_GENERATOR_BUS_EVIDENCE: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
+    N_STANDBY_TRANSFER_EVIDENCE: {level: 5.5, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
     GND: {level: 0.0, unit: V, zone: safe, basis: Virtual-only; no physical safety rating}
   procedures:
     dc_voltage:

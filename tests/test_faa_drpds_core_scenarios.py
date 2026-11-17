@@ -85,6 +85,12 @@ def _module():
         ("Dual_critical_path_loss",),
         ("SATS_output_loss",),
         ("Essential_feed_loss",),
+        ("Source_1_evidence_loss",),
+        ("Source_2_evidence_loss",),
+        ("SWGR_1_section_evidence_loss",),
+        ("SWGR_2_section_evidence_loss",),
+        ("Generator_bus_evidence_loss",),
+        ("Standby_transfer_evidence_loss",),
     ],
 )
 def test_synthetic_drpds_mode_updates_real_core_posterior(mode):
@@ -94,14 +100,14 @@ def test_synthetic_drpds_mode_updates_real_core_posterior(mode):
         core_root=CORE,
         module_path=VIRTUAL_MODULE,
         adapter=adapter,
-        overrides={"policy.selection": "spike"},
+        overrides={"policy.selection": "spike", "policy.max_checks": 12},
         max_steps=100,
     )
 
     assert result["module"] == module.ref
     assert result["checks_requested"]
     assert result["accepted_measurements"]
-    assert result["mode_posterior"][mode] > 0.5, result["mode_posterior"]
+    assert result["mode_posterior"][mode] > 0.5, {"mode": mode, "posterior": result["mode_posterior"], "requested_points": list(result["checks_requested"]), "accepted_points": list(result["accepted_measurements"]), "decision": result["decision"]}
     assert all(row["allowed"] for row in result["gateway_log"])
     assert all(row["adapter_called"] for row in result["gateway_log"])
 
