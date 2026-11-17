@@ -91,6 +91,11 @@ def build_model(ingested: dict[str, Any], object_name: str = "Unspecified electr
             for page in ingested["ocr"].get("pages", [])
             if page.get("symbol_candidates")
         ],
+        "roi_ocr": [
+            {"page": page["page"], **page["roi_ocr"]}
+            for page in ingested["ocr"].get("pages", [])
+            if page.get("roi_ocr")
+        ],
         "circuits": extracted["circuits"],
         "issues": extracted["issues"] + [{
             "id": "TOPOLOGY-NOT-IMPLEMENTED",
