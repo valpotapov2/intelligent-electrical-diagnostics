@@ -62,6 +62,38 @@ def _ocr_image(image: Image.Image, page_number: int, lang: str, psm: int) -> dic
     }
 
 
+def _extract_pdf_vector_primitives(page: fitz.Page) -> dict[str, Any]:
+    """Keep native PDF line/rectangle geometry before rasterization; coordinates are PDF points."""
+    lines = []
+    rectangles = []
+    for drawing_index, drawing in enumerate(page.get_drawings(), start=1):
+        for item_index, item in enumerate(drawing.get("items", []), start=1):
+            kind = item[0]
+            primitive_id = f"pdf-path-{drawing_index}-item-{item_index}"
+            if kind == "l":
+                start, end = item[1], item[2]
+                lines.append({
+                    "id": primitive_id,
+                    "start": [round(start.x, 3), round(start.y, 3)],
+                    "end": [round(end.x, 3), round(end.y, 3)],
+                    "length_pt": round(start.distance_to(end), 3),
+                    "status": "vector_candidate",
+                })
+            elif kind == "re":
+                rect = item[1]
+                rectangles.append({
+                    "id": primitive_id,
+                    "bbox": [round(rect.x0, 3), round(rect.y0, 3), round(rect.x1, 3), round(rect.y1, 3)],
+                    "status": "vector_candidate",
+                })
+    return {
+        "coordinate_space": "pdf_points",
+        "lines": lines,
+        "rectangles": rectangles,
+        "note": "Vector primitives are not classified as electrical conductors or component symbols.",
+    }
+
+
 def ingest_document(path: str | Path, lang: str = "rus+eng", dpi: int = 220, psm: int = 11) -> dict[str, Any]:
     source = Path(path)
     if not source.is_file():
@@ -75,6 +107,7 @@ def ingest_document(path: str | Path, lang: str = "rus+eng", dpi: int = 220, psm
             image = Image.open(io.BytesIO(pixmap.tobytes("png"))).convert("RGB")
             page_result = _ocr_image(image, index, lang, psm)
             page_result["geometry"] = detect_geometry(image)
+            page_result["pdf_vector_geometry"] = _extract_pdf_vector_primitives(page)
             page_result["source_page_size"] = [page.rect.width, page.rect.height]
             pages.append(page_result)
     elif suffix in SUPPORTED_IMAGES:
