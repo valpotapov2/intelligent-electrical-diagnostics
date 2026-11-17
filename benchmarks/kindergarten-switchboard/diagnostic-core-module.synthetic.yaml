@@ -1,0 +1,181 @@
+# Явно синтетическая модель для тестирования решений ядра. Не является схемой или планом
+# физических измерений ВРУ детского сада. Все точки и уровни виртуальные (0–5.5 V).
+schema_version: '1.3'
+manifest:
+  id: kindergarten_switchboard_virtual
+  version: 0.1.0
+  title: Виртуальная диагностическая модель сценариев ВРУ
+  domain: Электротехника — синтетический программный стенд
+  description: >
+    Только программная модель для проверки работы диагностического ядра на сценариях KSW.
+    Значения и точки не соответствуют физическим цепям или безопасным точкам реального ВРУ.
+  sources:
+    - benchmarks/kindergarten-switchboard/scenarios.v0.1.json
+    - benchmarks/kindergarten-switchboard/electrical-object-model.v0.1.json
+    - Синтетические показания и уровни заданы исключительно для виртуального теста
+objects:
+  components:
+    virtual_edge_qf4_common:
+      type: virtual_connection_locus
+      title: Синтетический locus общего участка QF4
+    virtual_edge_qf4_load5:
+      type: virtual_connection_locus
+      title: Синтетический locus ответвления к нагрузке 5
+    virtual_qf9_observation:
+      type: virtual_observation_locus
+      title: Синтетический locus аномалии наблюдения QF9
+  nodes:
+    - V_COMMON
+    - V_LOAD4
+    - V_LOAD5
+    - V_QF9
+    - GND
+  points:
+    P_COMMON:
+      node: V_COMMON
+      location: Виртуальная точка общего участка (не физическая точка ВРУ)
+    P_LOAD4:
+      node: V_LOAD4
+      location: Виртуальная точка нагрузки 4 (не физическая точка ВРУ)
+    P_LOAD5:
+      node: V_LOAD5
+      location: Виртуальная точка нагрузки 5 (не физическая точка ВРУ)
+    P_QF9:
+      node: V_QF9
+      location: Виртуальная точка наблюдения QF9 (не физическая точка ВРУ)
+links: []
+quantities:
+  dc_voltage:
+    title: Синтетический уровень виртуального сигнала
+    unit: V
+    kind: numeric
+instruments:
+  virtual_meter:
+    title: Синтетический виртуальный измеритель
+    version: 1
+    input: Только программный адаптер; физического прибора нет
+    time:
+      first: 1.0
+      next: 1.0
+    connection:
+      input_type: isolated
+      common_earthed: false
+      isolation_confirmed: true
+      safe_connection_confirmed: true
+      basis: Виртуальный программный канал; физического подключения не существует
+      max_input: 10.0
+      max_input_unit: V
+      input_resistance_ohm: 1000000.0
+    profiles:
+      dc_voltage:
+        range: [0.0, 5.5]
+        unit: V
+        resolution: 0.01
+        accuracy:
+          pct: 0.0
+          abs: 0.01
+checks:
+  - quantity: dc_voltage
+    points: [P_COMMON, P_LOAD4, P_LOAD5, P_QF9]
+    powered: true
+    requirements:
+      V_COMMON: &virtual_requirement
+        unit: V
+        range: [0.0, 5.5]
+        accuracy:
+          max_error: 0.05
+          at_value: 2.5
+          basis: Синтетический допуск для различения виртуальных значений, не физическая метрология
+        connection:
+          common_node: GND
+          isolation_required: false
+          earthed_common_ok: true
+          max_level: 5.5
+          level_unit: V
+          min_input_resistance_ohm: 1000.0
+          basis: Виртуальная схема подключения внутри программной модели
+        basis: Синтетический диапазон виртуального сигнала
+      V_LOAD4: *virtual_requirement
+      V_LOAD5: *virtual_requirement
+      V_QF9: *virtual_requirement
+faults:
+  modes:
+    Healthy:
+      component: null
+      basis: Исходный режим синтетического виртуального стенда
+    QF4_common_open:
+      component: virtual_edge_qf4_common
+      basis: Синтетическая неисправность; соответствие edge-qf4-to-cable только логическое
+    QF4_branch_open:
+      component: virtual_edge_qf4_load5
+      basis: Синтетическая неисправность; соответствие edge-qf4-load-5 только логическое
+    QF9_observation_anomaly:
+      component: virtual_qf9_observation
+      basis: Синтетическая аномалия виртуального наблюдения QF9
+    outside_model:
+      component: null
+      outside: true
+      basis: Вне области синтетической виртуальной модели
+  priors:
+    values:
+      Healthy: 0.2
+      QF4_common_open: 0.2
+      QF4_branch_open: 0.2
+      QF9_observation_anomaly: 0.2
+      outside_model: 0.2
+    basis: Равные синтетические априорные вероятности для теста, не статистика отказов ВРУ
+symptoms:
+  Healthy:
+    dc_voltage:
+      V_COMMON: {value: 5.0, source: Синтетическое значение виртуального стенда}
+      V_LOAD4: {value: 5.0, source: Синтетическое значение виртуального стенда}
+      V_LOAD5: {value: 5.0, source: Синтетическое значение виртуального стенда}
+      V_QF9: {value: 5.0, source: Синтетическое значение виртуального стенда}
+  QF4_common_open:
+    dc_voltage:
+      V_COMMON: {value: 0.0, source: Синтетическое значение при виртуальном общем обрыве}
+      V_LOAD4: {value: 0.0, source: Синтетическое значение при виртуальном общем обрыве}
+      V_LOAD5: {value: 0.0, source: Синтетическое значение при виртуальном общем обрыве}
+      V_QF9: {value: 5.0, source: Синтетическое значение виртуального стенда}
+  QF4_branch_open:
+    dc_voltage:
+      V_COMMON: {value: 5.0, source: Синтетическое значение виртуального стенда}
+      V_LOAD4: {value: 5.0, source: Синтетическое значение виртуального стенда}
+      V_LOAD5: {value: 0.0, source: Синтетическое значение при виртуальном обрыве ответвления}
+      V_QF9: {value: 5.0, source: Синтетическое значение виртуального стенда}
+  QF9_observation_anomaly:
+    dc_voltage:
+      V_COMMON: {value: 5.0, source: Синтетическое значение виртуального стенда}
+      V_LOAD4: {value: 5.0, source: Синтетическое значение виртуального стенда}
+      V_LOAD5: {value: 5.0, source: Синтетическое значение виртуального стенда}
+      V_QF9: {value: 0.0, source: Синтетическое значение аномалии QF9}
+connection_error:
+  prior: 0.01
+  basis: Синтетический параметр виртуальной модели
+  reading:
+    dc_voltage: 2.5
+  reading_basis: Синтетическое значение ошибки подключения в виртуальной модели
+conclusion:
+  requirements:
+    no_fault: []
+    fault: []
+    outside: []
+  basis: Виртуальный тест проверяет вывод ядра; это не критерии физического допуска ВРУ
+safety:
+  limits:
+    V: 5.5
+  nodes:
+    V_COMMON: {level: 5.5, unit: V, zone: safe, basis: Только виртуальный уровень, не физическая оценка безопасности}
+    V_LOAD4: {level: 5.5, unit: V, zone: safe, basis: Только виртуальный уровень, не физическая оценка безопасности}
+    V_LOAD5: {level: 5.5, unit: V, zone: safe, basis: Только виртуальный уровень, не физическая оценка безопасности}
+    V_QF9: {level: 5.5, unit: V, zone: safe, basis: Только виртуальный уровень, не физическая оценка безопасности}
+    GND: {level: 0.0, unit: V, zone: safe, basis: Виртуальный общий узел, физического подключения нет}
+  procedures:
+    dc_voltage:
+      qualification: none
+      basis: Только программное измерение; исполнитель не подключается к оборудованию
+  connection_confirmation: required
+  rules: []
+costs:
+  default: 1.0
+  basis: Синтетическая стоимость одного виртуального измерения
