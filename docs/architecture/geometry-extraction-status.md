@@ -5,7 +5,9 @@
 - Adaptive thresholding of raster pages.
 - Morphological extraction of long horizontal and vertical strokes.
 - Probabilistic Hough line-segment candidates.
-- Candidate intersections from horizontal/vertical mask overlap.
+- Duplicate/overlapping Hough fragments are merged into normalized axis-aligned segments.
+- Intersections are derived from normalized horizontal/vertical segment extents.
+- Native PDF vector line and rectangle primitives are retained separately in PDF-point coordinates.
 - Pixel coordinates retained in page coordinate space.
 - Synthetic tests for orthogonal lines and blank images.
 
