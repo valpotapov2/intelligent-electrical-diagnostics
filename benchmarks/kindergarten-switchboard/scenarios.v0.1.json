@@ -1,0 +1,151 @@
+{
+  "benchmark_id": "kindergarten-switchboard-001",
+  "version": "0.1",
+  "module_id": "kindergarten_switchboard",
+  "execution_mode": "offline_simulation_only",
+  "source_model": "benchmarks/kindergarten-switchboard/electrical-object-model.v0.1.json",
+  "scenario_contract": {
+    "inputs": "Synthetic state mutations and simulated observations only; no live instrument commands.",
+    "expected_output": "Engine hypothesis changes, affected graph scope, uncertainty, and safety-gateway decision.",
+    "forbidden": "No instruction to open a live cabinet, probe energized conductors, change breaker settings, or operate the ATS."
+  },
+  "scenarios": [
+    {
+      "id": "KSW-BASE-001",
+      "title": "Нормальное состояние схемы",
+      "category": "baseline",
+      "injection": {
+        "type": "none"
+      },
+      "simulated_observations": [],
+      "expected": {
+        "affected_load_ids": [],
+        "required_engine_behavior": [
+          "Не объявлять неисправность без отклонений",
+          "Сохранить неопределённость фактического состояния монтажа"
+        ],
+        "safety_gateway": "deny_live_measurement_without_approved_test_plan"
+      }
+    },
+    {
+      "id": "KSW-QF4-OPEN-001",
+      "title": "Обрыв общей линии QF4",
+      "category": "topology_fault",
+      "injection": {
+        "type": "open_edge",
+        "edge_id": "CON-QF4-CABLE"
+      },
+      "expected": {
+        "affected_load_ids": [
+          "LOAD-4",
+          "LOAD-5"
+        ],
+        "unaffected_reference_load_ids": [
+          "LOAD-1",
+          "LOAD-2",
+          "LOAD-3",
+          "LOAD-6",
+          "LOAD-7",
+          "LOAD-8",
+          "LOAD-9",
+          "LOAD-10",
+          "LOAD-11"
+        ],
+        "required_engine_behavior": [
+          "Связать одновременную потерю LOAD-4 и LOAD-5 с общей частью цепи QF4",
+          "Не обвинять две нагрузки независимо без дополнительного основания"
+        ],
+        "safety_gateway": "simulation_only"
+      }
+    },
+    {
+      "id": "KSW-QF4-BRANCH-001",
+      "title": "Обрыв ответвления к чердачному помещению",
+      "category": "topology_fault",
+      "injection": {
+        "type": "open_edge",
+        "edge_id": "CON-QF4-LOAD-5"
+      },
+      "expected": {
+        "affected_load_ids": [
+          "LOAD-5"
+        ],
+        "unaffected_reference_load_ids": [
+          "LOAD-4"
+        ],
+        "required_engine_behavior": [
+          "Локализовать дефект после точки разветвления QF4",
+          "Не объявлять неисправным весь QF4 только по отказу LOAD-5"
+        ],
+        "safety_gateway": "simulation_only"
+      }
+    },
+    {
+      "id": "KSW-QF9-OBS-001",
+      "title": "Аномальное наблюдение на цепи QF9",
+      "category": "observation_anomaly",
+      "injection": {
+        "type": "synthetic_observation",
+        "target_id": "CIR-QF9",
+        "quantity": "voltage",
+        "condition": "outside_configured_simulation_band"
+      },
+      "expected": {
+        "affected_load_ids": [
+          "LOAD-10"
+        ],
+        "required_engine_behavior": [
+          "Проверить достоверность и повторяемость наблюдения в симуляции",
+          "Не выводить причину из одного значения",
+          "Не считать проектный расчётный ток 68.97 А фактическим измерением"
+        ],
+        "safety_gateway": "simulation_only"
+      }
+    },
+    {
+      "id": "KSW-INSTRUMENT-INVALID-001",
+      "title": "Недостоверный результат измерительного адаптера",
+      "category": "instrument_fault",
+      "injection": {
+        "type": "measurement_result",
+        "instrument_status": "error",
+        "value": null,
+        "target_id": "CIR-QF9"
+      },
+      "expected": {
+        "affected_load_ids": [],
+        "required_engine_behavior": [
+          "Не использовать ошибочный результат как физическое наблюдение",
+          "Сохранить причину отказа прибора",
+          "Не запрашивать опасное повторное подключение к силовым частям"
+        ],
+        "safety_gateway": "block_live_retry_without_explicit_authorization"
+      }
+    },
+    {
+      "id": "KSW-UNKNOWN-TOPOLOGY-001",
+      "title": "Запрос проверки внутренней логики АВР",
+      "category": "knowledge_boundary",
+      "injection": {
+        "type": "question",
+        "target_id": "ATS-1",
+        "topic": "internal_transfer_logic"
+      },
+      "expected": {
+        "affected_load_ids": [],
+        "required_engine_behavior": [
+          "Сообщить, что внутренняя схема АВР не представлена в исходном SVG",
+          "Запросить отдельную принципиальную схему/паспорт вместо домысливания соединений"
+        ],
+        "safety_gateway": "deny_unmodeled_live_test"
+      }
+    }
+  ],
+  "acceptance_checks": [
+    "Все target_id и edge_id в сценариях существуют в electrical-object-model.v0.1.json.",
+    "Сценарии KSW-QF4-OPEN-001 и KSW-QF4-BRANCH-001 дают разные затронутые множества нагрузок.",
+    "Сценарий с ошибкой прибора не превращает null в измеренное значение.",
+    "Ни один сценарий не выдаёт проектные значения как реальные измерения.",
+    "Все сценарии остаются в offline_simulation_only."
+  ]
+}
