@@ -1,0 +1,407 @@
+{
+  "benchmark_id": "kindergarten-switchboard-001",
+  "version": "0.2-draft",
+  "source": {
+    "filename": "1000055928.jpg",
+    "width_px": 1536,
+    "height_px": 1109,
+    "mime_type": "image/jpeg",
+    "repository_status": "not_committed"
+  },
+  "coordinate_system": {
+    "origin": "top_left",
+    "unit": "pixel",
+    "bbox_order": [
+      "x1",
+      "y1",
+      "x2",
+      "y2"
+    ]
+  },
+  "annotation_status": "coarse_visual_boxes_not_independently_reviewed",
+  "objects": [
+    {
+      "id": "IN-1",
+      "tag": "1QF",
+      "class": "incoming_protective_device",
+      "bbox": [
+        1000,
+        48,
+        1092,
+        142
+      ],
+      "status": "visually_transcribed",
+      "confidence": null
+    },
+    {
+      "id": "IN-2",
+      "tag": "2QF",
+      "class": "incoming_protective_device",
+      "bbox": [
+        1115,
+        48,
+        1205,
+        142
+      ],
+      "status": "visually_transcribed",
+      "confidence": null
+    },
+    {
+      "id": "KM-1",
+      "tag": "KM1",
+      "class": "contactor",
+      "bbox": [
+        1010,
+        140,
+        1087,
+        181
+      ],
+      "status": "visually_transcribed",
+      "confidence": null
+    },
+    {
+      "id": "KM-2",
+      "tag": "KM2",
+      "class": "contactor",
+      "bbox": [
+        1137,
+        140,
+        1205,
+        181
+      ],
+      "status": "visually_transcribed",
+      "confidence": null
+    },
+    {
+      "id": "ATS-1",
+      "tag": "АВР",
+      "class": "automatic_transfer_switch_controller",
+      "bbox": [
+        1074,
+        139,
+        1140,
+        177
+      ],
+      "status": "visually_transcribed",
+      "confidence": null
+    },
+    {
+      "id": "METER-1",
+      "tag": null,
+      "class": "electricity_meter",
+      "text": "Меркурий 230 AR",
+      "bbox": [
+        1112,
+        218,
+        1190,
+        313
+      ],
+      "status": "visually_transcribed",
+      "confidence": null
+    },
+    {
+      "id": "CT-1",
+      "tag": "TA1–TA3",
+      "class": "current_transformers",
+      "text": "100/5",
+      "bbox": [
+        1055,
+        267,
+        1110,
+        314
+      ],
+      "status": "visually_transcribed",
+      "confidence": null
+    },
+    {
+      "id": "OUT-QF-1",
+      "tag": "QF1",
+      "class": "outgoing_protective_device",
+      "bbox": [
+        365,
+        389,
+        420,
+        477
+      ],
+      "status": "visually_transcribed_coarse_bbox",
+      "confidence": null
+    },
+    {
+      "id": "OUT-QF-2",
+      "tag": "QF2",
+      "class": "outgoing_protective_device",
+      "bbox": [
+        431,
+        389,
+        486,
+        477
+      ],
+      "status": "visually_transcribed_coarse_bbox",
+      "confidence": null
+    },
+    {
+      "id": "OUT-QF-3",
+      "tag": "QF3",
+      "class": "outgoing_protective_device",
+      "bbox": [
+        497,
+        389,
+        552,
+        477
+      ],
+      "status": "visually_transcribed_coarse_bbox",
+      "confidence": null
+    },
+    {
+      "id": "OUT-QF-4",
+      "tag": "QF4",
+      "class": "outgoing_protective_device",
+      "bbox": [
+        563,
+        389,
+        618,
+        477
+      ],
+      "status": "visually_transcribed_coarse_bbox",
+      "confidence": null
+    },
+    {
+      "id": "OUT-QF-5",
+      "tag": "QF5",
+      "class": "outgoing_protective_device",
+      "bbox": [
+        629,
+        389,
+        684,
+        477
+      ],
+      "status": "visually_transcribed_coarse_bbox",
+      "confidence": null
+    },
+    {
+      "id": "OUT-QF-6",
+      "tag": "QF6",
+      "class": "outgoing_protective_device",
+      "bbox": [
+        695,
+        389,
+        750,
+        477
+      ],
+      "status": "visually_transcribed_coarse_bbox",
+      "confidence": null
+    },
+    {
+      "id": "OUT-QF-7",
+      "tag": "QF7",
+      "class": "outgoing_protective_device",
+      "bbox": [
+        761,
+        389,
+        816,
+        477
+      ],
+      "status": "visually_transcribed_coarse_bbox",
+      "confidence": null
+    },
+    {
+      "id": "OUT-QF-8",
+      "tag": "QF8",
+      "class": "outgoing_protective_device",
+      "bbox": [
+        827,
+        389,
+        882,
+        477
+      ],
+      "status": "visually_transcribed_coarse_bbox",
+      "confidence": null
+    },
+    {
+      "id": "OUT-QF-9",
+      "tag": "QF9",
+      "class": "outgoing_protective_device",
+      "bbox": [
+        893,
+        389,
+        948,
+        477
+      ],
+      "status": "visually_transcribed_coarse_bbox",
+      "confidence": null
+    },
+    {
+      "id": "OUT-QF-10",
+      "tag": "QF10",
+      "class": "outgoing_protective_device",
+      "bbox": [
+        959,
+        389,
+        1014,
+        477
+      ],
+      "status": "visually_transcribed_coarse_bbox",
+      "confidence": null
+    },
+    {
+      "id": "BUS-1",
+      "tag": "L1/L2/L3",
+      "class": "busbar_group",
+      "bbox": [
+        315,
+        316,
+        1455,
+        347
+      ],
+      "status": "visually_transcribed",
+      "confidence": null
+    },
+    {
+      "id": "BUS-2",
+      "tag": "N",
+      "class": "busbar",
+      "bbox": [
+        315,
+        347,
+        1455,
+        366
+      ],
+      "status": "visually_transcribed",
+      "confidence": null
+    },
+    {
+      "id": "BUS-3",
+      "tag": "PE",
+      "class": "protective_earth_bus",
+      "bbox": [
+        315,
+        366,
+        1455,
+        390
+      ],
+      "status": "visually_transcribed",
+      "confidence": null
+    },
+    {
+      "id": "TABLE-1",
+      "tag": null,
+      "class": "load_table",
+      "bbox": [
+        300,
+        828,
+        1155,
+        1053
+      ],
+      "status": "visually_transcribed",
+      "confidence": null
+    }
+  ],
+  "load_table": [
+    {
+      "plan_position": 1,
+      "installed_power_kw": 25.88,
+      "calculated_current_a": 16.52,
+      "status": "visual_transcription_requires_cell_level_review"
+    },
+    {
+      "plan_position": 2,
+      "installed_power_kw": 38.93,
+      "calculated_current_a": 19.8,
+      "status": "visual_transcription_requires_cell_level_review"
+    },
+    {
+      "plan_position": 3,
+      "installed_power_kw": 45.26,
+      "calculated_current_a": 24.55,
+      "status": "visual_transcription_requires_cell_level_review"
+    },
+    {
+      "plan_position": 4,
+      "installed_power_kw": 53.07,
+      "calculated_current_a": 29.86,
+      "status": "visual_transcription_requires_cell_level_review"
+    },
+    {
+      "plan_position": 5,
+      "installed_power_kw": 4.09,
+      "calculated_current_a": 3.18,
+      "status": "visual_transcription_requires_cell_level_review"
+    },
+    {
+      "plan_position": 6,
+      "installed_power_kw": 1.65,
+      "calculated_current_a": 2.51,
+      "status": "visual_transcription_requires_cell_level_review"
+    },
+    {
+      "plan_position": 7,
+      "installed_power_kw": 2.6,
+      "calculated_current_a": 3.95,
+      "status": "visual_transcription_requires_cell_level_review"
+    },
+    {
+      "plan_position": 8,
+      "installed_power_kw": 1.37,
+      "calculated_current_a": 2.07,
+      "status": "visual_transcription_requires_cell_level_review"
+    },
+    {
+      "plan_position": 9,
+      "installed_power_kw": 0.5,
+      "calculated_current_a": 0.47,
+      "status": "visual_transcription_requires_cell_level_review"
+    },
+    {
+      "plan_position": 10,
+      "installed_power_kw": 47.37,
+      "calculated_current_a": 68.97,
+      "status": "visual_transcription_requires_cell_level_review"
+    },
+    {
+      "plan_position": 11,
+      "installed_power_kw": 2.5,
+      "calculated_current_a": 3.8,
+      "status": "visual_transcription_requires_cell_level_review"
+    },
+    {
+      "plan_position": 12,
+      "installed_power_kw": null,
+      "calculated_current_a": null,
+      "status": "visual_transcription_requires_cell_level_review"
+    }
+  ],
+  "connections": [],
+  "metrics": {
+    "ocr": {
+      "psm11_tokens": 200,
+      "psm11_tokens_confidence_ge_50": 98,
+      "psm11_equipment_regex_hits": [
+        "KM2",
+        "PE"
+      ],
+      "psm6_tokens": 305,
+      "psm6_equipment_regex_hits": [],
+      "psm12_tokens": 206,
+      "psm12_equipment_regex_hits": []
+    },
+    "geometry": {
+      "hough_horizontal_raw": 232,
+      "hough_vertical_raw": 256,
+      "contours_before_ocr_and_nesting_filter": 331,
+      "contour_families": {
+        "rectangular_outline": 120,
+        "polygonal_outline": 151,
+        "circular_outline": 19,
+        "quadrilateral_outline": 18,
+        "irregular_closed_shape": 23
+      }
+    }
+  },
+  "limitations": [
+    "Bounding boxes are coarse visual estimates, not audited ground truth.",
+    "No electrical connections are asserted.",
+    "Equipment tags and load-table cells require cell-level review.",
+    "Raw geometry counts are intermediate and must not be interpreted as electrical object counts.",
+    "Source JPEG is not stored in this repository yet."
+  ]
+}
