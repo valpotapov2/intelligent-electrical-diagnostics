@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120">
+<defs>
+  <style>
+    .bg{fill:#fff}.box{fill:#f7f9fc;stroke:#344054;stroke-width:2;rx:12}.source{fill:#eef6ff;stroke:#175cd3}.gen{fill:#fff7e6;stroke:#b54708}.critical{fill:#ecfdf3;stroke:#027a48}.control{fill:#f4f3ff;stroke:#6941c6}.bus{fill:#344054}.line{stroke:#475467;stroke-width:3;fill:none}.dashed{stroke-dasharray:9 7}.title{font:700 27px Arial;fill:#101828}.h{font:700 18px Arial;fill:#101828}.t{font:15px Arial;fill:#344054}.small{font:13px Arial;fill:#475467}.white{fill:#fff;font:700 14px Arial}
+  </style>
+  <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#475467"/></marker>
+</defs>
+<rect class="bg" width="1600" height="1120"/>
+<text x="800" y="42" text-anchor="middle" class="title">FAA DRPDS — functional single-line architecture (conceptual model)</text>
+<text x="800" y="68" text-anchor="middle" class="small">Based on FAA JO 6480.22 Fig. 2-1 / 2-2; not a site-specific as-built drawing</text>
+
+<!-- commercial sources -->
+<rect x="70" y="110" width="230" height="95" class="box source"/>
+<text x="185" y="145" text-anchor="middle" class="h">Utility feeder 1</text><text x="185" y="173" text-anchor="middle" class="t">Transformer T1</text><text x="185" y="192" text-anchor="middle" class="small">480/277 V secondary*</text>
+<rect x="370" y="110" width="230" height="95" class="box source"/>
+<text x="485" y="145" text-anchor="middle" class="h">Utility feeder 2</text><text x="485" y="173" text-anchor="middle" class="t">Transformer T2</text><text x="485" y="192" text-anchor="middle" class="small">480/277 V secondary*</text>
+
+<!-- main switchgear -->
+<rect x="80" y="270" width="420" height="115" class="box"/>
+<text x="290" y="305" text-anchor="middle" class="h">SWGR 1</text><text x="290" y="333" text-anchor="middle" class="t">Main 1M1 • standby 1M2</text><text x="290" y="358" text-anchor="middle" class="small">Bus section 1</text>
+<rect x="650" y="270" width="420" height="115" class="box"/>
+<text x="860" y="305" text-anchor="middle" class="h">SWGR 2</text><text x="860" y="333" text-anchor="middle" class="t">Main 2M1 • standby 2M2</text><text x="860" y="358" text-anchor="middle" class="small">Bus section 2</text>
+<path d="M185 205 V240 H290 V270" class="line" marker-end="url(#arr)"/>
+<path d="M485 205 V240 H860 V270" class="line" marker-end="url(#arr)"/>
+<path d="M500 326 H650" class="line dashed"/><rect x="520" y="298" width="110" height="52" class="box"/><text x="575" y="320" text-anchor="middle" class="h">Tie</text><text x="575" y="339" text-anchor="middle" class="small">breaker</text>
+
+<!-- generators -->
+<rect x="1190" y="110" width="330" height="245" class="box gen"/>
+<text x="1355" y="145" text-anchor="middle" class="h">Standby generation</text>
+<rect x="1220" y="170" width="125" height="55" class="box gen"/><text x="1282" y="203" text-anchor="middle" class="t">EG 1</text>
+<rect x="1370" y="170" width="125" height="55" class="box gen"/><text x="1432" y="203" text-anchor="middle" class="t">EG 2..n</text>
+<rect x="1250" y="255" width="210" height="65" class="box gen"/><text x="1355" y="282" text-anchor="middle" class="h">PSG / common bus</text><text x="1355" y="303" text-anchor="middle" class="small">Synchronize • parallel</text>
+<path d="M1282 225 V240 H1355 V255 M1432 225 V240 H1355" class="line"/>
+<path d="M1250 287 H1120 V420 H290 V385" class="line" marker-end="url(#arr)"/>
+<path d="M1460 287 H1510 V420 H860 V385" class="line" marker-end="url(#arr)"/>
+
+<!-- branches -->
+<path d="M290 385 V465" class="line"/><path d="M860 385 V465" class="line"/>
+<rect x="70" y="465" width="470" height="140" class="box"/>
+<text x="305" y="500" text-anchor="middle" class="h">Essential distribution</text>
+<text x="305" y="530" text-anchor="middle" class="t">Essential SWBDs • MCCs</text>
+<text x="305" y="557" text-anchor="middle" class="t">HVAC • chillers • pumps • fans</text>
+<text x="305" y="582" text-anchor="middle" class="small">Essential loads may be shed during limited standby capacity</text>
+<rect x="650" y="465" width="470" height="140" class="box critical"/>
+<text x="885" y="500" text-anchor="middle" class="h">Critical power supply</text>
+<text x="885" y="530" text-anchor="middle" class="t">UPS supply switchgear</text>
+<text x="885" y="557" text-anchor="middle" class="t">UPS 1..n • battery strings • output SWBDs</text>
+<text x="885" y="582" text-anchor="middle" class="small">Conditioned uninterruptible supply</text>
+
+<!-- critical buses -->
+<path d="M885 605 V655" class="line"/>
+<rect x="650" y="655" width="210" height="82" class="box critical"/>
+<text x="755" y="688" text-anchor="middle" class="h">Critical Bus A</text><text x="755" y="714" text-anchor="middle" class="small">Redundant path A</text>
+<rect x="910" y="655" width="210" height="82" class="box critical"/>
+<text x="1015" y="688" text-anchor="middle" class="h">Critical Bus B</text><text x="1015" y="714" text-anchor="middle" class="small">Redundant path B</text>
+<path d="M885 637 H755 V655 M885 637 H1015 V655" class="line"/>
+<rect x="650" y="790" width="210" height="90" class="box critical"/>
+<text x="755" y="825" text-anchor="middle" class="h">PDU / SATS</text><text x="755" y="850" text-anchor="middle" class="small">Path A distribution</text>
+<rect x="910" y="790" width="210" height="90" class="box critical"/>
+<text x="1015" y="825" text-anchor="middle" class="h">PDU / SATS</text><text x="1015" y="850" text-anchor="middle" class="small">Path B / transfer</text>
+<path d="M755 737 V790 M1015 737 V790" class="line" marker-end="url(#arr)"/>
+<rect x="760" y="930" width="260" height="85" class="box critical"/>
+<text x="890" y="963" text-anchor="middle" class="h">CDP panels</text><text x="890" y="989" text-anchor="middle" class="small">Critical electronic loads</text>
+<path d="M755 880 V905 H890 V930 M1015 880 V905 H890" class="line" marker-end="url(#arr)"/>
+
+<!-- control system -->
+<rect x="1190" y="520" width="330" height="180" class="box control"/>
+<text x="1355" y="555" text-anchor="middle" class="h">PMCS</text>
+<text x="1355" y="583" text-anchor="middle" class="t">OWS-1 / OWS-2 • PLCs</text>
+<text x="1355" y="610" text-anchor="middle" class="t">PowerLogic • networks</text>
+<text x="1355" y="640" text-anchor="middle" class="small">Monitor • sequence • alarm • command</text>
+<path d="M1070 326 H1145 V560 H1190" class="line dashed" marker-end="url(#arr)"/>
+<path d="M1190 650 H1145 V420" class="line dashed" marker-end="url(#arr)"/>
+<path d="M1190 610 H1155 V560 H1120" class="line dashed"/>
+<rect x="1190" y="770" width="330" height="115" class="box control"/>
+<text x="1355" y="808" text-anchor="middle" class="h">AC / DC control power</text>
+<text x="1355" y="837" text-anchor="middle" class="t">125 V DC • batteries • chargers</text>
+<text x="1355" y="862" text-anchor="middle" class="small">Relay / trip / close / controller supply</text>
+<path d="M1355 700 V770" class="line dashed" marker-end="url(#arr)"/>
+
+<text x="70" y="1060" class="small">* Voltage shown as described in the historical FAA handbook; transformer primary and site ratings vary. Exact topology, quantities, breaker labels and interlocks are site-specific.</text>
+<text x="70" y="1085" class="small">Solid lines: functional power paths. Dashed lines: control/monitoring relationships. Conceptual architecture only; not an operating or switching instruction.</text>
+</svg>
