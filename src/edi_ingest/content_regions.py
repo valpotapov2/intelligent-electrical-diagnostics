@@ -56,9 +56,10 @@ def _grid_regions(geometry: dict[str, Any], width: int, height: int) -> list[dic
     if len(points) < 6:
         return []
 
-    # Intersections belong to the same local grid component when they share
-    # an actual detected line segment. Pixel-radius clustering split ordinary
-    # grids whenever adjacent columns were farther apart than the chosen radius.
+    # A detected segment can span unrelated drawing areas. Connect only
+    # neighboring intersections along that segment, using its local spacing.
+    # This preserves ordinary grids while preventing one long line from
+    # chaining otherwise separate regions across the page.
     parent = list(range(len(points)))
 
     def find(index: int) -> int:
@@ -72,15 +73,31 @@ def _grid_regions(geometry: dict[str, Any], width: int, height: int) -> list[dic
         if a != b:
             parent[b] = a
 
+    def connect_local_neighbors(
+        members_by_segment: dict[str, list[int]], axis: int, axis_length: int
+    ) -> None:
+        for members in members_by_segment.values():
+            ordered = sorted(members, key=lambda index: points[index][axis])
+            gaps = [
+                points[right][axis] - points[left][axis]
+                for left, right in zip(ordered, ordered[1:])
+            ]
+            positive_gaps = [gap for gap in gaps if gap > 0]
+            if not positive_gaps:
+                continue
+            max_gap = min(1.6 * float(sorted(positive_gaps)[len(positive_gaps) // 2]), axis_length * 0.25)
+            for left, right, gap in zip(ordered, ordered[1:], gaps):
+                if gap <= max_gap:
+                    union(left, right)
+
     by_horizontal: dict[str, list[int]] = {}
     by_vertical: dict[str, list[int]] = {}
     for index, (_, _, horizontal_id, vertical_id) in enumerate(points):
         by_horizontal.setdefault(horizontal_id, []).append(index)
         by_vertical.setdefault(vertical_id, []).append(index)
 
-    for members in [*by_horizontal.values(), *by_vertical.values()]:
-        for index in members[1:]:
-            union(members[0], index)
+    connect_local_neighbors(by_horizontal, axis=0, axis_length=width)
+    connect_local_neighbors(by_vertical, axis=1, axis_length=height)
 
     groups: dict[int, list[int]] = {}
     for index in range(len(points)):
