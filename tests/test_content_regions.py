@@ -113,3 +113,26 @@ def test_table_candidate_requires_grid_and_repeated_text_bands():
     tables = [item for item in result["regions"] if item["kind"] == "table_candidate"]
     assert len(tables) == 1
     assert tables[0]["evidence"]["text_token_count"] == 8
+
+
+def test_grid_components_do_not_chain_across_page():
+    geometry = {
+        "horizontal_segments": [
+            {"id": f"h{i}", "start": [100, y], "end": [400, y]}
+            for i, y in enumerate([100, 120, 140])
+        ] + [
+            {"id": f"bh{i}", "start": [900, y], "end": [1200, y]}
+            for i, y in enumerate([700, 720, 740])
+        ],
+        "vertical_segments": [
+            {"id": f"v{i}", "start": [x, 90], "end": [x, 150]}
+            for i, x in enumerate([150, 250, 350])
+        ] + [
+            {"id": f"bv{i}", "start": [x, 690], "end": [x, 750])
+            for i, x in enumerate([950, 1050, 1150])
+        ],
+    }
+    result = propose_content_regions(1536, 1109, [], geometry, {"candidates": []})
+    grids = [item for item in result["regions"] if item["kind"] == "line_grid_candidate"]
+    assert len(grids) == 2
+    assert all(item["evidence"]["intersection_count"] == 9 for item in grids)
