@@ -136,3 +136,24 @@ def test_grid_components_do_not_chain_across_page():
     grids = [item for item in result["regions"] if item["kind"] == "line_grid_candidate"]
     assert len(grids) == 2
     assert all(item["evidence"]["intersection_count"] == 9 for item in grids)
+
+
+def test_long_shared_segments_do_not_chain_separate_grids():
+    # Each horizontal line spans both grids, but the large gap between them
+    # must keep the two local components separate.
+    geometry = {
+        "horizontal_segments": [
+            {"id": f"h{i}", "start": [100, y], "end": [1100, y]}
+            for i, y in enumerate([100, 120, 140])
+        ],
+        "vertical_segments": [
+            {"id": f"v{i}", "start": [x, 90], "end": [x, 150]}
+            for i, x in enumerate([100, 200, 300, 900, 1000, 1100])
+        ],
+    }
+    result = propose_content_regions(1200, 300, [], geometry, {"candidates": []})
+    grids = [item for item in result["regions"] if item["kind"] == "line_grid_candidate"]
+    assert len(grids) == 2
+    boxes = sorted(item["bbox"] for item in grids)
+    assert boxes[0][2] < boxes[1][0]
+    assert [item["evidence"]["intersection_count"] for item in grids] == [9, 9]
