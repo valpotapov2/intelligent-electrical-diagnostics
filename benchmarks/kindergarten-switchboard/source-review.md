@@ -31,6 +31,8 @@
 
 These are source transcriptions, not recalculated or independently verified engineering values.
 
+The eleven displayed installed-power values sum arithmetically to **223.22 kW**, while the drawing's printed summary reads **223.21 kW**. Preserve both source values and record this 0.01 kW discrepancy; do not silently overwrite either. The sum of the displayed calculated-current values is 175.68 A, while the drawing's printed summary reads 176 A (consistent with rounding to a whole ampere, but not proof of the underlying calculation method).
+
 ## Outgoing protective-device labels
 
 The following ratings are transcribed from the labels next to the drawn outgoing devices. The exact manufacturer/type strings should be checked against a higher-resolution source before being treated as equipment identity.
