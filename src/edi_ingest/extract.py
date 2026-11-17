@@ -86,6 +86,11 @@ def build_model(ingested: dict[str, Any], object_name: str = "Unspecified electr
             for page in ingested["ocr"].get("pages", [])
             if page.get("pdf_vector_geometry")
         ],
+        "symbol_candidates": [
+            {"page": page["page"], **page["symbol_candidates"]}
+            for page in ingested["ocr"].get("pages", [])
+            if page.get("symbol_candidates")
+        ],
         "circuits": extracted["circuits"],
         "issues": extracted["issues"] + [{
             "id": "TOPOLOGY-NOT-IMPLEMENTED",
@@ -96,6 +101,6 @@ def build_model(ingested: dict[str, Any], object_name: str = "Unspecified electr
         "extraction": {
             "tool_version": "0.1.0",
             "review_status": "unreviewed",
-            "method": "tesseract_ocr_regex_candidates_plus_geometric_line_candidates",
+            "method": "ocr_geometry_pdf_vectors_and_unclassified_shape_candidates",
         },
     }
