@@ -1,0 +1,164 @@
+{
+  "benchmark_id": "faa-drpds-graph-readiness-001",
+  "version": "0.1",
+  "module_id": "faa_drpds",
+  "execution_mode": "offline_simulation_only",
+  "source_model": "examples/objects/faa-drpds.generic.json",
+  "scenario_contract": {
+    "inputs": "Synthetic graph-edge removals, synthetic observations and explicit missing-prerequisite questions only.",
+    "expected_output": "Reachability-based affected load scope, explicit unknowns, and safety-gateway denial of live actions.",
+    "limitation": "This benchmark tests graph reachability only. It does not perform causal diagnosis, hypothesis ranking, measurement planning or site-specific protection analysis.",
+    "forbidden": "No live instrument commands, energized testing, breaker operation, switching sequence or modification of protection settings."
+  },
+  "scenarios": [
+    {
+      "id": "DRPDS-BASE-001",
+      "title": "Нормальная связность при двух коммерческих вводах",
+      "category": "baseline",
+      "source_component_ids": [
+        "U1",
+        "U2"
+      ],
+      "injection": {
+        "type": "none"
+      },
+      "expected": {
+        "affected_load_ids": []
+      }
+    },
+    {
+      "id": "DRPDS-UTILITY-1-LOSS-001",
+      "title": "Потеря пути коммерческого ввода 1 при сохранном вводе 2",
+      "category": "redundant_source_path",
+      "source_component_ids": [
+        "U1",
+        "U2"
+      ],
+      "injection": {
+        "type": "open_edge",
+        "edge_id": "E02"
+      },
+      "expected": {
+        "affected_load_ids": []
+      }
+    },
+    {
+      "id": "DRPDS-CRITICAL-A-LOSS-001",
+      "title": "Потеря пути к Critical Bus A",
+      "category": "redundant_critical_path",
+      "source_component_ids": [
+        "U1",
+        "U2"
+      ],
+      "injection": {
+        "type": "open_edge",
+        "edge_id": "E22"
+      },
+      "expected": {
+        "affected_load_ids": []
+      }
+    },
+    {
+      "id": "DRPDS-CRITICAL-BOTH-LOSS-001",
+      "title": "Потеря обоих критических шинных путей",
+      "category": "critical_distribution_loss",
+      "source_component_ids": [
+        "U1",
+        "U2"
+      ],
+      "injection": {
+        "type": "open_edges",
+        "edge_ids": [
+          "E22",
+          "E23"
+        ]
+      },
+      "expected": {
+        "affected_load_ids": [
+          "CRIT-LOADS"
+        ]
+      }
+    },
+    {
+      "id": "DRPDS-ESSENTIAL-BOTH-FEEDS-LOSS-001",
+      "title": "Потеря обоих путей к Essential distribution",
+      "category": "essential_distribution_loss",
+      "source_component_ids": [
+        "U1",
+        "U2"
+      ],
+      "injection": {
+        "type": "open_edges",
+        "edge_ids": [
+          "E14",
+          "E15"
+        ]
+      },
+      "expected": {
+        "affected_load_ids": [
+          "ESS-LOADS"
+        ]
+      }
+    },
+    {
+      "id": "DRPDS-INSTRUMENT-ERROR-001",
+      "title": "Недостоверный результат адаптера измерения",
+      "category": "instrument_fault",
+      "source_component_ids": [
+        "U1",
+        "U2"
+      ],
+      "injection": {
+        "type": "measurement_result",
+        "target_id": "UPS-GROUP",
+        "instrument_status": "error",
+        "value": null
+      },
+      "expected": {
+        "affected_load_ids": []
+      }
+    },
+    {
+      "id": "DRPDS-UNKNOWN-SATS-DETAIL-001",
+      "title": "Запрос локализации отказа конкретного SATS/CDP",
+      "category": "knowledge_boundary",
+      "source_component_ids": [
+        "U1",
+        "U2"
+      ],
+      "injection": {
+        "type": "question",
+        "target_id": "SATS-GROUP",
+        "missing_prerequisites": [
+          "нет индивидуальных ID SATS и их парных входов/выходов",
+          "нет связей конкретного SATS с конкретным CDP и нагрузками",
+          "нет site-specific схемы и обратных сигналов положения"
+        ]
+      },
+      "expected": {
+        "affected_load_ids": []
+      }
+    },
+    {
+      "id": "DRPDS-UNKNOWN-UPS-UNIT-001",
+      "title": "Запрос различения отказа UPS 2 и UPS 3",
+      "category": "knowledge_boundary",
+      "source_component_ids": [
+        "U1",
+        "U2"
+      ],
+      "injection": {
+        "type": "question",
+        "target_id": "UPS-GROUP",
+        "missing_prerequisites": [
+          "UPS представлены агрегированной группой, а не отдельными компонентами",
+          "нет отдельных входов, выходов, байпасов и батарей UPS 1/2/3",
+          "нет измерений и журналов событий конкретных UPS"
+        ]
+      },
+      "expected": {
+        "affected_load_ids": []
+      }
+    }
+  ]
+}
