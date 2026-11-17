@@ -76,6 +76,48 @@
       ]
     },
     {
+      "id": "DQ-SWGR-SECTION-SUPPLY",
+      "title": "Is the relevant SWGR section supplied from its intended source?",
+      "component_refs": [
+        "SWGR1",
+        "SWGR2",
+        "1M1",
+        "2M1",
+        "1M2",
+        "2M2",
+        "TIE",
+        "PSG",
+        "U1",
+        "U2",
+        "T1",
+        "T2"
+      ],
+      "prerequisites": [
+        "DQ-SOURCE-AVAILABILITY"
+      ],
+      "required_evidence": [
+        "selected_source_path_for_relevant_section",
+        "incomer_and_tie_breaker_state",
+        "section_voltage_or_independent_electrical_state",
+        "mode_and_interlock_state"
+      ],
+      "distinguishes": [
+        "normal_source_path_unavailable",
+        "standby_source_path_unavailable_when_required",
+        "switching_or_feedback_problem",
+        "measurement_channel_problem"
+      ],
+      "cannot_conclude_from": [
+        "PMCS_status_without_freshness_or_independent_evidence"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ]
+    },
+    {
       "id": "DQ-SWGR-STANDBY-TRANSFER",
       "title": "Did a main SWGR section transfer to standby?",
       "component_refs": [
@@ -119,7 +161,8 @@
           "document_id": "faa-jo-6480-22-block",
           "page": 4
         }
-      ]
+      ],
+      "applicability": "Only when the operating mode or observed event requires a transfer to standby supply."
     },
     {
       "id": "DQ-ESSENTIAL-FEED",
@@ -132,7 +175,7 @@
         "SWGR2"
       ],
       "prerequisites": [
-        "DQ-SWGR-STANDBY-TRANSFER"
+        "DQ-SWGR-SECTION-SUPPLY"
       ],
       "required_evidence": [
         "selected_upstream_source_path",
@@ -166,7 +209,7 @@
         "DC125"
       ],
       "prerequisites": [
-        "DQ-SWGR-STANDBY-TRANSFER"
+        "DQ-SWGR-SECTION-SUPPLY"
       ],
       "required_evidence": [
         "UPS_input_state",
@@ -367,6 +410,7 @@
     "Do not treat PMCS display state as independent proof of contact position or electrical condition.",
     "Do not transform a logical observation template into a physical terminal or test point.",
     "Do not invent individual device mappings inside grouped equipment families.",
-    "A missing prerequisite produces insufficient evidence, not an assumed healthy state."
+    "A missing prerequisite produces insufficient evidence, not an assumed healthy state.",
+    "Do not require generator readiness for a diagnosis under normal commercial-source operation; generator prerequisites apply only when standby operation or transfer is relevant."
   ]
 }
