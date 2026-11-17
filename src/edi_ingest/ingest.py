@@ -13,6 +13,7 @@ from pytesseract import Output
 from .geometry import detect_geometry
 from .symbols import detect_symbol_candidates
 from .roi import run_roi_ocr
+from .content_regions import propose_content_regions, run_content_region_ocr
 
 
 SUPPORTED_IMAGES = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".bmp"}
@@ -116,6 +117,13 @@ def ingest_document(path: str | Path, lang: str = "rus+eng", dpi: int = 220, psm
             page_result["geometry"] = detect_geometry(image)
             page_result["symbol_candidates"] = detect_symbol_candidates(image, page_result["tokens"])
             page_result["roi_ocr"] = run_roi_ocr(image, lang=lang, psm=psm)
+            page_result["content_regions"] = propose_content_regions(
+                image.width, image.height, page_result["tokens"],
+                page_result["geometry"], page_result["symbol_candidates"]
+            )
+            page_result["content_region_ocr"] = run_content_region_ocr(
+                image, page_result["content_regions"], lang=lang, psm=psm
+            )
             page_result["pdf_vector_geometry"] = _extract_pdf_vector_primitives(page, render_scale=dpi / 72)
             page_result["source_page_size"] = [page.rect.width, page.rect.height]
             pages.append(page_result)
@@ -125,6 +133,13 @@ def ingest_document(path: str | Path, lang: str = "rus+eng", dpi: int = 220, psm
         page_result["geometry"] = detect_geometry(image)
         page_result["symbol_candidates"] = detect_symbol_candidates(image, page_result["tokens"])
         page_result["roi_ocr"] = run_roi_ocr(image, lang=lang, psm=psm)
+        page_result["content_regions"] = propose_content_regions(
+            image.width, image.height, page_result["tokens"],
+            page_result["geometry"], page_result["symbol_candidates"]
+        )
+        page_result["content_region_ocr"] = run_content_region_ocr(
+            image, page_result["content_regions"], lang=lang, psm=psm
+        )
         pages.append(page_result)
     else:
         raise ValueError(f"Unsupported input format: {suffix}")
