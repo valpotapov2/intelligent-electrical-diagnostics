@@ -72,15 +72,30 @@ def _grid_regions(geometry: dict[str, Any], width: int, height: int) -> list[dic
         if a != b:
             parent[b] = a
 
+    # A detected segment can span several unrelated drawing areas. Connect
+    # only neighboring intersections along that segment, and only across a
+    # bounded gap. This preserves ordinary grids while preventing one long
+    # Hough segment from joining distant parts of the page.
+    max_link_gap = max(120, int(min(width, height) * 0.08))
     by_horizontal: dict[str, list[int]] = {}
     by_vertical: dict[str, list[int]] = {}
     for index, (_, _, horizontal_id, vertical_id) in enumerate(points):
-        by_horizontal.setdefault(horizontal_id, []).append(index)
-        by_vertical.setdefault(vertical_id, []).append(index)
+        if horizontal_id != "None":
+            by_horizontal.setdefault(horizontal_id, []).append(index)
+        if vertical_id != "None":
+            by_vertical.setdefault(vertical_id, []).append(index)
 
-    for members in [*by_horizontal.values(), *by_vertical.values()]:
-        for index in members[1:]:
-            union(members[0], index)
+    for members in by_horizontal.values():
+        members.sort(key=lambda index: points[index][0])
+        for first, second in zip(members, members[1:]):
+            if points[second][0] - points[first][0] <= max_link_gap:
+                union(first, second)
+
+    for members in by_vertical.values():
+        members.sort(key=lambda index: points[index][1])
+        for first, second in zip(members, members[1:]):
+            if points[second][1] - points[first][1] <= max_link_gap:
+                union(first, second)
 
     groups: dict[int, list[int]] = {}
     for index in range(len(points)):
