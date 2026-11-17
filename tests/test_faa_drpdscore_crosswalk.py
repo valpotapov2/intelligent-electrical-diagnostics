@@ -51,5 +51,5 @@ def test_faa_core_crosswalk_does_not_claim_execution_or_physical_measurements():
     assert "measurementrequest" not in serialized
     assert "terminal_number" not in serialized
     assert '"value":' not in serialized
-    assert all("not" in item["rationale"].lower() or item["coverage"] == "partial"
-               for item in crosswalk["mappings"])
+    assert "not a proven diagnosis" in " ".join(crosswalk["constraints"]).lower()
+    assert "unmapped questions" in " ".join(crosswalk["constraints"]).lower()
