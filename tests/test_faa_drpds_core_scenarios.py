@@ -107,7 +107,7 @@ def test_synthetic_drpds_mode_updates_real_core_posterior(mode):
     assert result["module"] == module.ref
     assert result["checks_requested"]
     assert result["accepted_measurements"]
-    assert result["mode_posterior"][mode] > 0.5, {"mode": mode, "posterior": result["mode_posterior"], "checks_requested": result["checks_requested"], "accepted_measurements": result["accepted_measurements"], "decision": result["decision"]}
+    assert result["mode_posterior"][mode] > 0.5, {"mode": mode, "posterior": result["mode_posterior"], "requested_points": [row.get("check_id") for row in result["checks_requested"]], "accepted_points": [row.get("check_id") for row in result["accepted_measurements"]], "decision": result["decision"]}
     assert all(row["allowed"] for row in result["gateway_log"])
     assert all(row["adapter_called"] for row in result["gateway_log"])
 
