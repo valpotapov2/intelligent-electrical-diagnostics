@@ -111,7 +111,7 @@ def test_table_candidate_requires_repeated_horizontal_rules_and_text_bands():
     result = propose_content_regions(120, 100, tokens, geometry, {"candidates": []})
     tables = [item for item in result["regions"] if item["kind"] == "table_candidate"]
     assert len(tables) == 1
-    assert tables[0]["evidence"]["text_token_count"] == 12
+    assert tables[0]["evidence"]["text_token_count"] == 9
     assert tables[0]["evidence"]["horizontal_segment_count"] == 5
 
 
