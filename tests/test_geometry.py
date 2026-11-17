@@ -44,3 +44,21 @@ def test_empty_image_returns_no_false_segments():
     assert result["horizontal_segments"] == []
     assert result["vertical_segments"] == []
     assert result["junction_candidates"] == []
+
+
+def test_native_pdf_vector_primitives_are_preserved():
+    import fitz
+
+    from edi_ingest.ingest import _extract_pdf_vector_primitives
+
+    document = fitz.open()
+    page = document.new_page(width=300, height=200)
+    page.draw_line((20, 40), (250, 40), color=(0, 0, 0), width=1)
+    page.draw_rect((30, 70, 120, 130), color=(0, 0, 0), width=1)
+
+    result = _extract_pdf_vector_primitives(page)
+    assert result["coordinate_space"] == "pdf_points"
+    assert len(result["lines"]) >= 1
+    assert len(result["rectangles"]) >= 1
+    assert result["lines"][0]["start"] == [20.0, 40.0]
+    assert result["lines"][0]["end"] == [250.0, 40.0]
