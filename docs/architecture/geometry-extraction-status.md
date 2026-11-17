@@ -8,6 +8,7 @@
 - Duplicate/overlapping Hough fragments are merged into normalized axis-aligned segments.
 - Intersections are derived from normalized horizontal/vertical segment extents.
 - Native PDF vector line and rectangle primitives are retained separately in PDF-point coordinates.
+- PDF vector coordinates also carry a DPI-derived pixel transform so they can be compared with OCR token boxes and raster geometry.
 - Pixel coordinates retained in page coordinate space.
 - Synthetic tests for orthogonal lines and blank images.
 
