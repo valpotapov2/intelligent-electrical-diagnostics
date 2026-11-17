@@ -12,12 +12,15 @@
 - Pixel coordinates retained in page coordinate space.
 - Synthetic tests for orthogonal lines and blank images.
 
+- Generic closed-shape candidates are extracted separately with OCR-overlap suppression; see [symbol candidate extraction](symbol-candidate-extraction.md).
+
 ## Not implemented
 
 - Distinguishing electrical conductors from table borders, dimension lines or symbol strokes.
 - Detecting junction dots and bridge/no-connect conventions robustly.
 - Connecting line segments across gaps.
-- Detecting component terminals and attaching wires to them.
+- Semantic recognition of electrical symbols and component terminals.
+- Attaching wires to component terminals.
 - Determining net identity or phase/neutral/PE semantics.
 - Creating confirmed electrical graph edges.
 

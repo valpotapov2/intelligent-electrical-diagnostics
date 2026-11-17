@@ -83,7 +83,7 @@ def detect_geometry(image: Image.Image, min_line_length: int = 35, max_line_gap:
     horizontal_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (max(15, 35 * scale), 1))
     vertical_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, max(15, 35 * scale)))
     horizontal = cv2.morphologyEx(binary, cv2.MORPH_OPEN, horizontal_kernel)
-    vertical = cv2.morphologyEx(binary, cv2.MORPH_OPEN, vertical)
+    vertical = cv2.morphologyEx(binary, cv2.MORPH_OPEN, vertical_kernel)
 
     h_lines = cv2.HoughLinesP(
         horizontal, 1, np.pi / 180, threshold=max(12, min_line_length // 2),
