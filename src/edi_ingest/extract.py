@@ -81,6 +81,11 @@ def build_model(ingested: dict[str, Any], object_name: str = "Unspecified electr
             for page in ingested["ocr"].get("pages", [])
             if page.get("geometry")
         ],
+        "pdf_vector_candidates": [
+            {"page": page["page"], **page["pdf_vector_geometry"]}
+            for page in ingested["ocr"].get("pages", [])
+            if page.get("pdf_vector_geometry")
+        ],
         "circuits": extracted["circuits"],
         "issues": extracted["issues"] + [{
             "id": "TOPOLOGY-NOT-IMPLEMENTED",
