@@ -18,27 +18,37 @@
   "mappings": [
     {
       "question_id": "DQ-SOURCE-AVAILABILITY",
-      "coverage": "none",
-      "synthetic_modes": [],
-      "rationale": "The fixture has two virtual utility observations but no source-loss mode, transformer model, sensing-channel fault, or independent source evidence."
+      "coverage": "partial",
+      "synthetic_modes": [
+        "Source_1_evidence_loss",
+        "Source_2_evidence_loss"
+      ],
+      "rationale": "Two independent virtual source-evidence channels can be distinguished in the engine fixture; transformers, sensing fuses, independent physical confirmation, and source-versus-channel fault discrimination are not modeled."
     },
     {
       "question_id": "DQ-GENERATOR-AVAILABILITY",
-      "coverage": "none",
-      "synthetic_modes": [],
-      "rationale": "No generator, generator bus, output breaker, capacity, or load-shed behavior is represented."
+      "coverage": "partial",
+      "synthetic_modes": [
+        "Generator_bus_evidence_loss"
+      ],
+      "rationale": "A single virtual generator-bus evidence-channel pattern is exercised; individual generator readiness, output breakers, capacity, load shedding, and engine-running versus electrical-availability distinctions are not modeled."
     },
     {
       "question_id": "DQ-SWGR-SECTION-SUPPLY",
-      "coverage": "none",
-      "synthetic_modes": [],
-      "rationale": "The fixture does not model SWGR sections, incomers, tie logic, selected source paths, or switching feedback."
+      "coverage": "partial",
+      "synthetic_modes": [
+        "SWGR_1_section_evidence_loss",
+        "SWGR_2_section_evidence_loss"
+      ],
+      "rationale": "Separate virtual section-evidence channels are exercised; selected source paths, incomers, tie logic, interlocks, breaker feedback, and actual SWGR topology are not modeled."
     },
     {
       "question_id": "DQ-SWGR-STANDBY-TRANSFER",
-      "coverage": "none",
-      "synthetic_modes": [],
-      "rationale": "No standby-transfer sequence, generator readiness, permissives, breaker actuation, or transfer feedback is modeled."
+      "coverage": "partial",
+      "synthetic_modes": [
+        "Standby_transfer_evidence_loss"
+      ],
+      "rationale": "A single virtual transfer-evidence channel pattern is exercised; no transfer sequence, generator permissive logic, breaker command/position relationship, or event timing is modeled."
     },
     {
       "question_id": "DQ-ESSENTIAL-FEED",
@@ -95,6 +105,7 @@
     "A partial mapping is test-shape correspondence only; it is not evidence that the synthetic mode diagnoses the architecture question.",
     "No architecture question is converted into a MeasurementRequest by this crosswalk.",
     "Synthetic fixture points and values remain software-only and must not be mapped to physical FAA terminals or measurements.",
-    "Unmapped questions are explicit coverage gaps, not healthy states or negative diagnoses."
+    "Unmapped questions are explicit coverage gaps, not healthy states or negative diagnoses.",
+    "New source, generator-bus, SWGR-section, and standby-transfer modes are isolated virtual evidence-channel patterns; they do not encode source-to-section wiring or a transfer sequence."
   ]
 }
