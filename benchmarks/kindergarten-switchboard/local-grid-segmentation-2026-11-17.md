@@ -48,3 +48,10 @@ The change fixes page-wide chaining and the added row-count filter removes the o
 ## Reproducibility limit
 
 The JPEG remains outside the repository. The reported image experiment was run locally using the supplied attachment and current repository algorithms; it cannot be reproduced from the repository alone.
+
+## Table-candidate filter validation
+
+- The table promotion rule now requires at least five detected horizontal segments as well as repeated OCR text bands.
+- On the supplied image, this leaves one lower-page table candidate and rejects the upper-right equipment/control region, which has four horizontal segments.
+- GitHub Actions run #112: 22 tests passed, 1 existing warning.
+- This does not resolve the incomplete table boundary or corrupted OCR. The candidate is still a coarse region proposal.
