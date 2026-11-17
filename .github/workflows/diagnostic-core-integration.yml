@@ -2,7 +2,7 @@ name: Diagnostic core integration
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, integration/diagnostic-core-contracts-v1]
     paths:
       - "src/edi_ingest/diagnostic_core.py"
       - "tests/test_diagnostic_core_bridge.py"
@@ -10,6 +10,7 @@ on:
       - "tests/test_faa_drpds_core_scenarios.py"
       - "benchmarks/kindergarten-switchboard/diagnostic-core-module.synthetic.yaml"
       - "benchmarks/faa-drpds/diagnostic-core-module.synthetic.yaml"
+      - "docs/objects/faa-drpds-core-integration.md"
       - "docs/architecture/diagnostic-core-integration.md"
       - ".github/workflows/diagnostic-core-integration.yml"
   workflow_dispatch:
