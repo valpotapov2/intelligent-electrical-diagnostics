@@ -85,7 +85,7 @@ def _grid_regions(geometry: dict[str, Any], width: int, height: int) -> list[dic
             positive_gaps = [gap for gap in gaps if gap > 0]
             if not positive_gaps:
                 continue
-            max_gap = min(1.6 * float(sorted(positive_gaps)[len(positive_gaps) // 2]), axis_length * 0.25)
+            max_gap = min(1.6 * float(sorted(positive_gaps)[len(positive_gaps) // 2]), axis_length * 0.50)
             for left, right, gap in zip(ordered, ordered[1:], gaps):
                 if gap <= max_gap:
                     union(left, right)
