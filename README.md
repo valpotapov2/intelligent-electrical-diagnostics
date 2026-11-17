@@ -58,4 +58,18 @@ edi-ingest path/to/diagram.png --lang rus+eng -o model.draft.json
 pytest
 ```
 
-См. [статус MVP](docs/architecture/ingestion-mvp-status.md), [конвейер обработки схем](docs/architecture/diagram-ingestion-pipeline.md) и [формат графовой модели](docs/architecture/electrical-object-graph.md).
+## Объекты для демонстрации диагностического ядра
+
+Объекты и их модели располагаются в `docs/objects` и `examples/objects`.
+
+### Объект №3 — FAA DRPDS
+
+Dual Redundant Power Distribution System — многоуровневая резервированная система электроснабжения TRACON.
+
+- [Полное техническое описание, режимы, подсистемы и диагностические сценарии](docs/objects/faa-drpds-technical-description.md)
+- [Функциональная однолинейная архитектура SVG](docs/objects/faa-drpds-functional-architecture.svg)
+- [Графовая модель объекта JSON](examples/objects/faa-drpds.generic.json)
+
+Модель является generic/reference model. Она не заменяет site-specific однолинейную схему, перечень уставок или утверждённые процедуры переключения. Историческое руководство FAA JO 6480.22 отменено; актуальная общая политика приведена в JO 6950.2F.
+
+См. также [статус MVP](docs/architecture/ingestion-mvp-status.md), [конвейер обработки схем](docs/architecture/diagram-ingestion-pipeline.md) и [формат графовой модели](docs/architecture/electrical-object-graph.md).
