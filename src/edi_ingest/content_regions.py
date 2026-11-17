@@ -56,11 +56,13 @@ def _grid_regions(geometry: dict[str, Any], width: int, height: int) -> list[dic
     if len(points) < 6:
         return []
 
-    # Spatial bins keep distant drawing-frame intersections from becoming one page-wide ROI.
-    cell = max(24, int(min(width, height) * 0.50))
+    # Connect only nearby intersections. A page-scale radius creates transitive
+    # chains across unrelated diagrams and collapses the whole sheet into one ROI.
+    radius = max(24, int(min(width, height) * 0.08))
+    radius_squared = radius * radius
     bins: dict[tuple[int, int], list[int]] = {}
     for index, (x, y, _, _) in enumerate(points):
-        bins.setdefault((x // cell, y // cell), []).append(index)
+        bins.setdefault((x // radius, y // radius), []).append(index)
 
     parent = list(range(len(points)))
 
@@ -79,7 +81,7 @@ def _grid_regions(geometry: dict[str, Any], width: int, height: int) -> list[dic
                 if j <= i:
                     continue
                 x2, y2 = points[j][0], points[j][1]
-                if abs(x1 - x2) <= cell and abs(y1 - y2) <= cell:
+                if (x1 - x2) ** 2 + (y1 - y2) ** 2 <= radius_squared:
                     a, b = find(i), find(j)
                     if a != b:
                         parent[b] = a
