@@ -10,6 +10,8 @@ from PIL import Image
 import pytesseract
 from pytesseract import Output
 
+from .geometry import detect_geometry
+
 
 SUPPORTED_IMAGES = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".bmp"}
 
@@ -72,11 +74,14 @@ def ingest_document(path: str | Path, lang: str = "rus+eng", dpi: int = 220, psm
             pixmap = page.get_pixmap(dpi=dpi, alpha=False)
             image = Image.open(io.BytesIO(pixmap.tobytes("png"))).convert("RGB")
             page_result = _ocr_image(image, index, lang, psm)
+            page_result["geometry"] = detect_geometry(image)
             page_result["source_page_size"] = [page.rect.width, page.rect.height]
             pages.append(page_result)
     elif suffix in SUPPORTED_IMAGES:
         image = Image.open(source).convert("RGB")
-        pages.append(_ocr_image(image, 1, lang, psm))
+        page_result = _ocr_image(image, 1, lang, psm)
+        page_result["geometry"] = detect_geometry(image)
+        pages.append(page_result)
     else:
         raise ValueError(f"Unsupported input format: {suffix}")
 
