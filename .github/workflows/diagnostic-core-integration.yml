@@ -6,6 +6,8 @@ on:
     paths:
       - "src/edi_ingest/diagnostic_core.py"
       - "tests/test_diagnostic_core_bridge.py"
+      - "tests/test_kindergarten_core_scenarios.py"
+      - "benchmarks/kindergarten-switchboard/diagnostic-core-module.synthetic.yaml"
       - "docs/architecture/diagnostic-core-integration.md"
       - ".github/workflows/diagnostic-core-integration.yml"
   workflow_dispatch:
@@ -34,12 +36,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
           pip install -r diagnostics-mvp/requirements.txt
-      - name: Run real-core contract smoke test
+      - name: Run real-core contract and KSW scenario tests
         if: env.DIAGNOSTICS_MVP_TOKEN != ''
         env:
           DIAGNOSTICS_MVP_PATH: diagnostics-mvp
-        run: pytest -q tests/test_diagnostic_core_bridge.py
+        run: |
+          pytest -q tests/test_diagnostic_core_bridge.py
+          pytest -q tests/test_kindergarten_core_scenarios.py
       - name: Report missing private-repository credential
         if: env.DIAGNOSTICS_MVP_TOKEN == ''
         run: |
-          echo "::warning::Set repository secret DIAGNOSTICS_MVP_TOKEN to enable the real diagnostic-core integration test."
+          echo "::warning::Set repository secret DIAGNOSTICS_MVP_TOKEN to enable the real diagnostic-core integration tests."
