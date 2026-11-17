@@ -55,10 +55,20 @@ def detect_symbol_candidates(
 
         if circularity >= 0.72:
             family = "circular_outline"
-        elif vertices == 4 and 0.65 <= aspect_ratio <= 1.55:
-            family = "quadrilateral_outline"
         elif vertices == 4:
-            family = "rectangular_outline"
+            points = approximation.reshape(-1, 2).astype(float)
+            angles = []
+            for point_index in range(4):
+                previous = points[(point_index - 1) % 4] - points[point_index]
+                following = points[(point_index + 1) % 4] - points[point_index]
+                denominator = float(np.linalg.norm(previous) * np.linalg.norm(following))
+                if denominator:
+                    cosine = float(np.clip(np.dot(previous, following) / denominator, -1.0, 1.0))
+                    angles.append(float(np.degrees(np.arccos(cosine))))
+            if len(angles) == 4 and all(70 <= angle <= 110 for angle in angles):
+                family = "rectangular_outline"
+            else:
+                family = "quadrilateral_outline"
         elif vertices >= 5:
             family = "polygonal_outline"
         else:
