@@ -32,6 +32,7 @@ def run_diagnostic_session(
     instruments_at_hand: set[str] | None = None,
     qualified: bool = False,
     max_steps: int = 100,
+    overrides: dict | None = None,
 ) -> dict:
     """Run the actual core decision loop through its safety gateway.
 
@@ -45,7 +46,7 @@ def run_diagnostic_session(
 
     module = dmodule.load(module_path)
     policy = dpolicy.load(policy_path) if policy_path else dpolicy.load()
-    model = dmodel.build(module, policy)
+    model = dmodel.build(module, policy, overrides=overrides)
     session = engine.Session(model, instruments_at_hand)
     gateway = dsafety.SafetyGateway(
         module,
