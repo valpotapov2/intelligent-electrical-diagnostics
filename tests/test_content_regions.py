@@ -39,8 +39,8 @@ def test_line_grid_requires_multiple_intersections():
 def test_shape_density_groups_nearby_candidates_without_naming_them():
     shapes = {"candidates": [
         {"center": [40, 40], "bbox": [30, 30, 50, 50]},
-        {"center": [70, 45], "bbox": [60, 35, 80, 55]},
-        {"center": [90, 70], "bbox": [80, 60, 100, 80]},
+        {"center": [60, 45], "bbox": [50, 35, 70, 55]},
+        {"center": [75, 70], "bbox": [65, 60, 85, 80]},
     ]}
     result = propose_content_regions(300, 200, [], {}, shapes)
     cluster = next(item for item in result["regions"] if item["kind"] == "graphic_shape_cluster")
