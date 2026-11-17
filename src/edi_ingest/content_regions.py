@@ -56,12 +56,9 @@ def _grid_regions(geometry: dict[str, Any], width: int, height: int) -> list[dic
     if len(points) < 6:
         return []
 
-    # Spatial bins keep distant drawing-frame intersections from becoming one page-wide ROI.
-    cell = max(24, int(min(width, height) * 0.50))
-    bins: dict[tuple[int, int], list[int]] = {}
-    for index, (x, y, _, _) in enumerate(points):
-        bins.setdefault((x // cell, y // cell), []).append(index)
-
+    # Intersections belong to the same local grid component when they share
+    # an actual detected line segment. Pixel-radius clustering split ordinary
+    # grids whenever adjacent columns were farther apart than the chosen radius.
     parent = list(range(len(points)))
 
     def find(index: int) -> int:
@@ -70,19 +67,20 @@ def _grid_regions(geometry: dict[str, Any], width: int, height: int) -> list[dic
             index = parent[index]
         return index
 
-    for (gx, gy), indices in bins.items():
-        nearby = [idx for dx in (-1, 0, 1) for dy in (-1, 0, 1)
-                  for idx in bins.get((gx + dx, gy + dy), [])]
-        for i in indices:
-            x1, y1 = points[i][0], points[i][1]
-            for j in nearby:
-                if j <= i:
-                    continue
-                x2, y2 = points[j][0], points[j][1]
-                if abs(x1 - x2) <= cell and abs(y1 - y2) <= cell:
-                    a, b = find(i), find(j)
-                    if a != b:
-                        parent[b] = a
+    def union(first: int, second: int) -> None:
+        a, b = find(first), find(second)
+        if a != b:
+            parent[b] = a
+
+    by_horizontal: dict[str, list[int]] = {}
+    by_vertical: dict[str, list[int]] = {}
+    for index, (_, _, horizontal_id, vertical_id) in enumerate(points):
+        by_horizontal.setdefault(horizontal_id, []).append(index)
+        by_vertical.setdefault(vertical_id, []).append(index)
+
+    for members in [*by_horizontal.values(), *by_vertical.values()]:
+        for index in members[1:]:
+            union(members[0], index)
 
     groups: dict[int, list[int]] = {}
     for index in range(len(points)):
