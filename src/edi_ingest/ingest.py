@@ -11,6 +11,7 @@ import pytesseract
 from pytesseract import Output
 
 from .geometry import detect_geometry
+from .symbols import detect_symbol_candidates
 
 
 SUPPORTED_IMAGES = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".bmp"}
@@ -112,6 +113,7 @@ def ingest_document(path: str | Path, lang: str = "rus+eng", dpi: int = 220, psm
             image = Image.open(io.BytesIO(pixmap.tobytes("png"))).convert("RGB")
             page_result = _ocr_image(image, index, lang, psm)
             page_result["geometry"] = detect_geometry(image)
+            page_result["symbol_candidates"] = detect_symbol_candidates(image, page_result["tokens"])
             page_result["pdf_vector_geometry"] = _extract_pdf_vector_primitives(page, render_scale=dpi / 72)
             page_result["source_page_size"] = [page.rect.width, page.rect.height]
             pages.append(page_result)
@@ -119,6 +121,7 @@ def ingest_document(path: str | Path, lang: str = "rus+eng", dpi: int = 220, psm
         image = Image.open(source).convert("RGB")
         page_result = _ocr_image(image, 1, lang, psm)
         page_result["geometry"] = detect_geometry(image)
+        page_result["symbol_candidates"] = detect_symbol_candidates(image, page_result["tokens"])
         pages.append(page_result)
     else:
         raise ValueError(f"Unsupported input format: {suffix}")
