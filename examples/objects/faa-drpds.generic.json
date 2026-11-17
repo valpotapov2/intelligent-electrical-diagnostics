@@ -1,0 +1,1239 @@
+{
+  "schema_version": "0.1",
+  "source_documents": [
+    {
+      "id": "faa-jo-6480-22",
+      "kind": "single_line_diagram",
+      "filename": "FAA JO 6480.22 Figure 2-2 (historical, cancelled)",
+      "page": 5,
+      "media_type": "application/pdf",
+      "url": "https://www.faa.gov/documentLibrary/media/Order/6480.22.pdf"
+    },
+    {
+      "id": "faa-jo-6480-22-block",
+      "kind": "other",
+      "filename": "FAA JO 6480.22 Figure 2-1 and paragraphs 201-207 (historical, cancelled)",
+      "page": 4,
+      "media_type": "application/pdf",
+      "url": "https://www.faa.gov/documentLibrary/media/Order/6480.22.pdf"
+    },
+    {
+      "id": "faa-jo-6950-2f",
+      "kind": "specification",
+      "filename": "FAA JO 6950.2F (current general power policy)",
+      "page": 1,
+      "media_type": "application/pdf",
+      "url": "https://www.faa.gov/documentLibrary/media/Order/JO_6950_2F.pdf"
+    }
+  ],
+  "object": {
+    "name": "FAA DRPDS — generic large TRACON architecture",
+    "facility_type": "TRACON critical/essential power distribution system",
+    "supply": {
+      "architecture": "dual commercial utility transformers + standby engine generators + UPS critical distribution",
+      "nominal_secondary_voltage": "480/277 V (historical handbook typical description; site-specific)",
+      "site_specific_values_required": true
+    },
+    "installation_year": null
+  },
+  "components": [
+    {
+      "id": "U1",
+      "kind": "supply",
+      "label": "Utility feeder 1",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "commercial_source",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Utility feeder 1"
+        }
+      ]
+    },
+    {
+      "id": "T1",
+      "kind": "supply",
+      "label": "Transformer T1",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "step_down_transformer",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Transformer T1"
+        }
+      ]
+    },
+    {
+      "id": "U2",
+      "kind": "supply",
+      "label": "Utility feeder 2",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "commercial_source",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Utility feeder 2"
+        }
+      ]
+    },
+    {
+      "id": "T2",
+      "kind": "supply",
+      "label": "Transformer T2",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "step_down_transformer",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Transformer T2"
+        }
+      ]
+    },
+    {
+      "id": "SWGR1",
+      "kind": "switchboard",
+      "label": "SWGR 1",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "main_switchgear",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "SWGR 1"
+        }
+      ]
+    },
+    {
+      "id": "SWGR2",
+      "kind": "switchboard",
+      "label": "SWGR 2",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "main_switchgear",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "SWGR 2"
+        }
+      ]
+    },
+    {
+      "id": "1M1",
+      "kind": "breaker",
+      "label": "1M1",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "commercial_main_incomer",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "1M1"
+        }
+      ]
+    },
+    {
+      "id": "2M1",
+      "kind": "breaker",
+      "label": "2M1",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "commercial_main_incomer",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "2M1"
+        }
+      ]
+    },
+    {
+      "id": "TIE",
+      "kind": "breaker",
+      "label": "SWGR tie breaker",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "bus_tie",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "SWGR tie breaker"
+        }
+      ]
+    },
+    {
+      "id": "EGSET",
+      "kind": "supply",
+      "label": "Engine generator set EG 1..n",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "standby_generator_group",
+        "site_specific": true,
+        "typical_units": 4,
+        "engine_generator_count_site_specific": true,
+        "parallel_operation": true,
+        "extra_capacity_requirement": "at least two more than required for facility load in historical handbook"
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Engine generator set EG 1..n"
+        }
+      ]
+    },
+    {
+      "id": "PSG",
+      "kind": "switchboard",
+      "label": "Power switchgear / generator common bus",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "generator_switchgear",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Power switchgear / generator common bus"
+        }
+      ]
+    },
+    {
+      "id": "1M2",
+      "kind": "breaker",
+      "label": "1M2",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "standby_incomer",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "1M2"
+        }
+      ]
+    },
+    {
+      "id": "2M2",
+      "kind": "breaker",
+      "label": "2M2",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "standby_incomer",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "2M2"
+        }
+      ]
+    },
+    {
+      "id": "ESS-SWBD",
+      "kind": "switchboard",
+      "label": "Essential switchboards",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "essential_distribution",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Essential switchboards"
+        }
+      ]
+    },
+    {
+      "id": "MCC",
+      "kind": "switchboard",
+      "label": "Motor control centers",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "motor_control_center",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Motor control centers"
+        }
+      ]
+    },
+    {
+      "id": "UPS-SWGR",
+      "kind": "switchboard",
+      "label": "UPS supply switchgear",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "ups_input_distribution",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "UPS supply switchgear"
+        }
+      ]
+    },
+    {
+      "id": "UPS-GROUP",
+      "kind": "supply",
+      "label": "UPS units",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "uninterruptible_power_supply_group",
+        "site_specific": true,
+        "working_units": 3,
+        "test_unit_present": true,
+        "architecture": "isolated_redundant",
+        "ups_1_role": "bypass_source_for_ups_2_and_ups_3",
+        "ups_2_output": "critical_bus_A",
+        "ups_3_output": "critical_bus_B",
+        "ratings_site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "UPS units"
+        }
+      ]
+    },
+    {
+      "id": "UPS-SWBD",
+      "kind": "switchboard",
+      "label": "UPS output switchboards",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "ups_output_distribution",
+        "site_specific": true,
+        "units": 3,
+        "ups_1_output_to_bypass_inputs_ups_2_ups_3": true,
+        "ups_2_output_to_critical_bus_A": true,
+        "ups_3_output_to_critical_bus_B": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "UPS output switchboards"
+        }
+      ]
+    },
+    {
+      "id": "BUS-A",
+      "kind": "busbar",
+      "label": "Critical Bus A",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "critical_bus",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Critical Bus A"
+        }
+      ]
+    },
+    {
+      "id": "BUS-B",
+      "kind": "busbar",
+      "label": "Critical Bus B",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "critical_bus",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Critical Bus B"
+        }
+      ]
+    },
+    {
+      "id": "PDU-GROUP",
+      "kind": "switchboard",
+      "label": "Power Distribution Units",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "pdu_group",
+        "site_specific": true,
+        "typical_count": 8,
+        "hcf_count": 6,
+        "input": "480/277 V three-wire",
+        "output": "208/120 V four-wire",
+        "paired_for_maintenance": true,
+        "each_pdu_feeds_two_sats": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Power Distribution Units"
+        }
+      ]
+    },
+    {
+      "id": "SATS-GROUP",
+      "kind": "ats",
+      "label": "Solid-state automatic transfer switches",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "static_automatic_transfer_switch_group",
+        "site_specific": true,
+        "dual_source": true,
+        "source_1": "PDU fed from Critical Bus A",
+        "source_2": "PDU fed from Critical Bus B",
+        "automatic_transfer_on_source_failure": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Solid-state automatic transfer switches"
+        }
+      ]
+    },
+    {
+      "id": "CDP-GROUP",
+      "kind": "switchboard",
+      "label": "Critical Distribution Panels",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "critical_distribution_panel_group",
+        "site_specific": true,
+        "typical_count": 4,
+        "hcf_count": 3,
+        "distribution": "modified MCC design",
+        "upstream_sats_isolation_for_maintenance": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Critical Distribution Panels"
+        }
+      ]
+    },
+    {
+      "id": "CRIT-LOADS",
+      "kind": "load",
+      "label": "Critical electronic and computer loads",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "critical_load_group",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Critical electronic and computer loads"
+        }
+      ]
+    },
+    {
+      "id": "ESS-LOADS",
+      "kind": "load",
+      "label": "Essential facility loads",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "essential_load_group",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Essential facility loads"
+        }
+      ]
+    },
+    {
+      "id": "PMCS",
+      "kind": "unknown",
+      "label": "Power Monitoring and Control System",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "pmcs_owsp_plc_powerlogic_network",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Power Monitoring and Control System"
+        }
+      ]
+    },
+    {
+      "id": "DC125",
+      "kind": "supply",
+      "label": "125 V DC control power system",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "dc_control_battery_system",
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "125 V DC control power system"
+        }
+      ]
+    },
+    {
+      "id": "LOADBANK-SWBD",
+      "kind": "switchboard",
+      "label": "Load bank switchboard",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "test_load_distribution_switchboard",
+        "connections_to_psg_and_ups_outputs": true,
+        "interlocked_to_prevent_multiple_sources": true,
+        "site_specific": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Load bank distribution equipment described in system block diagram and paragraph 204d"
+        }
+      ]
+    },
+    {
+      "id": "LOADBANK",
+      "kind": "load",
+      "label": "Load bank",
+      "manufacturer": null,
+      "model": null,
+      "attributes": {
+        "equipment_type": "resistive_or_linear_test_load_bank",
+        "historical_typical_rating_kw": 1000,
+        "hcf_rating_kw": 1500,
+        "used_for_generator_and_ups_load_testing": true
+      },
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Load bank described in paragraph 204d"
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "E01",
+      "from": "U1",
+      "to": "T1",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Utility feeder 1 supplies transformer T1"
+        }
+      ]
+    },
+    {
+      "id": "E02",
+      "from": "T1",
+      "to": "SWGR1",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Transformer T1 supplies SWGR 1"
+        }
+      ]
+    },
+    {
+      "id": "E03",
+      "from": "U2",
+      "to": "T2",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Utility feeder 2 supplies transformer T2"
+        }
+      ]
+    },
+    {
+      "id": "E04",
+      "from": "T2",
+      "to": "SWGR2",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Transformer T2 supplies SWGR 2"
+        }
+      ]
+    },
+    {
+      "id": "E05",
+      "from": "SWGR1",
+      "to": "1M1",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Commercial main incomer 1M1"
+        }
+      ]
+    },
+    {
+      "id": "E06",
+      "from": "SWGR2",
+      "to": "2M1",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Commercial main incomer 2M1"
+        }
+      ]
+    },
+    {
+      "id": "E07",
+      "from": "SWGR1",
+      "to": "TIE",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "SWGR 1 tie connection"
+        }
+      ]
+    },
+    {
+      "id": "E08",
+      "from": "TIE",
+      "to": "SWGR2",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "SWGR 2 tie connection"
+        }
+      ]
+    },
+    {
+      "id": "E09",
+      "from": "EGSET",
+      "to": "PSG",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Generator outputs connect to common generator bus"
+        }
+      ]
+    },
+    {
+      "id": "E10",
+      "from": "PSG",
+      "to": "1M2",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Standby source path to SWGR 1"
+        }
+      ]
+    },
+    {
+      "id": "E11",
+      "from": "PSG",
+      "to": "2M2",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Standby source path to SWGR 2"
+        }
+      ]
+    },
+    {
+      "id": "E12",
+      "from": "1M2",
+      "to": "SWGR1",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Standby incomer to SWGR 1"
+        }
+      ]
+    },
+    {
+      "id": "E13",
+      "from": "2M2",
+      "to": "SWGR2",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Standby incomer to SWGR 2"
+        }
+      ]
+    },
+    {
+      "id": "E14",
+      "from": "SWGR1",
+      "to": "ESS-SWBD",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Essential distribution path"
+        }
+      ]
+    },
+    {
+      "id": "E15",
+      "from": "SWGR2",
+      "to": "ESS-SWBD",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Redundant essential distribution path"
+        }
+      ]
+    },
+    {
+      "id": "E16",
+      "from": "ESS-SWBD",
+      "to": "MCC",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Essential switchboard feeds MCC"
+        }
+      ]
+    },
+    {
+      "id": "E17",
+      "from": "MCC",
+      "to": "ESS-LOADS",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "MCC feeds essential loads"
+        }
+      ]
+    },
+    {
+      "id": "E18",
+      "from": "SWGR1",
+      "to": "UPS-SWGR",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Critical power supply path"
+        }
+      ]
+    },
+    {
+      "id": "E19",
+      "from": "SWGR2",
+      "to": "UPS-SWGR",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Redundant critical power supply path"
+        }
+      ]
+    },
+    {
+      "id": "E20",
+      "from": "UPS-SWGR",
+      "to": "UPS-GROUP",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "UPS input supply"
+        }
+      ]
+    },
+    {
+      "id": "E21",
+      "from": "UPS-GROUP",
+      "to": "UPS-SWBD",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "UPS conditioned outputs"
+        }
+      ]
+    },
+    {
+      "id": "E22",
+      "from": "UPS-SWBD",
+      "to": "BUS-A",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Critical bus A supply"
+        }
+      ]
+    },
+    {
+      "id": "E23",
+      "from": "UPS-SWBD",
+      "to": "BUS-B",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Critical bus B supply"
+        }
+      ]
+    },
+    {
+      "id": "E24",
+      "from": "BUS-A",
+      "to": "PDU-GROUP",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Critical bus A distribution"
+        }
+      ]
+    },
+    {
+      "id": "E25",
+      "from": "BUS-B",
+      "to": "PDU-GROUP",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "Critical bus B distribution"
+        }
+      ]
+    },
+    {
+      "id": "E26",
+      "from": "PDU-GROUP",
+      "to": "SATS-GROUP",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "PDU/SATS critical distribution relationship"
+        }
+      ]
+    },
+    {
+      "id": "E27",
+      "from": "SATS-GROUP",
+      "to": "CDP-GROUP",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "SATS outputs feed critical distribution panels"
+        }
+      ]
+    },
+    {
+      "id": "E28",
+      "from": "CDP-GROUP",
+      "to": "CRIT-LOADS",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5,
+          "text": "CDP feeds critical loads"
+        }
+      ]
+    },
+    {
+      "id": "E29",
+      "from": "PMCS",
+      "to": "SWGR1",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": "faa-jo-6480-22-block",
+          "text": "PMCS monitors and controls distribution equipment"
+        }
+      ]
+    },
+    {
+      "id": "E30",
+      "from": "PMCS",
+      "to": "SWGR2",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": "faa-jo-6480-22-block",
+          "text": "PMCS monitors and controls distribution equipment"
+        }
+      ]
+    },
+    {
+      "id": "E31",
+      "from": "PMCS",
+      "to": "EGSET",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": "faa-jo-6480-22-block",
+          "text": "PMCS monitors and controls standby generation"
+        }
+      ]
+    },
+    {
+      "id": "E32",
+      "from": "PMCS",
+      "to": "UPS-GROUP",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": "faa-jo-6480-22-block",
+          "text": "PMCS monitors critical power subsystems"
+        }
+      ]
+    },
+    {
+      "id": "E33",
+      "from": "DC125",
+      "to": "PMCS",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": "faa-jo-6480-22-block",
+          "text": "DC control power supports control and monitoring subsystems"
+        }
+      ]
+    },
+    {
+      "id": "E34",
+      "from": "PSG",
+      "to": "LOADBANK-SWBD",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Load bank can be connected to PSG through load bank switchboard"
+        }
+      ]
+    },
+    {
+      "id": "E35",
+      "from": "UPS-SWBD",
+      "to": "LOADBANK-SWBD",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Load bank can be connected to UPS output switchboards through load bank switchboard"
+        }
+      ]
+    },
+    {
+      "id": "E36",
+      "from": "LOADBANK-SWBD",
+      "to": "LOADBANK",
+      "conductor": null,
+      "status": "recognized",
+      "confidence": null,
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4,
+          "text": "Load bank switchboard supplies load bank"
+        }
+      ]
+    }
+  ],
+  "circuits": [],
+  "issues": [
+    {
+      "id": "SITE-001",
+      "severity": "high",
+      "description": "Site-specific single-line drawings are required to confirm actual component count, labels, topology, transformer ratings and cable routes.",
+      "status": "open",
+      "related_ids": []
+    },
+    {
+      "id": "SITE-002",
+      "severity": "high",
+      "description": "Actual primary voltages, transformer ratings, generator ratings and protective-device settings are not established by this generic model.",
+      "status": "open",
+      "related_ids": []
+    },
+    {
+      "id": "SITE-003",
+      "severity": "high",
+      "description": "The detailed maintenance handbook JO 6480.22 is cancelled; current JO 6480.22A content is restricted. This model is an architecture reference, not an approved maintenance procedure.",
+      "status": "open",
+      "related_ids": []
+    },
+    {
+      "id": "SITE-004",
+      "severity": "medium",
+      "description": "Exact number and allocation of UPS, PDU, SATS, CDP, MCC and feeder circuits vary by facility.",
+      "status": "open",
+      "related_ids": []
+    },
+    {
+      "id": "SITE-005",
+      "severity": "high",
+      "description": "Control wiring, interlock truth tables, ZSI wiring and field terminal references require site-specific drawings and approved settings documentation.",
+      "status": "open",
+      "related_ids": []
+    }
+  ],
+  "extraction": {
+    "tool_version": "manual-source-model-0.1",
+    "created_at": "2026-11-17T18:48:00Z",
+    "review_status": "partially_reviewed"
+  }
+}
