@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "electrical-diagram-ingestion"
+version = "0.1.0"
+description = "OCR-first ingestion prototype for electrical single-line diagrams"
+requires-python = ">=3.10"
+dependencies = [
+  "Pillow>=10.0",
+  "pytesseract>=0.3.10",
+  "PyMuPDF>=1.23"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "jsonschema>=4.21"]
+
+[project.scripts]
+edi-ingest = "edi_ingest.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
