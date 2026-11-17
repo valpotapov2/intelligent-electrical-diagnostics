@@ -853,12 +853,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            335,
             445,
-            0,
+            355,
             545
           ],
-          "text": "QF1 cable"
+          "text": "QF1 cable inscription"
         }
       ]
     },
@@ -879,12 +879,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            392,
             445,
-            0,
+            412,
             545
           ],
-          "text": "QF2 cable"
+          "text": "QF2 cable inscription"
         }
       ]
     },
@@ -905,12 +905,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            450,
             445,
-            0,
+            470,
             545
           ],
-          "text": "QF3 cable"
+          "text": "QF3 cable inscription"
         }
       ]
     },
@@ -931,12 +931,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            508,
             445,
-            0,
+            528,
             545
           ],
-          "text": "QF4 cable"
+          "text": "QF4 cable inscription"
         }
       ]
     },
@@ -957,12 +957,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            624,
             445,
-            0,
+            644,
             545
           ],
-          "text": "QF5 cable"
+          "text": "QF5 cable inscription"
         }
       ]
     },
@@ -983,12 +983,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            682,
             445,
-            0,
+            702,
             545
           ],
-          "text": "QF6 cable"
+          "text": "QF6 cable inscription"
         }
       ]
     },
@@ -1009,12 +1009,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            740,
             445,
-            0,
+            760,
             545
           ],
-          "text": "QF7 cable"
+          "text": "QF7 cable inscription"
         }
       ]
     },
@@ -1035,12 +1035,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            798,
             445,
-            0,
+            818,
             545
           ],
-          "text": "QF8 cable"
+          "text": "QF8 cable inscription"
         }
       ]
     },
@@ -1061,12 +1061,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            856,
             445,
-            0,
+            876,
             545
           ],
-          "text": "QF9 cable"
+          "text": "QF9 cable inscription"
         }
       ]
     },
@@ -1087,12 +1087,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            914,
             445,
-            0,
+            934,
             545
           ],
-          "text": "QF10 cable"
+          "text": "QF10 cable inscription"
         }
       ]
     }
@@ -1110,9 +1110,9 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
-            365,
-            0,
+            341,
+            390,
+            345,
             545
           ],
           "text": "QF1; SVG shows continuous outgoing feeder and cable label"
@@ -1131,9 +1131,9 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
-            365,
-            0,
+            398,
+            390,
+            402,
             545
           ],
           "text": "QF2; SVG shows continuous outgoing feeder and cable label"
@@ -1152,9 +1152,9 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
-            365,
-            0,
+            456,
+            390,
+            460,
             545
           ],
           "text": "QF3; SVG shows continuous outgoing feeder and cable label"
@@ -1173,9 +1173,9 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
-            365,
-            0,
+            514,
+            390,
+            518,
             545
           ],
           "text": "QF4; SVG shows continuous outgoing feeder and cable label"
@@ -1194,9 +1194,9 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
-            365,
-            0,
+            630,
+            390,
+            634,
             545
           ],
           "text": "QF5; SVG shows continuous outgoing feeder and cable label"
@@ -1215,9 +1215,9 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
-            365,
-            0,
+            688,
+            390,
+            692,
             545
           ],
           "text": "QF6; SVG shows continuous outgoing feeder and cable label"
@@ -1236,9 +1236,9 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
-            365,
-            0,
+            746,
+            390,
+            750,
             545
           ],
           "text": "QF7; SVG shows continuous outgoing feeder and cable label"
@@ -1257,9 +1257,9 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
-            365,
-            0,
+            804,
+            390,
+            808,
             545
           ],
           "text": "QF8; SVG shows continuous outgoing feeder and cable label"
@@ -1278,9 +1278,9 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
-            365,
-            0,
+            862,
+            390,
+            866,
             545
           ],
           "text": "QF9; SVG shows continuous outgoing feeder and cable label"
@@ -1299,9 +1299,9 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
-            365,
-            0,
+            920,
+            390,
+            924,
             545
           ],
           "text": "QF10; SVG shows continuous outgoing feeder and cable label"
@@ -1320,10 +1320,10 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            341,
             445,
-            0,
-            722
+            345,
+            708
           ],
           "text": "QF1 feeder to plan position 1; explicit SVG line/branch geometry"
         }
@@ -1341,10 +1341,10 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            398,
             445,
-            0,
-            722
+            402,
+            612
           ],
           "text": "QF2 feeder to plan position 2; explicit SVG line/branch geometry"
         }
@@ -1362,10 +1362,10 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            456,
             445,
-            0,
-            722
+            460,
+            708
           ],
           "text": "QF3 feeder to plan position 3; explicit SVG line/branch geometry"
         }
@@ -1383,10 +1383,10 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            514,
             445,
-            0,
-            722
+            518,
+            612
           ],
           "text": "QF4 feeder to plan position 4; explicit SVG line/branch geometry"
         }
@@ -1425,10 +1425,10 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            630,
             445,
-            0,
-            722
+            634,
+            708
           ],
           "text": "QF5 feeder to plan position 6; explicit SVG line/branch geometry"
         }
@@ -1446,10 +1446,10 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            688,
             445,
-            0,
-            722
+            692,
+            708
           ],
           "text": "QF6 feeder to plan position 7; explicit SVG line/branch geometry"
         }
@@ -1467,10 +1467,10 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            746,
             445,
-            0,
-            722
+            750,
+            708
           ],
           "text": "QF7 feeder to plan position 8; explicit SVG line/branch geometry"
         }
@@ -1488,10 +1488,10 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            804,
             445,
-            0,
-            722
+            808,
+            708
           ],
           "text": "QF8 feeder to plan position 9; explicit SVG line/branch geometry"
         }
@@ -1509,10 +1509,10 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            862,
             445,
-            0,
-            722
+            866,
+            708
           ],
           "text": "QF9 feeder to plan position 10; explicit SVG line/branch geometry"
         }
@@ -1530,12 +1530,222 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            920,
             445,
-            0,
-            722
+            924,
+            708
           ],
           "text": "QF10 feeder to plan position 11; explicit SVG line/branch geometry"
+        }
+      ]
+    },
+    {
+      "id": "edge-bus-to-qf1",
+      "from": "bus-l123",
+      "to": "breaker-qf1",
+      "conductor": "L1/L2/L3 feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            341,
+            292,
+            345,
+            365
+          ],
+          "text": "Continuous vertical outgoing line from phase bus through breaker QF1"
+        }
+      ]
+    },
+    {
+      "id": "edge-bus-to-qf2",
+      "from": "bus-l123",
+      "to": "breaker-qf2",
+      "conductor": "L1/L2/L3 feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            398,
+            292,
+            402,
+            365
+          ],
+          "text": "Continuous vertical outgoing line from phase bus through breaker QF2"
+        }
+      ]
+    },
+    {
+      "id": "edge-bus-to-qf3",
+      "from": "bus-l123",
+      "to": "breaker-qf3",
+      "conductor": "L1/L2/L3 feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            456,
+            292,
+            460,
+            365
+          ],
+          "text": "Continuous vertical outgoing line from phase bus through breaker QF3"
+        }
+      ]
+    },
+    {
+      "id": "edge-bus-to-qf4",
+      "from": "bus-l123",
+      "to": "breaker-qf4",
+      "conductor": "L1/L2/L3 feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            514,
+            292,
+            518,
+            365
+          ],
+          "text": "Continuous vertical outgoing line from phase bus through breaker QF4"
+        }
+      ]
+    },
+    {
+      "id": "edge-bus-to-qf5",
+      "from": "bus-l123",
+      "to": "breaker-qf5",
+      "conductor": "L1/L2/L3 feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            630,
+            292,
+            634,
+            365
+          ],
+          "text": "Continuous vertical outgoing line from phase bus through breaker QF5"
+        }
+      ]
+    },
+    {
+      "id": "edge-bus-to-qf6",
+      "from": "bus-l123",
+      "to": "breaker-qf6",
+      "conductor": "L1/L2/L3 feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            688,
+            292,
+            692,
+            365
+          ],
+          "text": "Continuous vertical outgoing line from phase bus through breaker QF6"
+        }
+      ]
+    },
+    {
+      "id": "edge-bus-to-qf7",
+      "from": "bus-l123",
+      "to": "breaker-qf7",
+      "conductor": "L1/L2/L3 feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            746,
+            292,
+            750,
+            365
+          ],
+          "text": "Continuous vertical outgoing line from phase bus through breaker QF7"
+        }
+      ]
+    },
+    {
+      "id": "edge-bus-to-qf8",
+      "from": "bus-l123",
+      "to": "breaker-qf8",
+      "conductor": "L1/L2/L3 feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            804,
+            292,
+            808,
+            365
+          ],
+          "text": "Continuous vertical outgoing line from phase bus through breaker QF8"
+        }
+      ]
+    },
+    {
+      "id": "edge-bus-to-qf9",
+      "from": "bus-l123",
+      "to": "breaker-qf9",
+      "conductor": "L1/L2/L3 feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            862,
+            292,
+            866,
+            365
+          ],
+          "text": "Continuous vertical outgoing line from phase bus through breaker QF9"
+        }
+      ]
+    },
+    {
+      "id": "edge-bus-to-qf10",
+      "from": "bus-l123",
+      "to": "breaker-qf10",
+      "conductor": "L1/L2/L3 feeder",
+      "status": "recognized",
+      "confidence": 1,
+      "sources": [
+        {
+          "document_id": "schema-svg",
+          "page": 1,
+          "bbox": [
+            920,
+            292,
+            924,
+            365
+          ],
+          "text": "Continuous vertical outgoing line from phase bus through breaker QF10"
         }
       ]
     }
