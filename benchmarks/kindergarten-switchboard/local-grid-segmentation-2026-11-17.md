@@ -13,7 +13,7 @@ The previous implementation joined every intersection sharing a detected horizon
 
 ## Change in this iteration
 
-Intersections are now connected only to their neighboring intersections along a shared segment. The allowed gap is derived from the median spacing on that segment (1.6×), capped at 25% of the corresponding page dimension. This keeps regularly spaced grid points together while splitting large gaps along long merged lines.
+Intersections are now connected only to their neighboring intersections along a shared segment. The allowed gap is derived from the median spacing on that segment (1.6×), capped at 50% of the corresponding page dimension. This keeps regularly spaced grid points together while splitting large gaps along long merged lines.
 
 ## Result on the supplied image
 
@@ -21,28 +21,28 @@ Intersections are now connected only to their neighboring intersections along a 
 - Detected vertical segments: 84.
 - Intersection candidates: 272.
 - Previous shared-segment grouping: 1 page-wide component; rejected.
-- New local-neighbor grouping: 7 bounded grid candidates survived the existing size filters.
+- New local-neighbor grouping: 8 bounded grid candidates survived the existing size filters.
 - Largest lower-page grid candidate:
   - bbox: `[434, 863, 1218, 1109]`
   - 72 intersections
   - 6 horizontal segments
   - 12 vertical segments
-- A table-like proposal was produced for that lower-page candidate:
-  - 28 whole-page OCR tokens fall inside the proposal
-  - 7 horizontal text bands
-- The OCR crop of the lower-page candidate still returns heavily corrupted text; this is localization progress, not successful table transcription.
-- A second table-like proposal was also produced in the upper-right area (`[750, 174, 1157, 397]`, 44 intersections, 8 whole-page tokens, 5 text bands). This is a false-positive risk and demonstrates that the current table heuristic is not semantically specific.
+- The table-specific filter now requires at least five detected horizontal rules in addition to repeated OCR text bands.
+- After the filter, exactly one table candidate remains: `[434, 863, 1218, 1109]`.
+- That candidate contains 28 whole-page OCR tokens in 7 horizontal text bands, and its underlying grid has 6 horizontal and 12 vertical segments.
+- The upper-right candidate (`[758, 182, 1149, 389]`) has only 4 horizontal segments and is no longer promoted to a table candidate.
+- The lower candidate is still an incomplete crop: it misses the leftmost portion and upper header row of the visible table. The OCR crop remains heavily corrupted. This is coarse localization, not successful table extraction.
 
 ## Interpretation
 
-The change fixes the specific page-wide chaining failure and recovers a bounded lower-page grid around the load-table area. The result is not yet a verified table detection: the draft reference box `[300, 828, 1155, 1053]` is not independently reviewed ground truth, and the candidate extends to the bottom page edge. No precision, recall, or IoU is claimed.
+The change fixes page-wide chaining and the added row-count filter removes the observed upper-right false positive. One lower-page table candidate remains, but its bounding box is incomplete. The draft reference box `[300, 828, 1155, 1053]` is not independently reviewed ground truth. This is a useful first-pass localization only; no precision, recall, or IoU is claimed.
 
 ## Remaining work
 
-1. Improve the table-specific proposal to reject orthogonal equipment/control graphics such as the upper-right candidate.
-2. Tighten the lower-page table boundary using row/column evidence rather than broad intersection extent.
-3. Review the candidate boxes against independently annotated ground truth before reporting localization accuracy.
-4. Improve OCR separately; the current lower-page crop does not yield usable load-table text.
+1. Tighten the lower-page table boundary to include the leftmost columns and upper header row.
+2. Reconstruct rows, columns, and cell boundaries.
+3. Improve OCR separately; the current lower-page crop does not yield usable load-table text.
+4. Review candidate boxes against independently annotated ground truth before reporting localization accuracy.
 5. Keep all geometry and table outputs as candidates. No electrical connectivity, equipment identity, or topology is inferred.
 
 ## Reproducibility limit
