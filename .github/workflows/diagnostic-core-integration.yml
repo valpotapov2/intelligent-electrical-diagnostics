@@ -1,0 +1,45 @@
+name: Diagnostic core integration
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/edi_ingest/diagnostic_core.py"
+      - "tests/test_diagnostic_core_bridge.py"
+      - "docs/architecture/diagnostic-core-integration.md"
+      - ".github/workflows/diagnostic-core-integration.yml"
+  workflow_dispatch:
+
+jobs:
+  core-integration:
+    runs-on: ubuntu-latest
+    env:
+      DIAGNOSTICS_MVP_TOKEN: ${{ secrets.DIAGNOSTICS_MVP_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Checkout pinned private diagnostic core
+        if: env.DIAGNOSTICS_MVP_TOKEN != ''
+        uses: actions/checkout@v4
+        with:
+          repository: leverty93/diagnostics-mvp
+          ref: 048587b527342f4dc178e8c99e115c974113fbed
+          token: ${{ secrets.DIAGNOSTICS_MVP_TOKEN }}
+          path: diagnostics-mvp
+      - name: Install project and core dependencies
+        if: env.DIAGNOSTICS_MVP_TOKEN != ''
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+          pip install -r diagnostics-mvp/requirements.txt
+      - name: Run real-core contract smoke test
+        if: env.DIAGNOSTICS_MVP_TOKEN != ''
+        env:
+          DIAGNOSTICS_MVP_PATH: diagnostics-mvp
+        run: pytest -q tests/test_diagnostic_core_bridge.py
+      - name: Report missing private-repository credential
+        if: env.DIAGNOSTICS_MVP_TOKEN == ''
+        run: |
+          echo "::warning::Set repository secret DIAGNOSTICS_MVP_TOKEN to enable the real diagnostic-core integration test."
