@@ -97,9 +97,9 @@ def _grid_regions(geometry: dict[str, Any], width: int, height: int) -> list[dic
         raw = [min(xs), min(ys), max(xs) + 1, max(ys) + 1]
         box_w, box_h = raw[2] - raw[0], raw[3] - raw[1]
         # A candidate occupying most of the sheet is almost certainly a drawing frame/network.
-        if box_w > width * 0.72 or box_h > height * 0.62:
+        if box_w > width * 0.85 or box_h > height * 0.75:
             continue
-        if box_w * box_h > width * height * 0.28:
+        if box_w * box_h > width * height * 0.45:
             continue
         if raw[0] <= width * 0.015 and raw[1] <= height * 0.015:
             continue
