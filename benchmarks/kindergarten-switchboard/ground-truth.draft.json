@@ -1,0 +1,333 @@
+{
+  "benchmark_id": "kindergarten-switchboard-001",
+  "version": "0.1",
+  "source": {
+    "filename": "source.jpg",
+    "mime_type": "image/jpeg",
+    "width_px": 1536,
+    "height_px": 1109,
+    "page_count": 1,
+    "status": "available_in_originating_conversation_not_committed_to_repository"
+  },
+  "coordinate_system": {
+    "origin": "top_left",
+    "units": "pixels",
+    "bbox_order": [
+      "x1",
+      "y1",
+      "x2",
+      "y2"
+    ]
+  },
+  "global_observations": [
+    {
+      "id": "G-001",
+      "class": "assembly",
+      "text": "ВРУ",
+      "status": "observed",
+      "bbox": null,
+      "evidence": "visual_transcription",
+      "confidence": null
+    },
+    {
+      "id": "G-002",
+      "class": "system_earthing",
+      "text": "TN-C-S",
+      "status": "observed",
+      "bbox": null,
+      "evidence": "visual_transcription",
+      "confidence": null
+    },
+    {
+      "id": "G-003",
+      "class": "bus_label",
+      "text": "L1, L2, L3",
+      "status": "observed",
+      "bbox": null,
+      "evidence": "visual_transcription",
+      "confidence": null
+    },
+    {
+      "id": "G-004",
+      "class": "bus_label",
+      "text": "N",
+      "status": "observed",
+      "bbox": null,
+      "evidence": "visual_transcription",
+      "confidence": null
+    },
+    {
+      "id": "G-005",
+      "class": "bus_label",
+      "text": "PE",
+      "status": "observed",
+      "bbox": null,
+      "evidence": "visual_transcription",
+      "confidence": null
+    },
+    {
+      "id": "G-006",
+      "class": "summary_parameter",
+      "text": "Py=223.21 kW",
+      "status": "observed",
+      "bbox": null,
+      "evidence": "visual_transcription",
+      "confidence": null
+    },
+    {
+      "id": "G-007",
+      "class": "summary_parameter",
+      "text": "Pp=115.64 kW",
+      "status": "observed",
+      "bbox": null,
+      "evidence": "visual_transcription",
+      "confidence": null
+    },
+    {
+      "id": "G-008",
+      "class": "summary_parameter",
+      "text": "Ip=176 A",
+      "status": "observed",
+      "bbox": null,
+      "evidence": "visual_transcription",
+      "confidence": null
+    }
+  ],
+  "equipment": [
+    {
+      "id": "E-001",
+      "tag": "1QF",
+      "class": "incoming_protective_device",
+      "status": "observed",
+      "rating_text": "3C200; BA88-35; 35kA",
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-002",
+      "tag": "2QF",
+      "class": "incoming_protective_device",
+      "status": "observed",
+      "rating_text": "3C200; BA88-35; 35kA",
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-003",
+      "tag": "KM1",
+      "class": "contactor",
+      "status": "observed",
+      "rating_text": "200A",
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-004",
+      "tag": "KM2",
+      "class": "contactor",
+      "status": "observed",
+      "rating_text": "200A",
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-005",
+      "tag": null,
+      "class": "automatic_transfer_switch",
+      "text": "АВР",
+      "status": "observed",
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-006",
+      "tag": "TA1–TA3",
+      "class": "current_transformers",
+      "status": "observed",
+      "rating_text": "100/5",
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-007",
+      "tag": null,
+      "class": "electricity_meter",
+      "text": "Меркурий 230 AR",
+      "status": "observed",
+      "rating_text": "5(60)",
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-008",
+      "tag": "QF1",
+      "class": "outgoing_protective_device",
+      "status": "observed",
+      "rating_text": null,
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-009",
+      "tag": "QF2",
+      "class": "outgoing_protective_device",
+      "status": "observed",
+      "rating_text": null,
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-010",
+      "tag": "QF3",
+      "class": "outgoing_protective_device",
+      "status": "observed",
+      "rating_text": null,
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-011",
+      "tag": "QF4",
+      "class": "outgoing_protective_device",
+      "status": "observed",
+      "rating_text": null,
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-012",
+      "tag": "QF5",
+      "class": "outgoing_protective_device",
+      "status": "observed",
+      "rating_text": null,
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-013",
+      "tag": "QF6",
+      "class": "outgoing_protective_device",
+      "status": "observed",
+      "rating_text": null,
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-014",
+      "tag": "QF7",
+      "class": "outgoing_protective_device",
+      "status": "observed",
+      "rating_text": null,
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-015",
+      "tag": "QF8",
+      "class": "outgoing_protective_device",
+      "status": "observed",
+      "rating_text": null,
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-016",
+      "tag": "QF9",
+      "class": "outgoing_protective_device",
+      "status": "observed",
+      "rating_text": null,
+      "bbox": null,
+      "confidence": null
+    },
+    {
+      "id": "E-017",
+      "tag": "QF10",
+      "class": "outgoing_protective_device",
+      "status": "observed",
+      "rating_text": null,
+      "bbox": null,
+      "confidence": null
+    }
+  ],
+  "load_table": [
+    {
+      "plan_position": 1,
+      "installed_power_kw": 25.88,
+      "calculated_current_a": 16.52,
+      "status": "visually_transcribed_needs_review"
+    },
+    {
+      "plan_position": 2,
+      "installed_power_kw": 38.93,
+      "calculated_current_a": 19.8,
+      "status": "visually_transcribed_needs_review"
+    },
+    {
+      "plan_position": 3,
+      "installed_power_kw": 45.26,
+      "calculated_current_a": 24.55,
+      "status": "visually_transcribed_needs_review"
+    },
+    {
+      "plan_position": 4,
+      "installed_power_kw": 53.07,
+      "calculated_current_a": 29.86,
+      "status": "visually_transcribed_needs_review"
+    },
+    {
+      "plan_position": 5,
+      "installed_power_kw": 4.09,
+      "calculated_current_a": 3.18,
+      "status": "visually_transcribed_needs_review"
+    },
+    {
+      "plan_position": 6,
+      "installed_power_kw": 1.65,
+      "calculated_current_a": 2.51,
+      "status": "visually_transcribed_needs_review"
+    },
+    {
+      "plan_position": 7,
+      "installed_power_kw": 2.6,
+      "calculated_current_a": 3.95,
+      "status": "visually_transcribed_needs_review"
+    },
+    {
+      "plan_position": 8,
+      "installed_power_kw": 1.37,
+      "calculated_current_a": 2.07,
+      "status": "visually_transcribed_needs_review"
+    },
+    {
+      "plan_position": 9,
+      "installed_power_kw": 0.5,
+      "calculated_current_a": 0.47,
+      "status": "visually_transcribed_needs_review"
+    },
+    {
+      "plan_position": 10,
+      "installed_power_kw": 47.37,
+      "calculated_current_a": 68.97,
+      "status": "visually_transcribed_needs_review"
+    },
+    {
+      "plan_position": 11,
+      "installed_power_kw": 2.5,
+      "calculated_current_a": 3.8,
+      "status": "visually_transcribed_needs_review"
+    },
+    {
+      "plan_position": 12,
+      "installed_power_kw": null,
+      "calculated_current_a": null,
+      "status": "visually_transcribed_needs_review"
+    }
+  ],
+  "connections": [],
+  "limitations": [
+    "No coordinate boxes have been reviewed yet; bbox is null.",
+    "No electrical net or terminal connectivity is asserted.",
+    "Outgoing device rating text is not yet transcribed.",
+    "The source image is not yet committed to the repository."
+  ]
+}
