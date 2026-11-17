@@ -1,0 +1,372 @@
+{
+  "schema_version": "0.1",
+  "model_id": "faa-drpds-diagnostic-dependencies",
+  "title": "FAA DRPDS diagnostic prerequisite model",
+  "execution_mode": "architecture_only",
+  "semantics": {
+    "relationship": "requires_evidence_before_conclusion",
+    "not_a_causal_model": true,
+    "not_a_measurement_plan": true,
+    "not_a_site_as_built_model": true,
+    "unknowns_policy": "Do not infer equipment instances, wiring, terminals, ratings, settings, or physical test points."
+  },
+  "source_model": "examples/objects/faa-drpds.generic.json",
+  "questions": [
+    {
+      "id": "DQ-SOURCE-AVAILABILITY",
+      "title": "Is a commercial source unavailable?",
+      "component_refs": [
+        "U1",
+        "T1",
+        "U2",
+        "T2",
+        "SWGR1",
+        "SWGR2"
+      ],
+      "prerequisites": [],
+      "required_evidence": [
+        "source_measurement_channel_validity",
+        "independent_source_state_evidence",
+        "transformer_input_output_evidence",
+        "sensing_channel_or_fuse_state_if_present"
+      ],
+      "distinguishes": [
+        "physical_source_loss",
+        "measurement_channel_failure",
+        "sensing_fuse_or_channel_failure"
+      ],
+      "cannot_conclude_from": [
+        "single_zero_value_in_PMCS"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ]
+    },
+    {
+      "id": "DQ-GENERATOR-AVAILABILITY",
+      "title": "Is generator capacity electrically available?",
+      "component_refs": [
+        "EGSET",
+        "PSG"
+      ],
+      "prerequisites": [],
+      "required_evidence": [
+        "individual_generator_run_ready_alarm_state",
+        "generator_output_evidence",
+        "common_bus_state",
+        "output_breaker_state",
+        "available_unit_count_and_load_shed_state"
+      ],
+      "distinguishes": [
+        "engine_running_without_electrical_availability",
+        "generator_output_or_breaker_problem",
+        "insufficient_available_capacity"
+      ],
+      "cannot_conclude_from": [
+        "engine_running_state_alone"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "id": "DQ-SWGR-STANDBY-TRANSFER",
+      "title": "Did a main SWGR section transfer to standby?",
+      "component_refs": [
+        "SWGR1",
+        "SWGR2",
+        "1M1",
+        "2M1",
+        "1M2",
+        "2M2",
+        "TIE",
+        "PSG"
+      ],
+      "prerequisites": [
+        "DQ-SOURCE-AVAILABILITY",
+        "DQ-GENERATOR-AVAILABILITY"
+      ],
+      "required_evidence": [
+        "source_availability",
+        "generator_bus_readiness",
+        "standby_incomer_permissives",
+        "tie_and_interlock_state",
+        "breaker_command_mode_and_position",
+        "independent_electrical_state"
+      ],
+      "distinguishes": [
+        "missing_source",
+        "missing_control_power_or_permissive",
+        "breaker_actuation_failure",
+        "position_feedback_failure"
+      ],
+      "cannot_conclude_from": [
+        "close_command_alone",
+        "PMCS_breaker_status_alone"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        },
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "id": "DQ-ESSENTIAL-FEED",
+      "title": "Is an essential load unavailable because of its supply path?",
+      "component_refs": [
+        "ESS-SWBD",
+        "MCC",
+        "ESS-LOADS",
+        "SWGR1",
+        "SWGR2"
+      ],
+      "prerequisites": [
+        "DQ-SWGR-STANDBY-TRANSFER"
+      ],
+      "required_evidence": [
+        "selected_upstream_source_path",
+        "switchboard_feeder_state",
+        "MCC_protective_and_control_state",
+        "load_response"
+      ],
+      "distinguishes": [
+        "upstream_supply_loss",
+        "feeder_protection_operation",
+        "MCC_or_control_problem",
+        "local_load_problem"
+      ],
+      "cannot_conclude_from": [
+        "stopped_motor_alone"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ]
+    },
+    {
+      "id": "DQ-UPS-HEALTH",
+      "title": "Is a UPS maintaining the intended critical supply mode?",
+      "component_refs": [
+        "UPS-SWGR",
+        "UPS-GROUP",
+        "UPS-SWBD",
+        "DC125"
+      ],
+      "prerequisites": [
+        "DQ-SWGR-STANDBY-TRANSFER"
+      ],
+      "required_evidence": [
+        "UPS_input_state",
+        "UPS_operating_mode",
+        "rectifier_inverter_and_bypass_state_when_available",
+        "DC_bus_and_battery_evidence",
+        "UPS_output_and_output_switchboard_state"
+      ],
+      "distinguishes": [
+        "input_supply_problem",
+        "inverter_or_rectifier_problem",
+        "bypass_operation",
+        "battery_or_DC_subsystem_problem",
+        "output_path_problem"
+      ],
+      "cannot_conclude_from": [
+        "UPS_output_voltage_alone"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        },
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "id": "DQ-CRITICAL-BUS",
+      "title": "Is Critical Bus A or B available?",
+      "component_refs": [
+        "BUS-A",
+        "BUS-B",
+        "UPS-SWBD",
+        "UPS-GROUP"
+      ],
+      "prerequisites": [
+        "DQ-UPS-HEALTH"
+      ],
+      "required_evidence": [
+        "assigned_UPS_output_state",
+        "output_switchboard_breaker_state",
+        "bus_state",
+        "measurement_channel_validity"
+      ],
+      "distinguishes": [
+        "UPS_output_problem",
+        "output_breaker_or_switchboard_problem",
+        "bus_or_sensing_problem"
+      ],
+      "cannot_conclude_from": [
+        "single_PMCS_bus_indication"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "id": "DQ-PDU-INPUT-OUTPUT",
+      "title": "Is a PDU distribution path available?",
+      "component_refs": [
+        "PDU-GROUP",
+        "BUS-A",
+        "BUS-B"
+      ],
+      "prerequisites": [
+        "DQ-CRITICAL-BUS"
+      ],
+      "required_evidence": [
+        "PDU_input_source_and_state",
+        "PDU_protection_state",
+        "documented_output_feeder_state"
+      ],
+      "distinguishes": [
+        "upstream_bus_loss",
+        "PDU_input_or_protection_problem",
+        "downstream_feeder_problem"
+      ],
+      "cannot_conclude_from": [
+        "downstream_load_loss_without_input_output_localization"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "id": "DQ-SATS-SOURCE-SELECTION",
+      "title": "Is a SATS supplying its load from an available intended source?",
+      "component_refs": [
+        "SATS-GROUP",
+        "PDU-GROUP",
+        "BUS-A",
+        "BUS-B"
+      ],
+      "prerequisites": [
+        "DQ-PDU-INPUT-OUTPUT"
+      ],
+      "required_evidence": [
+        "both_documented_SATS_input_states",
+        "source_selection_state",
+        "transfer_event_or_status",
+        "SATS_output_state"
+      ],
+      "distinguishes": [
+        "one_input_unavailable",
+        "source_selection_or_transfer_problem",
+        "output_path_problem"
+      ],
+      "cannot_conclude_from": [
+        "SATS_output_present_as_proof_of_both_inputs_healthy"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "id": "DQ-CDP-OUTGOING-CIRCUIT",
+      "title": "Is a CDP outgoing circuit unavailable?",
+      "component_refs": [
+        "CDP-GROUP",
+        "SATS-GROUP",
+        "CRIT-LOADS"
+      ],
+      "prerequisites": [
+        "DQ-SATS-SOURCE-SELECTION"
+      ],
+      "required_evidence": [
+        "SATS_output_state",
+        "CDP_incomer_state",
+        "outgoing_protective_device_state",
+        "documented_circuit_and_load_evidence"
+      ],
+      "distinguishes": [
+        "SATS_output_problem",
+        "CDP_incomer_problem",
+        "outgoing_protection_or_circuit_problem",
+        "local_load_problem"
+      ],
+      "cannot_conclude_from": [
+        "dead_load_alone"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "id": "DQ-PMCS-TRUSTWORTHINESS",
+      "title": "Does PMCS telemetry represent the physical equipment state?",
+      "component_refs": [
+        "PMCS",
+        "DC125",
+        "SWGR1",
+        "SWGR2",
+        "EGSET",
+        "UPS-GROUP"
+      ],
+      "prerequisites": [],
+      "required_evidence": [
+        "measurement_timestamp_and_quality",
+        "I_O_channel_state",
+        "PLC_and_communications_state",
+        "DC_control_power_state",
+        "independent_physical_or_electrical_cross_check"
+      ],
+      "distinguishes": [
+        "equipment_fault",
+        "sensor_or_I_O_fault",
+        "communications_or_stale_data",
+        "control_power_fault"
+      ],
+      "cannot_conclude_from": [
+        "displayed_status_without_freshness_and_independent_evidence"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ]
+    }
+  ],
+  "global_constraints": [
+    "A dependency is a prerequisite for interpreting evidence, not a proven physical causal edge.",
+    "Do not treat PMCS display state as independent proof of contact position or electrical condition.",
+    "Do not transform a logical observation template into a physical terminal or test point.",
+    "Do not invent individual device mappings inside grouped equipment families.",
+    "A missing prerequisite produces insufficient evidence, not an assumed healthy state."
+  ]
+}
