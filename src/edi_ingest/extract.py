@@ -76,16 +76,21 @@ def build_model(ingested: dict[str, Any], object_name: str = "Unspecified electr
         "object": {"name": object_name},
         "components": extracted["components"],
         "connections": extracted["connections"],
+        "geometry_candidates": [
+            {"page": page["page"], **page.get("geometry", {})}
+            for page in ingested["ocr"].get("pages", [])
+            if page.get("geometry")
+        ],
         "circuits": extracted["circuits"],
         "issues": extracted["issues"] + [{
             "id": "TOPOLOGY-NOT-IMPLEMENTED",
             "severity": "info",
-            "description": "MVP currently extracts OCR text and component-label candidates only. Electrical wire tracing, junction detection and connection graph construction are not implemented.",
+            "description": "Geometric line and intersection candidates are emitted separately. Confirmed electrical wire tracing, terminal attachment, net identity and connection graph construction are not implemented.",
             "status": "open",
         }],
         "extraction": {
             "tool_version": "0.1.0",
             "review_status": "unreviewed",
-            "method": "tesseract_ocr_plus_regex_candidates",
+            "method": "tesseract_ocr_regex_candidates_plus_geometric_line_candidates",
         },
     }
