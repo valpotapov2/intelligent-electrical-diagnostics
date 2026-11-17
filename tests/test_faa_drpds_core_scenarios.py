@@ -85,6 +85,12 @@ def _module():
         ("Dual_critical_path_loss",),
         ("SATS_output_loss",),
         ("Essential_feed_loss",),
+        ("Source_1_evidence_loss",),
+        ("Source_2_evidence_loss",),
+        ("SWGR_1_section_evidence_loss",),
+        ("SWGR_2_section_evidence_loss",),
+        ("Generator_bus_evidence_loss",),
+        ("Standby_transfer_evidence_loss",),
     ],
 )
 def test_synthetic_drpds_mode_updates_real_core_posterior(mode):
