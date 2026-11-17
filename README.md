@@ -69,6 +69,8 @@ Dual Redundant Power Distribution System — многоуровневая рез
 - [Полное техническое описание, режимы, подсистемы и диагностические сценарии](docs/objects/faa-drpds-technical-description.md)
 - [Функциональная однолинейная архитектура SVG](docs/objects/faa-drpds-functional-architecture.svg)
 - [Графовая модель объекта JSON](examples/objects/faa-drpds.generic.json)
+- [Диагностическая готовность и 8 offline-сценариев](docs/objects/faa-drpds-diagnostic-readiness.md)
+- [Benchmark-сценарии JSON](benchmarks/faa-drpds/scenarios.v0.1.json)
 
 Модель является generic/reference model. Она не заменяет site-specific однолинейную схему, перечень уставок или утверждённые процедуры переключения. Историческое руководство FAA JO 6480.22 отменено; актуальная общая политика приведена в JO 6950.2F.
 
