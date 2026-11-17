@@ -189,6 +189,10 @@ def _table_regions(
                   and y1 <= (token["bbox"][1] + token["bbox"][3]) / 2 <= y2]
         if len(inside) < 8:
             continue
+        # Tables need several repeated horizontal rules; equipment/control
+        # diagrams can also create rectangular grids but usually have fewer rows.
+        if grid["evidence"]["horizontal_segment_count"] < 5:
+            continue
         row_centers = sorted((token["bbox"][1] + token["bbox"][3]) / 2 for token in inside)
         bands: list[list[float]] = []
         tolerance = max(5, int((y2 - y1) * 0.035))
