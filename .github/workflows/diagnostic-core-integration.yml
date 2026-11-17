@@ -47,7 +47,8 @@ jobs:
           pytest -q tests/test_diagnostic_core_bridge.py
           pytest -q tests/test_kindergarten_core_scenarios.py
           pytest -q tests/test_faa_drpds_core_scenarios.py
-      - name: Report missing private-repository credential
+      - name: Fail when private-repository credential is missing
         if: env.DIAGNOSTICS_MVP_TOKEN == ''
         run: |
-          echo "::warning::Set repository secret DIAGNOSTICS_MVP_TOKEN to enable the real diagnostic-core integration tests."
+          echo "::error::Repository secret DIAGNOSTICS_MVP_TOKEN is required. Configure a read-only token for leverty93/diagnostics-mvp to run the real diagnostic-core tests."
+          exit 1
