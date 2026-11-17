@@ -93,26 +93,46 @@ def test_shape_chain_does_not_merge_into_one_long_region():
     assert all(item["bbox"][2] - item["bbox"][0] <= 110 for item in clusters)
 
 
-def test_table_candidate_requires_grid_and_repeated_text_bands():
+def test_table_candidate_requires_repeated_horizontal_rules_and_text_bands():
     geometry = {
         "horizontal_segments": [
-            {"id": "h1", "start": [10, 20], "end": [100, 20]},
-            {"id": "h2", "start": [10, 40], "end": [100, 40]},
-            {"id": "h3", "start": [10, 60], "end": [100, 60]},
+            {"id": f"h{i}", "start": [10, y], "end": [110, y]}
+            for i, y in enumerate([20, 35, 50, 65, 80])
         ],
         "vertical_segments": [
-            {"id": "v1", "start": [30, 10], "end": [30, 70]},
-            {"id": "v2", "start": [70, 10], "end": [70, 70]},
+            {"id": f"v{i}", "start": [x, 15], "end": [x, 85]}
+            for i, x in enumerate([30, 50, 70, 90])
         ],
     }
     tokens = [
-        {"text": f"c{i}", "bbox": [20 + (i % 2) * 40, 22 + (i // 2) * 8, 28 + (i % 2) * 40, 29 + (i // 2) * 8]}
-        for i in range(8)
+        {"text": f"c{i}", "bbox": [16 + (i % 4) * 20, 22 + (i // 4) * 15, 24 + (i % 4) * 20, 29 + (i // 4) * 15]}
+        for i in range(12)
     ]
-    result = propose_content_regions(120, 90, tokens, geometry, {"candidates": []})
+    result = propose_content_regions(120, 100, tokens, geometry, {"candidates": []})
     tables = [item for item in result["regions"] if item["kind"] == "table_candidate"]
     assert len(tables) == 1
-    assert tables[0]["evidence"]["text_token_count"] == 8
+    assert tables[0]["evidence"]["text_token_count"] == 12
+    assert tables[0]["evidence"]["horizontal_segment_count"] == 5
+
+
+def test_four_row_grid_is_not_promoted_to_table():
+    geometry = {
+        "horizontal_segments": [
+            {"id": f"h{i}", "start": [10, y], "end": [110, y]}
+            for i, y in enumerate([20, 40, 60, 80])
+        ],
+        "vertical_segments": [
+            {"id": f"v{i}", "start": [x, 15], "end": [x, 85]}
+            for i, x in enumerate([30, 50, 70, 90])
+        ],
+    }
+    tokens = [
+        {"text": f"c{i}", "bbox": [16 + (i % 4) * 20, 22 + (i // 4) * 20, 24 + (i % 4) * 20, 29 + (i // 4) * 20]}
+        for i in range(12)
+    ]
+    result = propose_content_regions(120, 100, tokens, geometry, {"candidates": []})
+    tables = [item for item in result["regions"] if item["kind"] == "table_candidate"]
+    assert not tables
 
 
 def test_grid_components_do_not_chain_across_page():
