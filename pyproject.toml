@@ -20,6 +20,7 @@ dev = ["pytest>=8.0", "jsonschema>=4.21"]
 
 [project.scripts]
 edi-ingest = "edi_ingest.cli:main"
+edi-scenarios = "edi_ingest.scenario_runner:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
