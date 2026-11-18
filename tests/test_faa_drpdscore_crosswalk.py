@@ -108,3 +108,12 @@ def test_faa_cdp_incoming_and_branch_questions_are_uncovered_by_synthetic_core()
     for question_id in ("DQ-CDP-INCOMING-PATH", "DQ-CDP-OUTGOING-BRANCH"):
         assert mappings[question_id]["coverage"] == "none"
         assert mappings[question_id]["synthetic_modes"] == []
+
+
+def test_faa_swgr_commercial_return_is_explicitly_uncovered_by_synthetic_core():
+    crosswalk = json.loads(CROSSWALK_PATH.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    mapping = mappings["DQ-SWGR-COMMERCIAL-RETURN"]
+    assert mapping["coverage"] == "none"
+    assert mapping["synthetic_modes"] == []
+    assert "return-delay/timer behavior" in mapping["rationale"]
