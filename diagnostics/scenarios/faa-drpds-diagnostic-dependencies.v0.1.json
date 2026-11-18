@@ -654,8 +654,7 @@
         "BUS-B"
       ],
       "prerequisites": [
-        "DQ-SATS-DUAL-INPUT-AVAILABILITY",
-        "DQ-SATS-AUTO-TRANSFER"
+        "DQ-SATS-DUAL-INPUT-AVAILABILITY"
       ],
       "required_evidence": [
         "documented_individual_SATS_identity_and_output_assignment",
