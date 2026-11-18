@@ -345,6 +345,12 @@
       "coverage": "none",
       "synthetic_modes": [],
       "rationale": "The synthetic fixture has no voltage sensing channels, under/overvoltage pickup, protection settings, time-delay/timer behavior or voltage-protection event records."
+    },
+    {
+      "question_id": "DQ-SWGR-COMMERCIAL-RETURN",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture does not model restored commercial-source qualification, source-stability evidence, return-delay/timer behavior, return permissives, retransfer breaker sequence or independent confirmation of return to commercial supply."
     }
   ],
   "constraints": [
