@@ -22,6 +22,7 @@ dev = ["pytest>=8.0"]
 [project.scripts]
 edi-ingest = "edi_ingest.cli:main"
 edi-scenarios = "edi_ingest.scenario_runner:main"
+edi-evidence-validate = "edi_ingest.evidence_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
