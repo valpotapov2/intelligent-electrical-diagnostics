@@ -76,6 +76,37 @@
       ]
     },
     {
+      "id": "DQ-CONTROL-POWER",
+      "title": "Is the auxiliary control-power subsystem available for the required control functions?",
+      "component_refs": [
+        "DC125"
+      ],
+      "prerequisites": [],
+      "required_evidence": [
+        "documented_AC_and_DC_control_supply_state",
+        "DC_bus_state",
+        "battery_subsystem_state",
+        "independent_evidence_for_the_affected_control_function"
+      ],
+      "distinguishes": [
+        "loss_of_DC_control_supply",
+        "battery_subsystem_unavailable",
+        "local_control_function_unavailable",
+        "control_power_indication_or_telemetry_problem"
+      ],
+      "cannot_conclude_from": [
+        "PMCS_displayed_breaker_or_controller_state_alone",
+        "equipment_failure_without_control_power_cross_check"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "Evaluate when control, switching, alarm, or telemetry behavior may depend on the documented AC/DC auxiliary supply."
+    },
+    {
       "id": "DQ-SWGR-SECTION-SUPPLY",
       "title": "Is the relevant SWGR section supplied from its intended source?",
       "component_refs": [
@@ -132,7 +163,8 @@
       ],
       "prerequisites": [
         "DQ-SOURCE-AVAILABILITY",
-        "DQ-GENERATOR-AVAILABILITY"
+        "DQ-GENERATOR-AVAILABILITY",
+        "DQ-CONTROL-POWER"
       ],
       "required_evidence": [
         "source_availability",
@@ -380,7 +412,9 @@
         "EGSET",
         "UPS-GROUP"
       ],
-      "prerequisites": [],
+      "prerequisites": [
+        "DQ-CONTROL-POWER"
+      ],
       "required_evidence": [
         "measurement_timestamp_and_quality",
         "I_O_channel_state",
@@ -411,6 +445,7 @@
     "Do not transform a logical observation template into a physical terminal or test point.",
     "Do not invent individual device mappings inside grouped equipment families.",
     "A missing prerequisite produces insufficient evidence, not an assumed healthy state.",
-    "Do not require generator readiness for a diagnosis under normal commercial-source operation; generator prerequisites apply only when standby operation or transfer is relevant."
+    "Do not require generator readiness for a diagnosis under normal commercial-source operation; generator prerequisites apply only when standby operation or transfer is relevant.",
+    "Control-power availability is a separate evidence question; do not infer it from the commanded or displayed state of the equipment whose control function is under investigation."
   ]
 }
