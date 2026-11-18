@@ -29,3 +29,26 @@ def test_breaker_markings_are_preserved_without_unsupported_pole_count():
         attributes = breakers[tag]["attributes"]
         assert attributes["marking"] == marking
         assert "poles" not in attributes
+
+
+def test_circuit_source_bounds_cover_their_traced_feeder_geometry():
+    model = json.loads(MODEL.read_text(encoding="utf-8"))
+    edges = model["connections"]
+    for circuit in model["circuits"]:
+        related = [
+            edge for edge in edges
+            if (edge["from"] == circuit["protective_device_id"] and edge["to"] == circuit["cable_id"])
+            or (edge["from"] == circuit["cable_id"] and edge["to"] in circuit["load_ids"])
+            or (edge["to"] == circuit["protective_device_id"] and edge["from"] == "bus-l123")
+        ]
+        boxes = [source["bbox"] for edge in related for source in edge["sources"] if "bbox" in source]
+        assert boxes, circuit["id"]
+        expected = [
+            min(box[0] for box in boxes),
+            min(box[1] for box in boxes),
+            max(box[2] for box in boxes),
+            max(box[3] for box in boxes),
+        ]
+        assert circuit["sources"][0]["bbox"] == expected, circuit["id"]
+        x1, y1, x2, y2 = circuit["sources"][0]["bbox"]
+        assert x2 > x1 and y2 > y1, circuit["id"]
