@@ -2050,6 +2050,65 @@
         }
       ],
       "applicability": "The historical source describes minimum- and maximum-voltage protection with time delays. Assess only the installed voltage-protection functions documented for the identified switchgear and compare event evidence with the current approved settings record. Separate sensing validity, voltage condition, pickup, timer behavior and protection decision. Do not infer numeric thresholds, delay values, VT/fuse arrangement, relay model or test points. Breaker/trip execution is assessed separately under DQ-SWGR-PROTECTION-RESPONSE; this question defines no test or switching procedure."
+    },
+    {
+      "id": "DQ-SWGR-COMMERCIAL-RETURN",
+      "title": "Did the affected SWGR section return from standby to the restored commercial source as documented?",
+      "component_refs": [
+        "SWGR1",
+        "SWGR2",
+        "1M1",
+        "2M1",
+        "1M2",
+        "2M2",
+        "TIE",
+        "PSG",
+        "U1",
+        "U2",
+        "T1",
+        "T2"
+      ],
+      "prerequisites": [
+        "DQ-SOURCE-AVAILABILITY",
+        "DQ-TRANSFORMER-INPUT-OUTPUT",
+        "DQ-CONTROL-POWER",
+        "DQ-SWGR-CONTROL-MODE"
+      ],
+      "required_evidence": [
+        "affected_SWGR_section_and_active_standby_source_path_identity",
+        "restored_commercial_source_identity_and_source_side_measurement_quality_timestamp",
+        "commercial_source_voltage_condition_and_stability_evidence_at_the_documented_boundary",
+        "site_approved_return_to_commercial_qualification_criteria_and_stability_interval_when_documented",
+        "configured_return_delay_or_timer_state_and_event_timing_when_present_and_recorded",
+        "return_transfer_permissive_and_mutual_interlock_state_at_command_time",
+        "AUTO_LOCAL_MANUAL_mode_and_active_control_authority_at_event_time",
+        "return_transfer_command_timestamp_and_involved_breaker_positions",
+        "independent_electrical_confirmation_of_the_restored_commercial_supply_path"
+      ],
+      "distinguishes": [
+        "commercial_source_not_restored_or_not_within_documented_operating_condition",
+        "source_measurement_or_stability_evidence_invalid_or_insufficient",
+        "documented_stability_interval_or_return_delay_not_satisfied_or_not_confirmed",
+        "return_transfer_blocked_by_documented_mode_permissive_or_interlock",
+        "return_command_not_issued_or_not_received",
+        "breaker_actuation_or_position_feedback_problem",
+        "return_command_and_independent_electrical_state_disagree",
+        "commercial_return_not_confirmed_from_available_event_evidence"
+      ],
+      "cannot_conclude_from": [
+        "commercial_source_present_indication_alone_as_proof_of_stable_return_qualification",
+        "generic_or_historical_voltage_or_time_value_as_installed_site_return_criterion",
+        "assumed_return_timer_value_or_unverified_timer_expiry",
+        "close_command_or_PMCS_breaker_status_alone_as_proof_of_completed_return",
+        "standby_source_disconnection_without_independent_confirmation_of_commercial_supply"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ],
+      "applicability": "The historical reference describes return to commercial supply after restoration and stabilization of commercial voltage, using the configured return sequence. Assess only a documented return event and the installed site's approved source-qualification criteria, timer/delay configuration, control mode, permissives, interlocks and breaker evidence. A stability interval or timer is required as evidence only when present in the installed design and recorded. Do not infer thresholds, timer values, breaker sequence, paralleling behavior, relay settings or physical test points. This question assesses the return event; it does not define or authorize a switching or test procedure."
     }
   ],
   "global_constraints": [
