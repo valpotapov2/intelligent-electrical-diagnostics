@@ -258,3 +258,42 @@ def test_faa_generator_decomposition_is_not_claimed_by_synthetic_bus_fixture():
         assert mappings[question_id]["synthetic_modes"] == []
     assert mappings["DQ-GENERATOR-AVAILABILITY"]["coverage"] == "partial"
     assert mappings["DQ-GENERATOR-AVAILABILITY"]["synthetic_modes"] == ["Generator_bus_evidence_loss"]
+
+
+def test_faa_swgr_transfer_chain_separates_mode_permissives_and_breaker_execution():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    components = {item["id"] for item in graph["components"]}
+    mode = questions["DQ-SWGR-CONTROL-MODE"]
+    permissives = questions["DQ-SWGR-TRANSFER-PERMISSIVES"]
+    actuation = questions["DQ-SWGR-BREAKER-ACTUATION"]
+    umbrella = questions["DQ-SWGR-STANDBY-TRANSFER"]
+    for question in (mode, permissives, actuation, umbrella):
+        assert set(question["component_refs"]) <= components
+    assert mode["prerequisites"] == []
+    assert set(permissives["prerequisites"]) == {"DQ-SOURCE-AVAILABILITY", "DQ-GENERATOR-AVAILABILITY"}
+    assert set(actuation["prerequisites"]) == {
+        "DQ-SWGR-CONTROL-MODE", "DQ-SWGR-TRANSFER-PERMISSIVES", "DQ-CONTROL-POWER"
+    }
+    assert set(umbrella["prerequisites"]) == {
+        "DQ-SOURCE-AVAILABILITY", "DQ-GENERATOR-AVAILABILITY", "DQ-CONTROL-POWER",
+        "DQ-SWGR-CONTROL-MODE", "DQ-SWGR-TRANSFER-PERMISSIVES", "DQ-SWGR-BREAKER-ACTUATION"
+    }
+    assert "AUTO_LOCAL_MANUAL_selector_state_and_timestamp" in mode["required_evidence"]
+    assert "event_context_and_permissive_state_at_command_time" in permissives["required_evidence"]
+    assert "independent_electrical_state_of_relevant_section_or_path" in actuation["required_evidence"]
+    assert "auxiliary_contact_alone_as_proof_of_primary_contact_condition" in actuation["cannot_conclude_from"]
+
+
+def test_faa_swgr_transfer_decomposition_is_not_claimed_by_synthetic_fixture():
+    crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
+    crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    for question_id in (
+        "DQ-SWGR-CONTROL-MODE",
+        "DQ-SWGR-TRANSFER-PERMISSIVES",
+        "DQ-SWGR-BREAKER-ACTUATION",
+    ):
+        assert mappings[question_id]["coverage"] == "none"
+        assert mappings[question_id]["synthetic_modes"] == []
