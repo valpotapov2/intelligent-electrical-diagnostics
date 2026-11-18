@@ -2118,6 +2118,38 @@
         "load-plan-10",
         "load-plan-11"
       ]
+    },
+    {
+      "id": "SVG-007",
+      "severity": "medium",
+      "description": "Several component attributes are transcribed from nearby SVG inscriptions, but component source references use tag/feeder-column boxes and generic text such as 'QF1 cable inscription' or only the device tag (for example 'QF1'). These boxes do not isolate the exact source text for every normalized attribute (breaker current/type/capacity, cable core count/cross-section/length, incoming cable data, contactor current). Attribute-level text and coordinate provenance remains incomplete; values are retained as drawing transcriptions, not independently verified equipment data.",
+      "status": "open",
+      "related_ids": [
+        "supply-1",
+        "supply-2",
+        "contactor-km1",
+        "contactor-km2",
+        "breaker-qf1",
+        "breaker-qf2",
+        "breaker-qf3",
+        "breaker-qf4",
+        "breaker-qf5",
+        "breaker-qf6",
+        "breaker-qf7",
+        "breaker-qf8",
+        "breaker-qf9",
+        "breaker-qf10",
+        "cable-qf1",
+        "cable-qf2",
+        "cable-qf3",
+        "cable-qf4",
+        "cable-qf5",
+        "cable-qf6",
+        "cable-qf7",
+        "cable-qf8",
+        "cable-qf9",
+        "cable-qf10"
+      ]
     }
   ],
   "totals": {
