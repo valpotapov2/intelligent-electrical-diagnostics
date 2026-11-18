@@ -698,6 +698,129 @@
       "applicability": "The diagnostic boundary separates UPS SWGR distribution from the UPS input itself. Apply to an individual feeder only when current site one-line drawings and equipment schedules establish its tag and assigned UPS; do not infer feeder count, breaker IDs, or source pairing."
     },
     {
+      "id": "DQ-UPS-CONVERSION-PATH",
+      "title": "Are the documented UPS rectifier and inverter conversion functions available?",
+      "component_refs": [
+        "UPS-GROUP"
+      ],
+      "prerequisites": [
+        "DQ-UPS-SWGR-FEEDER"
+      ],
+      "required_evidence": [
+        "specific_UPS_identity_and_assessed_input_supply_state",
+        "rectifier_operating_state_and_available_alarm_or_event_evidence",
+        "inverter_operating_state_and_available_alarm_or_event_evidence",
+        "UPS_output_voltage_frequency_and_load_with_measurement_quality_and_timestamp",
+        "UPS_operating_mode_and_conversion_event_history"
+      ],
+      "distinguishes": [
+        "UPS_input_available_but_rectifier_state_unavailable_or_abnormal",
+        "rectifier_evidence_available_but_inverter_state_unavailable_or_abnormal",
+        "conversion_function_state_or_transition_not_confirmed",
+        "output_measurement_or_telemetry_untrustworthy"
+      ],
+      "cannot_conclude_from": [
+        "UPS_output_voltage_alone_as_proof_of_rectifier_and_inverter_operation",
+        "output_present_while_on_bypass_as_proof_of_inverter_supply",
+        "aggregate_UPS_status_without_rectifier_and_inverter_evidence"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        },
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "Assess rectifier and inverter evidence separately for an identified UPS after its documented input feeder is assessed. Status names, internal design, thresholds and test methods are model-specific; do not infer an internal circuit topology or physical test points from the family-level architecture."
+    },
+    {
+      "id": "DQ-UPS-BYPASS-PATH",
+      "title": "Is the documented UPS bypass function and its selected supply path available?",
+      "component_refs": [
+        "UPS-GROUP",
+        "UPS-SWBD"
+      ],
+      "prerequisites": [
+        "DQ-UPS-SWGR-FEEDER"
+      ],
+      "required_evidence": [
+        "specific_UPS_identity_and_documented_bypass_path_assignment",
+        "UPS_operating_mode_and_bypass_selection_state",
+        "bypass_path_source_availability_and_quality_when_documented",
+        "bypass_switching_or_feedback_state_when_available",
+        "UPS_output_continuity_and_quality_with_measurement_timestamp",
+        "bypass_alarm_and_event_history"
+      ],
+      "distinguishes": [
+        "UPS_operating_on_documented_bypass_path",
+        "documented_bypass_source_or_path_unavailable",
+        "bypass_selection_or_feedback_disagreement",
+        "bypass_path_assignment_or_state_not_established",
+        "output_measurement_or_telemetry_untrustworthy"
+      ],
+      "cannot_conclude_from": [
+        "UPS_output_present_as_proof_that_inverter_is_supplying_the_load",
+        "UPS_bypass_status_without_documented_path_and_source_identity",
+        "historical_UPS_1_reserve_role_as_proof_of_installed_bypass_topology"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        },
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "Assess only bypass functions and source paths identified for the installed UPS. The historical UPS 1 reserve role is a typical functional role, not proof of a particular site's bypass arrangement. Do not infer static/maintenance bypass implementation, switching sequence, interlocks or physical test points."
+    },
+    {
+      "id": "DQ-UPS-DC-BATTERY",
+      "title": "Is the UPS DC bus and battery subsystem able to support the documented operating requirement?",
+      "component_refs": [
+        "UPS-GROUP"
+      ],
+      "prerequisites": [
+        "DQ-UPS-SWGR-FEEDER"
+      ],
+      "required_evidence": [
+        "specific_UPS_identity_and_DC_bus_state_with_measurement_quality",
+        "battery_state_of_charge_or_documented_condition_indication",
+        "battery_test_results_and_event_history",
+        "charger_state_and_available_alarm_evidence_when_present",
+        "battery_string_or_cell_evidence_when_documented_and_available",
+        "battery_temperature_or_other_documented_condition_indications_when_available"
+      ],
+      "distinguishes": [
+        "UPS_DC_bus_state_unavailable_or_out_of_documented_condition",
+        "battery_condition_or_test_evidence_indicates_reduced_availability",
+        "charger_or_battery_charging_problem",
+        "battery_measurement_or_condition_telemetry_untrustworthy",
+        "battery_autonomy_not_established_by_available_evidence"
+      ],
+      "cannot_conclude_from": [
+        "UPS_output_voltage_alone_as_proof_of_battery_availability",
+        "state_of_charge_indication_alone_as_proof_of_required_autonomy",
+        "aggregate_battery_status_without_documented_string_or_cell_mapping",
+        "assumed_battery_count_or_cell_voltage_limits"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        },
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "Evaluate the UPS DC bus and battery subsystem separately from the 125 V DC control-power system. Battery string/cell detail, charger arrangement, ratings, autonomy criteria and test procedures require installed equipment records and manufacturer/site-approved documentation."
+    },
+    {
       "id": "DQ-UPS-HEALTH",
       "title": "Is a UPS maintaining the intended critical supply mode?",
       "component_refs": [
@@ -707,24 +830,30 @@
         "DC125"
       ],
       "prerequisites": [
-        "DQ-UPS-SWGR-FEEDER"
+        "DQ-UPS-SWGR-FEEDER",
+        "DQ-UPS-CONVERSION-PATH",
+        "DQ-UPS-BYPASS-PATH",
+        "DQ-UPS-DC-BATTERY"
       ],
       "required_evidence": [
-        "UPS_input_state",
-        "UPS_operating_mode",
-        "rectifier_inverter_and_bypass_state_when_available",
-        "DC_bus_and_battery_evidence",
+        "UPS_input_and_supply_feeder_assessment",
+        "rectifier_and_inverter_conversion_assessment",
+        "documented_bypass_path_and_operating_mode_assessment",
+        "DC_bus_and_battery_subsystem_assessment",
         "UPS_output_and_output_switchboard_state"
       ],
       "distinguishes": [
-        "input_supply_problem",
-        "inverter_or_rectifier_problem",
-        "bypass_operation",
+        "input_supply_or_feeder_problem",
+        "rectifier_or_inverter_conversion_problem",
+        "bypass_path_or_operating_mode_problem",
         "battery_or_DC_subsystem_problem",
-        "output_path_problem"
+        "output_switchboard_or_downstream_path_problem",
+        "insufficient_UPS_internal_state_or_measurement_evidence"
       ],
       "cannot_conclude_from": [
-        "UPS_output_voltage_alone"
+        "UPS_output_voltage_alone",
+        "UPS_aggregate_alarm_or_ready_state_without_internal_subsystem_evidence",
+        "PMCS_indication_without_measurement_quality_or_independent_confirmation"
       ],
       "sources": [
         {
@@ -745,7 +874,7 @@
         "UPS-SWBD"
       ],
       "prerequisites": [
-        "DQ-UPS-SWGR-FEEDER"
+        "DQ-UPS-BYPASS-PATH"
       ],
       "required_evidence": [
         "documented_UPS_1_bypass_reserve_role_for_UPS_2_and_UPS_3",
@@ -780,7 +909,7 @@
         "BUS-A"
       ],
       "prerequisites": [
-        "DQ-UPS-SWGR-FEEDER"
+        "DQ-UPS-HEALTH"
       ],
       "required_evidence": [
         "UPS_2_input_and_operating_state",
@@ -821,7 +950,7 @@
         "BUS-B"
       ],
       "prerequisites": [
-        "DQ-UPS-SWGR-FEEDER"
+        "DQ-UPS-HEALTH"
       ],
       "required_evidence": [
         "UPS_3_input_and_operating_state",

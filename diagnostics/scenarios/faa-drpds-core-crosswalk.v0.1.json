@@ -279,6 +279,24 @@
       "coverage": "none",
       "synthetic_modes": [],
       "rationale": "The synthetic fixture does not model the UPS SWGR incoming supply boundary or an identified outgoing feeder to an individual UPS. No physical feeder assignment or source pairing is implied."
+    },
+    {
+      "question_id": "DQ-UPS-CONVERSION-PATH",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture does not model UPS rectifier/inverter conversion, the installed bypass path, or the UPS DC/battery subsystem. No internal topology, battery configuration, or site-specific bypass assignment is implied."
+    },
+    {
+      "question_id": "DQ-UPS-BYPASS-PATH",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture does not model UPS rectifier/inverter conversion, the installed bypass path, or the UPS DC/battery subsystem. No internal topology, battery configuration, or site-specific bypass assignment is implied."
+    },
+    {
+      "question_id": "DQ-UPS-DC-BATTERY",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture does not model UPS rectifier/inverter conversion, the installed bypass path, or the UPS DC/battery subsystem. No internal topology, battery configuration, or site-specific bypass assignment is implied."
     }
   ],
   "constraints": [

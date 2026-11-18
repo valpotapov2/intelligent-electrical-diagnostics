@@ -404,12 +404,17 @@ def test_faa_ups_supply_switchgear_input_and_outgoing_feeder_are_separate_stages
     assert incoming["prerequisites"] == ["DQ-SWGR-SECTION-SUPPLY"]
     assert feeder["prerequisites"] == ["DQ-UPS-SWGR-INPUT"]
     for question_id in (
-        "DQ-UPS-HEALTH",
-        "DQ-UPS-1-BYPASS-RESERVE",
-        "DQ-UPS-2-OUTPUT-PATH",
-        "DQ-UPS-3-OUTPUT-PATH",
+        "DQ-UPS-CONVERSION-PATH",
+        "DQ-UPS-BYPASS-PATH",
+        "DQ-UPS-DC-BATTERY",
     ):
         assert questions[question_id]["prerequisites"] == ["DQ-UPS-SWGR-FEEDER"]
+    assert set(questions["DQ-UPS-HEALTH"]["prerequisites"]) == {
+        "DQ-UPS-SWGR-FEEDER",
+        "DQ-UPS-CONVERSION-PATH",
+        "DQ-UPS-BYPASS-PATH",
+        "DQ-UPS-DC-BATTERY",
+    }
 
     assert "site_documented_UPS_SWGR_incoming_source_and_connection_identity" in incoming["required_evidence"]
     assert "assumed_number_or_source_pairing_of_UPS_SWGR_incomers" in incoming["cannot_conclude_from"]
@@ -420,5 +425,47 @@ def test_faa_ups_supply_switchgear_input_and_outgoing_feeder_are_separate_stages
     crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
     mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
     for question_id in ("DQ-UPS-SWGR-INPUT", "DQ-UPS-SWGR-FEEDER"):
+        assert mappings[question_id]["coverage"] == "none"
+        assert mappings[question_id]["synthetic_modes"] == []
+
+
+def test_faa_ups_internal_conversion_bypass_and_battery_stages_are_separate():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    conversion = questions["DQ-UPS-CONVERSION-PATH"]
+    bypass = questions["DQ-UPS-BYPASS-PATH"]
+    battery = questions["DQ-UPS-DC-BATTERY"]
+    health = questions["DQ-UPS-HEALTH"]
+
+    for question in (conversion, bypass, battery):
+        assert question["prerequisites"] == ["DQ-UPS-SWGR-FEEDER"]
+        assert question["sources"]
+        assert question["required_evidence"]
+        assert question["cannot_conclude_from"]
+    assert set(conversion["component_refs"]) == {"UPS-GROUP"}
+    assert "rectifier_operating_state_and_available_alarm_or_event_evidence" in conversion["required_evidence"]
+    assert "inverter_operating_state_and_available_alarm_or_event_evidence" in conversion["required_evidence"]
+    assert "UPS_output_present_as_proof_that_inverter_is_supplying_the_load" in bypass["cannot_conclude_from"]
+    assert "battery_test_results_and_event_history" in battery["required_evidence"]
+    assert "charger_state_and_available_alarm_evidence_when_present" in battery["required_evidence"]
+    assert "Evaluate the UPS DC bus" in battery["applicability"]
+    assert set(health["prerequisites"]) == {
+        "DQ-UPS-SWGR-FEEDER",
+        "DQ-UPS-CONVERSION-PATH",
+        "DQ-UPS-BYPASS-PATH",
+        "DQ-UPS-DC-BATTERY",
+    }
+    assert questions["DQ-UPS-1-BYPASS-RESERVE"]["prerequisites"] == ["DQ-UPS-BYPASS-PATH"]
+    assert questions["DQ-UPS-2-OUTPUT-PATH"]["prerequisites"] == ["DQ-UPS-HEALTH"]
+    assert questions["DQ-UPS-3-OUTPUT-PATH"]["prerequisites"] == ["DQ-UPS-HEALTH"]
+
+    crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
+    crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    for question_id in (
+        "DQ-UPS-CONVERSION-PATH",
+        "DQ-UPS-BYPASS-PATH",
+        "DQ-UPS-DC-BATTERY",
+    ):
         assert mappings[question_id]["coverage"] == "none"
         assert mappings[question_id]["synthetic_modes"] == []
