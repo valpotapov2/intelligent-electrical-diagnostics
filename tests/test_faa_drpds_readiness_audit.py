@@ -54,3 +54,11 @@ def test_faa_readiness_coverage_never_implies_physical_diagnosis():
     assert all(item["coverage"] in {"none", "partial"} for item in mappings)
     assert all(not item["synthetic_modes"] for item in mappings if item["coverage"] == "none")
     assert all(item["synthetic_modes"] for item in mappings if item["coverage"] == "partial")
+    by_id = {item["question_id"]: item for item in mappings}
+    for question_id in (
+        "DQ-PDU-INPUT-SUPPLY",
+        "DQ-PDU-VOLTAGE-CONVERSION",
+        "DQ-PDU-INTERNAL-PROTECTION",
+    ):
+        assert by_id[question_id]["coverage"] == "none"
+        assert by_id[question_id]["synthetic_modes"] == []
