@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from .evidence import validate_evidence_record, validate_evidence_records
+from .evidence import (\n    validate_complete_evidence_snapshot,\n    validate_evidence_record,\n    validate_evidence_records,\n)
 
 
 def _load_json_value(path: str) -> Any:
@@ -34,7 +34,7 @@ def main() -> int:
     )
     parser.add_argument("--record", required=True, help="Path to one evidence object or an array snapshot")
     parser.add_argument("--dependency-model", required=True, help="Path to diagnostic dependency-model JSON")
-    parser.add_argument("--schema", required=True, help="Path to diagnostic evidence JSON Schema")
+    parser.add_argument("--schema", required=True, help="Path to diagnostic evidence JSON Schema")\n    parser.add_argument(\n        "--require-complete",\n        action="store_true",\n        help="Require an array snapshot to contain every declared requirement",\n    )
     args = parser.parse_args()
 
     try:
