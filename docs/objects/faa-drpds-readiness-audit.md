@@ -8,21 +8,21 @@
 | Layer | Current inventory | What it demonstrates |
 |---|---:|---|
 | Generic electrical object graph | 29 components, 36 connections | Historical FAA functional architecture with source references; not an as-built one-line |
-| Diagnostic dependency model | 52 questions | Evidence prerequisites and limits on conclusions; not executable causal hypotheses |
-| Architecture-to-synthetic crosswalk | 52 mappings | Traceability of software-only analogue coverage |
+| Diagnostic dependency model | 53 questions | Evidence prerequisites and limits on conclusions; not executable causal hypotheses |
+| Architecture-to-synthetic crosswalk | 53 mappings | Traceability of software-only analogue coverage |
 | Crosswalk coverage: partial | 7 questions | Simplified virtual endpoint/evidence patterns only |
-| Crosswalk coverage: none | 45 questions | No synthetic analogue for that question |
+| Crosswalk coverage: none | 46 questions | No synthetic analogue for that question |
 | Crosswalk coverage: full | 0 questions | No architecture question has validated full diagnostic coverage |
 | Generic graph open issues | 5 | Site evidence and engineering limitations recorded in graph |
 
-**Interpretation:** 7/49 is **not** a 17.9% diagnostic success rate or field readiness score. A partial mapping is not a validated fault diagnosis. The crosswalk is not executable and does not itself create measurement requests.
+**Interpretation:** 7/53 is **not** a 13.2% diagnostic success rate or field readiness score. A partial mapping is not a validated fault diagnosis. The crosswalk is not executable and does not itself create measurement requests.
 
 ## 2. Readiness gates for interface trials
 
 | Gate | Status | Evidence / next action |
 |---|---|---|
 | Display generic graph and distinguish family nodes from installed instances | Architecture data available; UI unverified | Show 29 components/36 connections with provenance; never imply a verified site diagram |
-| Browse a diagnostic question and its evidence prerequisites | Architecture data available; UI unverified | Present all 52 questions and prerequisite relationships, including conditional branches |
+| Browse a diagnostic question and its evidence prerequisites | Architecture data available; UI unverified | Present all 53 questions and prerequisite relationships, including conditional branches |
 | Show unsupported/unknown evidence explicitly | Required; UI unverified | `coverage:none`, missing equipment mapping and missing observations must remain unknown |
 | Exercise real diagnostic core on virtual observations | Synthetic integration available | Existing real-core tests; virtual 0–5.5 V signals are not FAA voltages |
 | Diagnose an installed FAA facility | **Blocked** | Current site drawings, equipment/feeder tags, approved measurement points, signal map, settings, validated failure modes and likelihoods required |
@@ -47,6 +47,7 @@ These are *display and state-handling* cases, not electrical diagnosis validatio
 11. Select `DQ-SWGR-PROTECTION-RESPONSE`; show sensing/pickup, protective operation, trip output, breaker response and electrical interruption as distinct evidence. Do not infer relay settings or trip-circuit topology.
 12. Select `DQ-SWGR-SELECTIVITY-COORDINATION`; require the current approved site coordination study, installed settings and timestamped upstream/downstream event records. Do not calculate or invent settings or time-current curves.
 13. Select `DQ-SWGR-VOLTAGE-PROTECTION`; show sensing-channel validity, event-time voltage, pickup, configured timer evidence and protection decision separately. Use only approved installed settings; do not invent thresholds or delay values.
+14. Select `DQ-SWGR-COMMERCIAL-RETURN`; show restored-source condition, documented stability qualification, configured return delay when present, mode/permissives/interlocks, breaker response and independent electrical confirmation. Do not infer timer values or a site switching sequence.
 
 ## 4. Priority gaps before advancing beyond architecture UI
 
