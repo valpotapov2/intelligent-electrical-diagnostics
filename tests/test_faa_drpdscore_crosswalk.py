@@ -61,6 +61,18 @@ def test_faa_core_crosswalk_does_not_claim_execution_or_physical_measurements():
     assert "unmapped questions" in " ".join(crosswalk["constraints"]).lower()
 
 
+def test_faa_ups_role_questions_are_explicitly_uncovered_by_synthetic_core():
+    crosswalk = json.loads(CROSSWALK_PATH.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    for question_id in (
+        "DQ-UPS-1-BYPASS-RESERVE",
+        "DQ-UPS-2-OUTPUT-PATH",
+        "DQ-UPS-3-OUTPUT-PATH",
+    ):
+        assert mappings[question_id]["coverage"] == "none"
+        assert mappings[question_id]["synthetic_modes"] == []
+
+
 def test_faa_loadbank_question_is_explicitly_uncovered_by_synthetic_core():
     crosswalk = json.loads(CROSSWALK_PATH.read_text(encoding="utf-8"))
     mapping = next(item for item in crosswalk["mappings"] if item["question_id"] == "DQ-LOADBANK-TEST-PATH")
