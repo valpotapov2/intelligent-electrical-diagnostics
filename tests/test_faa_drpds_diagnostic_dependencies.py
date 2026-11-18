@@ -179,3 +179,41 @@ def test_faa_cdp_incoming_and_branch_questions_respect_grouped_source_boundary()
     assert "aggregate_CDP_to_critical_loads_relationship_without_individual_branch_mapping" in branch["cannot_conclude_from"]
     assert "maintenance isolation" in incoming["applicability"]
     assert "CDP-GROUP" in components
+
+
+
+def test_faa_pmcs_diagnostic_chain_is_decomposed_without_inventing_signal_topology():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    components = {item["id"] for item in graph["components"]}
+    channel = questions["DQ-PMCS-MEASUREMENT-CHANNEL"]
+    plc = questions["DQ-PMCS-PLC-ACQUISITION"]
+    comms = questions["DQ-PMCS-COMMS-OWS-FRESHNESS"]
+    umbrella = questions["DQ-PMCS-TRUSTWORTHINESS"]
+
+    assert set(channel["component_refs"] + plc["component_refs"] + comms["component_refs"] + umbrella["component_refs"]) <= components
+    assert channel["prerequisites"] == []
+    assert plc["prerequisites"] == ["DQ-PMCS-MEASUREMENT-CHANNEL"]
+    assert comms["prerequisites"] == ["DQ-PMCS-PLC-ACQUISITION"]
+    assert set(umbrella["prerequisites"]) == {
+        "DQ-CONTROL-POWER",
+        "DQ-PMCS-MEASUREMENT-CHANNEL",
+        "DQ-PMCS-PLC-ACQUISITION",
+        "DQ-PMCS-COMMS-OWS-FRESHNESS",
+    }
+    assert "independent_physical_or_electrical_cross_check" in umbrella["required_evidence"]
+    assert "PMCS screen indication alone" in umbrella["applicability"]
+
+
+def test_faa_pmcs_decomposition_is_uncovered_by_synthetic_core():
+    crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
+    crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    for question_id in (
+        "DQ-PMCS-MEASUREMENT-CHANNEL",
+        "DQ-PMCS-PLC-ACQUISITION",
+        "DQ-PMCS-COMMS-OWS-FRESHNESS",
+    ):
+        assert mappings[question_id]["coverage"] == "none"
+        assert mappings[question_id]["synthetic_modes"] == []

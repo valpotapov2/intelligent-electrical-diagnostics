@@ -155,6 +155,24 @@
       "rationale": "No CDP incomer, outgoing protective device, circuit identity, or individual critical load is modeled."
     },
     {
+      "question_id": "DQ-PMCS-MEASUREMENT-CHANNEL",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The fixture has no PMCS instrument/channel, PLC I/O acquisition, communications, OWS freshness, or signal-mapping fault modes."
+    },
+    {
+      "question_id": "DQ-PMCS-PLC-ACQUISITION",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The fixture has no PMCS instrument/channel, PLC I/O acquisition, communications, OWS freshness, or signal-mapping fault modes."
+    },
+    {
+      "question_id": "DQ-PMCS-COMMS-OWS-FRESHNESS",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The fixture has no PMCS instrument/channel, PLC I/O acquisition, communications, OWS freshness, or signal-mapping fault modes."
+    },
+    {
       "question_id": "DQ-PMCS-TRUSTWORTHINESS",
       "coverage": "none",
       "synthetic_modes": [],
