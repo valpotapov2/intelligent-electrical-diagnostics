@@ -97,3 +97,7 @@ The current machine-readable graph models the ten outgoing feeder circuits QF1�
 ## Load-schedule value provenance
 
 The machine graph stores installed-power and calculated-current values for plan positions 1–11. The current component source boxes identify the plan labels below the diagram (for example, Щр1), not the corresponding numeric cells in the load-schedule table. The values are transcribed in this review, but cell-level source coordinates have not yet been recorded in the graph. Do not treat the existing component bbox as coordinate evidence for those numeric attributes; preserve the values while this provenance gap remains open.
+
+## Attribute-level source localization
+
+The graph stores normalized breaker, cable, incoming-cable and contactor attributes. However, some component source references point to the device tag or a broad feeder-column region, and some `text` values are generic descriptions (for example, “QF1 cable inscription”) rather than the literal inscription. They do not independently localize every marking/value used for normalization. Preserve the transcribed attributes, but treat exact per-attribute text/bbox provenance as incomplete until each inscription is separately bounded and transcribed from the source SVG. This does not change the values or confirm installed equipment.
