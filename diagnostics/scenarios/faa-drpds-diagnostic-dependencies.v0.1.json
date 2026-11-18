@@ -13,6 +13,49 @@
   "source_model": "examples/objects/faa-drpds.generic.json",
   "questions": [
     {
+      "id": "DQ-TRANSFORMER-INPUT-OUTPUT",
+      "title": "Is each documented commercial transformer providing supported input/output evidence to its corresponding SWGR incomer?",
+      "component_refs": [
+        "U1",
+        "T1",
+        "1M1",
+        "SWGR1",
+        "U2",
+        "T2",
+        "2M1",
+        "SWGR2"
+      ],
+      "prerequisites": [],
+      "required_evidence": [
+        "transformer_identity_and_corresponding_commercial_source_when_documented",
+        "transformer_input_state_and_measurement_channel_validity",
+        "transformer_output_state_and_measurement_channel_validity",
+        "documented_transformer_protection_or_condition_indication_when_available",
+        "corresponding_SWGR_incomer_state_and_event_context",
+        "independent_or_local_confirmation_of_input_and_output_evidence_when_available"
+      ],
+      "distinguishes": [
+        "upstream_commercial_source_unavailable_or_out_of_documented_condition",
+        "transformer_input_present_but_output_evidence_inconsistent",
+        "documented_transformer_protection_or_condition_indication",
+        "input_or_output_sensing_channel_or_fuse_problem",
+        "transformer_output_or_corresponding_incomer_state_unconfirmed"
+      ],
+      "cannot_conclude_from": [
+        "SWGR_incomer_or_PMCS_status_alone_as_proof_of_transformer_output",
+        "single_voltage_indication_without_measurement_source_quality_and_timestamp",
+        "assumed_primary_voltage_transformer_rating_or_impedance",
+        "transformer_fault_without_separating_upstream_source_and_sensing_evidence"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ],
+      "applicability": "The historical reference describes two commercial sources, one transformer per source, transformer input/output and protection evidence, and the corresponding 1M1/2M1 incomers. The 480/277 V grounded-wye secondary is a typical-reference detail only; primary voltage, rating, impedance, protection implementation and installed test points remain site-specific. No numeric acceptance limits or field test procedure are defined."
+    },
+    {
       "id": "DQ-SOURCE-AVAILABILITY",
       "title": "Is a commercial source unavailable?",
       "component_refs": [
@@ -23,11 +66,12 @@
         "SWGR1",
         "SWGR2"
       ],
-      "prerequisites": [],
+      "prerequisites": [
+        "DQ-TRANSFORMER-INPUT-OUTPUT"
+      ],
       "required_evidence": [
         "source_measurement_channel_validity",
         "independent_source_state_evidence",
-        "transformer_input_output_evidence",
         "sensing_channel_or_fuse_state_if_present"
       ],
       "distinguishes": [
