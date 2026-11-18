@@ -382,7 +382,8 @@ def test_faa_essential_distribution_is_localized_by_feeder_mcc_and_load_evidence
     assert "site_specific_load_priority_or_shed_restore_criteria" in shed["required_evidence"]
     assert "historical_typical_generator_count_as_a_site_specific_threshold" in shed["cannot_conclude_from"]
 
-    crosswalk = json.loads(CROSSWALK_PATH.read_text(encoding="utf-8"))
+    crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
+    crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
     mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
     for question_id in (
         "DQ-ESSENTIAL-SWBD-FEEDER",
