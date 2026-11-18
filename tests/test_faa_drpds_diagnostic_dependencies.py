@@ -297,3 +297,31 @@ def test_faa_swgr_transfer_decomposition_is_not_claimed_by_synthetic_fixture():
     ):
         assert mappings[question_id]["coverage"] == "none"
         assert mappings[question_id]["synthetic_modes"] == []
+
+
+def test_faa_transformer_input_output_diagnostic_is_source_backed_and_site_bounded():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    components = {item["id"] for item in graph["components"]}
+    transformer = questions["DQ-TRANSFORMER-INPUT-OUTPUT"]
+    source = questions["DQ-SOURCE-AVAILABILITY"]
+
+    assert set(transformer["component_refs"]) <= components
+    assert transformer["prerequisites"] == []
+    assert "transformer_input_state_and_measurement_channel_validity" in transformer["required_evidence"]
+    assert "transformer_output_state_and_measurement_channel_validity" in transformer["required_evidence"]
+    assert "documented_transformer_protection_or_condition_indication_when_available" in transformer["required_evidence"]
+    assert "DQ-TRANSFORMER-INPUT-OUTPUT" in source["prerequisites"]
+    assert "transformer_input_output_evidence" not in source["required_evidence"]
+    assert "assumed_primary_voltage_transformer_rating_or_impedance" in transformer["cannot_conclude_from"]
+    assert "480/277 V" in transformer["applicability"]
+    assert "site-specific" in transformer["applicability"]
+
+
+def test_faa_transformer_decomposition_is_not_claimed_by_synthetic_core():
+    crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
+    crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    assert mappings["DQ-TRANSFORMER-INPUT-OUTPUT"]["coverage"] == "none"
+    assert mappings["DQ-TRANSFORMER-INPUT-OUTPUT"]["synthetic_modes"] == []
