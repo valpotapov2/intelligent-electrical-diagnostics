@@ -88,3 +88,8 @@ The source table's rows for starting current and mechanism name are not filled i
 - Represent unresolved links as issues or unknown relations; do not fill them using typical wiring practice.
 - Treat the model as an offline diagnostic-software benchmark only. It is not authorization to measure or operate the live switchboard.
 - Any future measurement scenario must pass a qualified electrical safety review and the project's SafetyGateway; this source review does not define safe live test points.
+
+
+## Machine-graph scope boundary
+
+The current machine-readable graph models the ten outgoing feeder circuits QF1–QF10, including the QF4 branch to plan position 5. It does **not** yet model the incoming protective devices 1QF/2QF or the upstream power-path connections involving the two supplies, ATS and contactors KM1/KM2. Their visible labels and ratings are transcribed above, but no incoming-side topology should be inferred from their omission in the graph. This is a graph-coverage limitation, not evidence that the equipment is absent from the source drawing.
