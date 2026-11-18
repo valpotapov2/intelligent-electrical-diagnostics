@@ -1760,12 +1760,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            341,
             292,
-            0,
-            722
+            345,
+            708
           ],
-          "text": "QF1 outgoing feeder"
+          "text": "QF1 feeder envelope; union of source-traced connection geometry"
         }
       ]
     },
@@ -1788,12 +1788,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            398,
             292,
-            0,
-            722
+            402,
+            612
           ],
-          "text": "QF2 outgoing feeder"
+          "text": "QF2 feeder envelope; union of source-traced connection geometry"
         }
       ]
     },
@@ -1816,12 +1816,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            456,
             292,
-            0,
-            722
+            460,
+            708
           ],
-          "text": "QF3 outgoing feeder"
+          "text": "QF3 feeder envelope; union of source-traced connection geometry"
         }
       ]
     },
@@ -1846,12 +1846,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            514,
             292,
-            0,
-            722
+            592,
+            612
           ],
-          "text": "QF4 outgoing feeder"
+          "text": "QF4 feeder envelope; union of source-traced connection geometry"
         }
       ]
     },
@@ -1874,12 +1874,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            630,
             292,
-            0,
-            722
+            634,
+            708
           ],
-          "text": "QF5 outgoing feeder"
+          "text": "QF5 feeder envelope; union of source-traced connection geometry"
         }
       ]
     },
@@ -1902,12 +1902,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            688,
             292,
-            0,
-            722
+            692,
+            708
           ],
-          "text": "QF6 outgoing feeder"
+          "text": "QF6 feeder envelope; union of source-traced connection geometry"
         }
       ]
     },
@@ -1930,12 +1930,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            746,
             292,
-            0,
-            722
+            750,
+            708
           ],
-          "text": "QF7 outgoing feeder"
+          "text": "QF7 feeder envelope; union of source-traced connection geometry"
         }
       ]
     },
@@ -1958,12 +1958,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            804,
             292,
-            0,
-            722
+            808,
+            708
           ],
-          "text": "QF8 outgoing feeder"
+          "text": "QF8 feeder envelope; union of source-traced connection geometry"
         }
       ]
     },
@@ -1986,12 +1986,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            862,
             292,
-            0,
-            722
+            866,
+            708
           ],
-          "text": "QF9 outgoing feeder"
+          "text": "QF9 feeder envelope; union of source-traced connection geometry"
         }
       ]
     },
@@ -2014,12 +2014,12 @@
           "document_id": "schema-svg",
           "page": 1,
           "bbox": [
-            0,
+            920,
             292,
-            0,
-            722
+            924,
+            708
           ],
-          "text": "QF10 outgoing feeder"
+          "text": "QF10 feeder envelope; union of source-traced connection geometry"
         }
       ]
     }
