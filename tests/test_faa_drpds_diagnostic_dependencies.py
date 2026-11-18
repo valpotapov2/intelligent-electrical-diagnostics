@@ -469,3 +469,37 @@ def test_faa_ups_internal_conversion_bypass_and_battery_stages_are_separate():
     ):
         assert mappings[question_id]["coverage"] == "none"
         assert mappings[question_id]["synthetic_modes"] == []
+
+
+def test_faa_pdu_input_conversion_and_internal_protection_are_separate_stages():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    incoming = questions["DQ-PDU-INPUT-SUPPLY"]
+    conversion = questions["DQ-PDU-VOLTAGE-CONVERSION"]
+    protection = questions["DQ-PDU-INTERNAL-PROTECTION"]
+    umbrella = questions["DQ-PDU-INPUT-CONDITION"]
+    outgoing = questions["DQ-PDU-OUTGOING-FEEDER"]
+
+    assert incoming["prerequisites"] == ["DQ-CRITICAL-BUS"]
+    assert conversion["prerequisites"] == ["DQ-PDU-INPUT-SUPPLY"]
+    assert protection["prerequisites"] == ["DQ-PDU-INPUT-SUPPLY"]
+    assert set(umbrella["prerequisites"]) == {
+        "DQ-PDU-INPUT-SUPPLY",
+        "DQ-PDU-VOLTAGE-CONVERSION",
+        "DQ-PDU-INTERNAL-PROTECTION",
+    }
+    assert outgoing["prerequisites"] == ["DQ-PDU-INPUT-CONDITION"]
+    assert "historical_480_277_to_208_120_V_reference_as_installed_site_rating" in conversion["cannot_conclude_from"]
+    assert "assumed_transformer_or_conversion_technology_inside_the_PDU" in conversion["cannot_conclude_from"]
+    assert "outgoing_feeder_protection_state_as_proof_of_PDU_main_protection_state" in protection["cannot_conclude_from"]
+    assert "outgoing-feeder protective device belongs to DQ-PDU-OUTGOING-FEEDER" in protection["applicability"]
+    assert "internal_switching_device_identity_and_state_when_documented" in protection["required_evidence"]
+    assert "switching_command_and_feedback_state_when_present_and_documented" in protection["required_evidence"]
+    assert "assessed only when the installed design documents one" in protection["applicability"]
+
+    crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
+    crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    for question_id in ("DQ-PDU-INPUT-SUPPLY", "DQ-PDU-VOLTAGE-CONVERSION", "DQ-PDU-INTERNAL-PROTECTION"):
+        assert mappings[question_id]["coverage"] == "none"
+        assert mappings[question_id]["synthetic_modes"] == []
