@@ -308,12 +308,14 @@ def test_faa_transformer_input_output_diagnostic_is_source_backed_and_site_bound
     source = questions["DQ-SOURCE-AVAILABILITY"]
 
     assert set(transformer["component_refs"]) <= components
-    assert transformer["prerequisites"] == []
+    assert transformer["prerequisites"] == ["DQ-SOURCE-AVAILABILITY"]
     assert "transformer_input_state_and_measurement_channel_validity" in transformer["required_evidence"]
     assert "transformer_output_state_and_measurement_channel_validity" in transformer["required_evidence"]
     assert "documented_transformer_protection_or_condition_indication_when_available" in transformer["required_evidence"]
-    assert "DQ-TRANSFORMER-INPUT-OUTPUT" in source["prerequisites"]
+    assert source["prerequisites"] == []
     assert "transformer_input_output_evidence" not in source["required_evidence"]
+    assert "source_side_measurement_identity_quality_and_timestamp" in source["required_evidence"]
+    assert "physical_commercial_source_loss_or_out_of_documented_condition" in source["distinguishes"]
     assert "assumed_primary_voltage_transformer_rating_or_impedance" in transformer["cannot_conclude_from"]
     assert "480/277 V" in transformer["applicability"]
     assert "site-specific" in transformer["applicability"]
@@ -325,3 +327,35 @@ def test_faa_transformer_decomposition_is_not_claimed_by_synthetic_core():
     mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
     assert mappings["DQ-TRANSFORMER-INPUT-OUTPUT"]["coverage"] == "none"
     assert mappings["DQ-TRANSFORMER-INPUT-OUTPUT"]["synthetic_modes"] == []
+
+
+
+def test_faa_commercial_source_independence_is_documented_but_site_verification_is_required():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    components = {item["id"] for item in graph["components"]}
+    independence = questions["DQ-COMMERCIAL-SOURCE-INDEPENDENCE"]
+
+    assert set(independence["component_refs"]) == {"U1", "U2"}
+    assert set(independence["component_refs"]) <= components
+    assert independence["prerequisites"] == []
+    assert "current_site_one_line_or_utility_records_showing_upstream_source_origins_when_available" in independence["required_evidence"]
+    assert "documented_shared_upstream_supply_dependency" in independence["distinguishes"]
+    assert "U1_and_U2_labels_alone_as_proof_of_independent_upstream_sources" in independence["cannot_conclude_from"]
+    assert "historical FAA reference describes two independent" in independence["applicability"]
+
+
+def test_faa_source_and_transformer_path_are_separate_stages_before_swgr_supply():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    source = questions["DQ-SOURCE-AVAILABILITY"]
+    transformer = questions["DQ-TRANSFORMER-INPUT-OUTPUT"]
+    section = questions["DQ-SWGR-SECTION-SUPPLY"]
+
+    assert source["prerequisites"] == []
+    assert transformer["prerequisites"] == ["DQ-SOURCE-AVAILABILITY"]
+    assert set(section["prerequisites"]) == {"DQ-SOURCE-AVAILABILITY", "DQ-TRANSFORMER-INPUT-OUTPUT"}
+    assert "transformer_input_state_and_measurement_channel_validity" in transformer["required_evidence"]
+    assert "transformer_output_state_and_measurement_channel_validity" in transformer["required_evidence"]
+    assert "physical_source_loss" not in transformer["distinguishes"]
