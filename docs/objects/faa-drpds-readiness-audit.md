@@ -1,6 +1,6 @@
 # FAA DRPDS — diagnostic readiness and coverage audit
 
-**Baseline:** Main after PR #53; this branch adds the next SWGR commercial-return diagnostic stage. Architecture-only model, not an installed facility.
+**Baseline:** Main after PR #54; this branch defines the evidence-state contract for the next interface-readiness step. Architecture-only model, not an installed facility.
 **Sources in this repository:** `examples/objects/faa-drpds.generic.json`, `diagnostics/scenarios/faa-drpds-diagnostic-dependencies.v0.1.json`, `diagnostics/scenarios/faa-drpds-core-crosswalk.v0.1.json`.
 
 ## 1. What is actually available
@@ -23,12 +23,12 @@
 |---|---|---|
 | Display generic graph and distinguish family nodes from installed instances | Architecture data available; UI unverified | Show 29 components/36 connections with provenance; never imply a verified site diagram |
 | Browse a diagnostic question and its evidence prerequisites | Architecture data available; UI unverified | Present all 53 questions and prerequisite relationships, including conditional branches |
-| Show unsupported/unknown evidence explicitly | Required; UI unverified | `coverage:none`, missing equipment mapping and missing observations must remain unknown |
+| Show unsupported/unknown evidence explicitly | Contract defined; UI unverified | Use the five evidence states; keep evidence state separate from observation quality and diagnosis |
 | Exercise real diagnostic core on virtual observations | Synthetic integration available | Existing real-core tests; virtual 0–5.5 V signals are not FAA voltages |
 | Diagnose an installed FAA facility | **Blocked** | Current site drawings, equipment/feeder tags, approved measurement points, signal map, settings, validated failure modes and likelihoods required |
 | Field switching or live electrical measurements | **Not authorized by this model** | Requires approved procedures and qualified personnel; no field plan is provided |
 
-**MVP decision:** An interface demonstration can proceed using architecture navigation, prerequisite inspection, missing-evidence states, and the existing synthetic core fixture. Do not wait for a site-specific feeder map merely to demonstrate those interactions. Do not present the synthetic fixture as a simulation of actual switchgear operation.
+**MVP decision:** An interface demonstration can proceed using architecture navigation, prerequisite inspection, the five evidence states, and the existing synthetic core fixture. Do not wait for a site-specific feeder map merely to demonstrate those interactions. Do not present the synthetic fixture as a simulation of actual switchgear operation.
 
 ## 3. Suggested deterministic interface acceptance cases
 
@@ -48,12 +48,15 @@ These are *display and state-handling* cases, not electrical diagnosis validatio
 12. Select `DQ-SWGR-SELECTIVITY-COORDINATION`; require the current approved site coordination study, installed settings and timestamped upstream/downstream event records. Do not calculate or invent settings or time-current curves.
 13. Select `DQ-SWGR-VOLTAGE-PROTECTION`; show sensing-channel validity, event-time voltage, pickup, configured timer evidence and protection decision separately. Use only approved installed settings; do not invent thresholds or delay values.
 14. Select `DQ-SWGR-COMMERCIAL-RETURN`; show restored-source condition, documented stability qualification, configured return delay when present, mode/permissives/interlocks, breaker response and independent electrical confirmation. Do not infer timer values or a site switching sequence.
+15. Render an `observed` item with invalid/uncertain quality without changing its evidence state into a diagnosis or a pass result.
+16. Render `stale` with its source-defined freshness basis and retain the original observation.
+17. Render `contradicted` with every conflicting observation, source and timestamp visible; do not auto-select one.
 
 ## 4. Priority gaps before advancing beyond architecture UI
 
 **P0 — Block field claims:** current site one-lines, installed device and feeder assignments, approved observation methods, protection/interlock/control documentation, and signal source/quality records. These are missing by design from the generic model.
 
-**P1 — Needed for useful interactive diagnosis:** an explicit evidence-state contract (unknown, unavailable, stale, contradicted, observed) and UI representation of prerequisite traversal. The current JSON contains requirements but not measured site evidence.
+**P1 — Contract now defined; UI remains unverified:** `schema/diagnostic-evidence.schema.json` defines `unknown`, `unavailable`, `stale`, `contradicted`, and `observed`. Observation quality is separate. The schema does not set freshness intervals, fault states, or physical acceptance criteria.
 
 **P2 — Expand synthetic tests selectively:** exercise *software handling* of missing, conflicting and stale evidence without inventing FAA equipment behavior or converting architecture questions into physical fault probabilities.
 
@@ -64,5 +67,6 @@ These are *display and state-handling* cases, not electrical diagnosis validatio
 - Prerequisite graph is acyclic.
 - No crosswalk `none` mapping may claim synthetic modes.
 - Source labels, family counts and functional observation templates do not establish site wiring or physical terminals.
+- Evidence state is not a diagnosis; observation quality is not evidence availability; stale classification requires an explicit source/site freshness basis.
 
 The accompanying tests enforce these machine-checkable invariants. Passing tests do **not** verify installed topology, electrical safety, or diagnostic accuracy.
