@@ -73,6 +73,18 @@ def test_faa_ups_role_questions_are_explicitly_uncovered_by_synthetic_core():
         assert mappings[question_id]["synthetic_modes"] == []
 
 
+def test_faa_pdu_questions_are_explicitly_uncovered_by_synthetic_core():
+    crosswalk = json.loads(CROSSWALK_PATH.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    for question_id in (
+        "DQ-PDU-INPUT-CONDITION",
+        "DQ-PDU-OUTGOING-FEEDER",
+        "DQ-PDU-MAINTENANCE-PAIR",
+    ):
+        assert mappings[question_id]["coverage"] == "none"
+        assert mappings[question_id]["synthetic_modes"] == []
+
+
 def test_faa_loadbank_question_is_explicitly_uncovered_by_synthetic_core():
     crosswalk = json.loads(CROSSWALK_PATH.read_text(encoding="utf-8"))
     mapping = next(item for item in crosswalk["mappings"] if item["question_id"] == "DQ-LOADBANK-TEST-PATH")
