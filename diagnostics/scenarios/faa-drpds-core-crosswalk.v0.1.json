@@ -339,6 +339,12 @@
       "coverage": "none",
       "synthetic_modes": [],
       "rationale": "The synthetic fixture has no installed protective-device settings, approved coordination study, time-current behavior, upstream/downstream trip sequence or ZSI coordination evidence."
+    },
+    {
+      "question_id": "DQ-SWGR-VOLTAGE-PROTECTION",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no voltage sensing channels, under/overvoltage pickup, protection settings, time-delay/timer behavior or voltage-protection event records."
     }
   ],
   "constraints": [
