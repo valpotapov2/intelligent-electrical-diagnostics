@@ -108,3 +108,59 @@ def validate_evidence_records(
             )
         seen_ids.add(evidence_id)
         seen_requirements.add(identity)
+
+
+def validate_complete_evidence_snapshot(
+    records: Sequence[Mapping[str, Any]],
+    dependency_model: Mapping[str, Any],
+    schema: Mapping[str, Any],
+) -> None:
+    """Validate a snapshot containing exactly one record for every declared requirement.
+
+    Requirements with state="unknown" are valid entries. Completeness means
+    every model requirement has an explicit record; it does not mean evidence
+    has been acquired or that any equipment condition has been established.
+    """
+    validate_evidence_records(records, dependency_model, schema)
+
+    questions = dependency_model.get("questions")
+    if not isinstance(questions, list):
+        raise ValueError("dependency model must contain a questions array")
+
+    expected: set[tuple[str, str]] = set()
+    for index, question in enumerate(questions):
+        if not isinstance(question, Mapping):
+            raise ValueError(f"invalid dependency question at index {index}")
+        question_id = question.get("id")
+        required_evidence = question.get("required_evidence")
+        if not isinstance(question_id, str) or not question_id:
+            raise ValueError(f"invalid question id at dependency index {index}")
+        if not isinstance(required_evidence, list):
+            raise ValueError(
+                f"question {question_id} has no valid required_evidence array"
+            )
+        for evidence_key in required_evidence:
+            if not isinstance(evidence_key, str) or not evidence_key:
+                raise ValueError(
+                    f"question {question_id} contains an invalid evidence key"
+                )
+            identity = (question_id, evidence_key)
+            if identity in expected:
+                raise ValueError(
+                    "duplicate declared requirement in dependency model: "
+                    f"question_id={question_id}, evidence_key={evidence_key}"
+                )
+            expected.add(identity)
+
+    actual = {(record["question_id"], record["evidence_key"]) for record in records}
+    missing = sorted(expected - actual)
+    unexpected = sorted(actual - expected)
+    if unexpected:
+        raise ValueError(f"snapshot contains undeclared requirements: {unexpected!r}")
+    if missing:
+        preview = missing[:10]
+        suffix = " ..." if len(missing) > len(preview) else ""
+        raise ValueError(
+            f"incomplete evidence snapshot: {len(missing)} requirements missing: "
+            f"{preview!r}{suffix}"
+        )
