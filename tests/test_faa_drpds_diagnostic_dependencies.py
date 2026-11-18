@@ -217,3 +217,44 @@ def test_faa_pmcs_decomposition_is_uncovered_by_synthetic_core():
     ):
         assert mappings[question_id]["coverage"] == "none"
         assert mappings[question_id]["synthetic_modes"] == []
+
+
+def test_faa_generator_diagnostic_chain_localizes_start_output_connection_and_capacity():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    components = {item["id"] for item in graph["components"]}
+    start = questions["DQ-GENERATOR-START-READINESS"]
+    output = questions["DQ-GENERATOR-ELECTRICAL-OUTPUT"]
+    connection = questions["DQ-GENERATOR-SYNCHRONIZATION-CONNECTION"]
+    capacity = questions["DQ-GENERATOR-CAPACITY-RESERVE"]
+    umbrella = questions["DQ-GENERATOR-AVAILABILITY"]
+    for question in (start, output, connection, capacity, umbrella):
+        assert set(question["component_refs"]) <= components
+    assert start["prerequisites"] == []
+    assert output["prerequisites"] == ["DQ-GENERATOR-START-READINESS"]
+    assert connection["prerequisites"] == ["DQ-GENERATOR-ELECTRICAL-OUTPUT"]
+    assert capacity["prerequisites"] == ["DQ-GENERATOR-SYNCHRONIZATION-CONNECTION"]
+    assert set(umbrella["prerequisites"]) == {
+        "DQ-GENERATOR-START-READINESS",
+        "DQ-GENERATOR-ELECTRICAL-OUTPUT",
+        "DQ-GENERATOR-SYNCHRONIZATION-CONNECTION",
+        "DQ-GENERATOR-CAPACITY-RESERVE",
+    }
+    assert "historical_typical_unit_count_as_a_site_specific_capacity_threshold" in capacity["cannot_conclude_from"]
+
+
+def test_faa_generator_decomposition_is_not_claimed_by_synthetic_bus_fixture():
+    crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
+    crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    for question_id in (
+        "DQ-GENERATOR-START-READINESS",
+        "DQ-GENERATOR-ELECTRICAL-OUTPUT",
+        "DQ-GENERATOR-SYNCHRONIZATION-CONNECTION",
+        "DQ-GENERATOR-CAPACITY-RESERVE",
+    ):
+        assert mappings[question_id]["coverage"] == "none"
+        assert mappings[question_id]["synthetic_modes"] == []
+    assert mappings["DQ-GENERATOR-AVAILABILITY"]["coverage"] == "partial"
+    assert mappings["DQ-GENERATOR-AVAILABILITY"]["synthetic_modes"] == ["Generator_bus_evidence_loss"]
