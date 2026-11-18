@@ -105,6 +105,12 @@
       "coverage": "none",
       "synthetic_modes": [],
       "rationale": "The synthetic fixture has no AC/DC auxiliary-supply, 125 V DC bus, battery-subsystem, or control-function evidence. The virtual standby-transfer evidence-loss mode is not a control-power diagnosis."
+    },
+    {
+      "question_id": "DQ-LOADBANK-TEST-PATH",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture contains no load-bank, test switchboard, source-selection, interlock, switching-feedback, or load-response evidence. Existing generator-bus and standby-transfer virtual channels are not load-bank test-path diagnoses."
     }
   ],
   "constraints": [
@@ -113,6 +119,7 @@
     "Synthetic fixture points and values remain software-only and must not be mapped to physical FAA terminals or measurements.",
     "Unmapped questions are explicit coverage gaps, not healthy states or negative diagnoses.",
     "New source, generator-bus, SWGR-section, and standby-transfer modes are isolated virtual evidence-channel patterns; they do not encode source-to-section wiring or a transfer sequence.",
-    "The control-power prerequisite is architecture-level only; the synthetic fixture does not model AC/DC auxiliary power or battery behavior."
+    "The control-power prerequisite is architecture-level only; the synthetic fixture does not model AC/DC auxiliary power or battery behavior.",
+    "Load-bank test-path coverage is absent from the synthetic fixture; no load-bank operation or switching sequence is represented."
   ]
 }
