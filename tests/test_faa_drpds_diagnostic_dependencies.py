@@ -579,3 +579,24 @@ def test_faa_swgr_voltage_protection_separates_sensing_pickup_and_time_delay():
     mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
     assert mappings["DQ-SWGR-VOLTAGE-PROTECTION"]["coverage"] == "none"
     assert mappings["DQ-SWGR-VOLTAGE-PROTECTION"]["synthetic_modes"] == []
+
+
+def test_faa_swgr_commercial_return_is_separate_and_site_bounded():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    returned = questions["DQ-SWGR-COMMERCIAL-RETURN"]
+
+    assert set(returned["component_refs"]) <= {
+        item["id"] for item in json.loads(GRAPH_PATH.read_text(encoding="utf-8"))["components"]
+    }
+    assert "DQ-SWGR-STANDBY-TRANSFER" not in returned["prerequisites"]
+    assert "site_approved_return_to_commercial_qualification_criteria_and_stability_interval_when_documented" in returned["required_evidence"]
+    assert "configured_return_delay_or_timer_state_and_event_timing_when_present_and_recorded" in returned["required_evidence"]
+    assert "generic_or_historical_voltage_or_time_value_as_installed_site_return_criterion" in returned["cannot_conclude_from"]
+    assert "Do not infer thresholds, timer values, breaker sequence" in returned["applicability"]
+
+    crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
+    crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    assert mappings["DQ-SWGR-COMMERCIAL-RETURN"]["coverage"] == "none"
+    assert mappings["DQ-SWGR-COMMERCIAL-RETURN"]["synthetic_modes"] == []
