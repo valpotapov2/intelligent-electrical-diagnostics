@@ -272,12 +272,12 @@ def test_faa_swgr_transfer_chain_separates_mode_permissives_and_breaker_executio
     for question in (mode, permissives, actuation, umbrella):
         assert set(question["component_refs"]) <= components
     assert mode["prerequisites"] == []
-    assert set(permissives["prerequisites"]) == {"DQ-SOURCE-AVAILABILITY", "DQ-GENERATOR-AVAILABILITY"}
+    assert set(permissives["prerequisites"]) == {"DQ-SOURCE-AVAILABILITY", "DQ-TRANSFORMER-INPUT-OUTPUT", "DQ-GENERATOR-AVAILABILITY"}
     assert set(actuation["prerequisites"]) == {
         "DQ-SWGR-CONTROL-MODE", "DQ-SWGR-TRANSFER-PERMISSIVES", "DQ-CONTROL-POWER"
     }
     assert set(umbrella["prerequisites"]) == {
-        "DQ-SOURCE-AVAILABILITY", "DQ-GENERATOR-AVAILABILITY", "DQ-CONTROL-POWER",
+        "DQ-SOURCE-AVAILABILITY", "DQ-TRANSFORMER-INPUT-OUTPUT", "DQ-GENERATOR-AVAILABILITY", "DQ-CONTROL-POWER",
         "DQ-SWGR-CONTROL-MODE", "DQ-SWGR-TRANSFER-PERMISSIVES", "DQ-SWGR-BREAKER-ACTUATION"
     }
     assert "AUTO_LOCAL_MANUAL_selector_state_and_timestamp" in mode["required_evidence"]
