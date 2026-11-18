@@ -1,6 +1,6 @@
 # FAA DRPDS — diagnostic readiness and coverage audit
 
-**Baseline:** PR #49 UPS changes plus this stacked PDU branch; PR #49 remains a separate prerequisite for merge. Architecture-only model, not an installed facility.
+**Baseline:** Main after PR #53; this branch adds the next SWGR commercial-return diagnostic stage. Architecture-only model, not an installed facility.
 **Sources in this repository:** `examples/objects/faa-drpds.generic.json`, `diagnostics/scenarios/faa-drpds-diagnostic-dependencies.v0.1.json`, `diagnostics/scenarios/faa-drpds-core-crosswalk.v0.1.json`.
 
 ## 1. What is actually available
