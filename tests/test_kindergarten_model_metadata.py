@@ -58,3 +58,13 @@ def test_incoming_side_omission_is_explicitly_recorded():
     assert set(issue["related_ids"]) == {
         "supply-1", "supply-2", "ats", "contactor-km1", "contactor-km2"
     }
+
+
+def test_load_schedule_values_have_explicit_cell_level_provenance_gap():
+    model = json.loads(MODEL.read_text(encoding="utf-8"))
+    issue = next(item for item in model["issues"] if item["id"] == "SVG-006")
+    assert issue["status"] == "open"
+    assert "cell-level coordinate provenance" in issue["description"]
+    loads = [item for item in model["components"] if item["kind"] == "load"]
+    assert len(loads) == 11
+    assert set(issue["related_ids"]) == {item["id"] for item in loads}
