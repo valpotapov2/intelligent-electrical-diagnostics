@@ -68,3 +68,15 @@ def test_load_schedule_values_have_explicit_cell_level_provenance_gap():
     loads = [item for item in model["components"] if item["kind"] == "load"]
     assert len(loads) == 11
     assert set(issue["related_ids"]) == {item["id"] for item in loads}
+
+
+def test_attribute_level_source_localization_gap_is_explicit():
+    model = json.loads(MODEL.read_text(encoding="utf-8"))
+    issue = next(item for item in model["issues"] if item["id"] == "SVG-007")
+    assert issue["status"] == "open"
+    assert "attribute-level text and coordinate provenance remains incomplete" in issue["description"]
+    expected = {
+        item["id"] for item in model["components"]
+        if item["kind"] in {"breaker", "cable", "supply", "contactor"}
+    }
+    assert set(issue["related_ids"]) == expected
