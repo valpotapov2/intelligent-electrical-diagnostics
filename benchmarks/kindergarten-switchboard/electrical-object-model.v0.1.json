@@ -2099,6 +2099,25 @@
         "contactor-km1",
         "contactor-km2"
       ]
+    },
+    {
+      "id": "SVG-006",
+      "severity": "medium",
+      "description": "Load attributes installed_power_kw and calculated_current_a are transcribed in the source review, but each load component's source bbox points to its plan label below the diagram rather than to the corresponding schedule-table cells. Numeric values therefore lack cell-level coordinate provenance in the machine graph.",
+      "status": "open",
+      "related_ids": [
+        "load-plan-1",
+        "load-plan-2",
+        "load-plan-3",
+        "load-plan-4",
+        "load-plan-5",
+        "load-plan-6",
+        "load-plan-7",
+        "load-plan-8",
+        "load-plan-9",
+        "load-plan-10",
+        "load-plan-11"
+      ]
     }
   ],
   "totals": {
