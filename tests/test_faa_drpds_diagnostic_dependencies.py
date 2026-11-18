@@ -493,6 +493,9 @@ def test_faa_pdu_input_conversion_and_internal_protection_are_separate_stages():
     assert "assumed_transformer_or_conversion_technology_inside_the_PDU" in conversion["cannot_conclude_from"]
     assert "outgoing_feeder_protection_state_as_proof_of_PDU_main_protection_state" in protection["cannot_conclude_from"]
     assert "outgoing-feeder protective device belongs to DQ-PDU-OUTGOING-FEEDER" in protection["applicability"]
+    assert "internal_switching_device_identity_and_state_when_documented" in protection["required_evidence"]
+    assert "switching_command_and_feedback_state_when_present_and_documented" in protection["required_evidence"]
+    assert "assessed only when the installed design documents one" in protection["applicability"]
 
     crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
     crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
