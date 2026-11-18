@@ -55,3 +55,15 @@ def test_faa_dependency_model_does_not_claim_physical_measurement_values():
     assert '"value":' not in serialized
     assert "terminal_number" not in serialized
     assert "measurement_limit" not in serialized
+
+
+def test_faa_control_power_is_an_explicit_prerequisite_where_relevant():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    control = questions["DQ-CONTROL-POWER"]
+    assert control["component_refs"] == ["DC125"]
+    assert "DC_bus_state" in control["required_evidence"]
+    assert "battery_subsystem_state" in control["required_evidence"]
+    assert "DQ-CONTROL-POWER" in questions["DQ-SWGR-STANDBY-TRANSFER"]["prerequisites"]
+    assert "DQ-CONTROL-POWER" in questions["DQ-PMCS-TRUSTWORTHINESS"]["prerequisites"]
+    assert "DQ-CONTROL-POWER" not in questions["DQ-SWGR-SECTION-SUPPLY"]["prerequisites"]
