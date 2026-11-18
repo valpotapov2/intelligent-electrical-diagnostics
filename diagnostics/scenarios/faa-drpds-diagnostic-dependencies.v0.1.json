@@ -315,7 +315,10 @@
       "prerequisites": [
         "DQ-SOURCE-AVAILABILITY",
         "DQ-GENERATOR-AVAILABILITY",
-        "DQ-CONTROL-POWER"
+        "DQ-CONTROL-POWER",
+        "DQ-SWGR-CONTROL-MODE",
+        "DQ-SWGR-TRANSFER-PERMISSIVES",
+        "DQ-SWGR-BREAKER-ACTUATION"
       ],
       "required_evidence": [
         "source_availability",
@@ -1123,6 +1126,141 @@
         }
       ],
       "applicability": "Only when a documented generator or UPS load-bank test path is under review; this question does not define or authorize a test procedure."
+    },
+    {
+      "id": "DQ-SWGR-CONTROL-MODE",
+      "title": "Is the documented SWGR control authority and operating mode consistent with the required transfer?",
+      "component_refs": [
+        "SWGR1",
+        "SWGR2",
+        "1M1",
+        "2M1",
+        "1M2",
+        "2M2",
+        "TIE",
+        "PMCS"
+      ],
+      "prerequisites": [],
+      "required_evidence": [
+        "affected_switchgear_and_breaker_identity_when_documented",
+        "AUTO_LOCAL_MANUAL_selector_state_and_timestamp",
+        "active_control_authority_PMCS_or_local_context",
+        "controller_or_PMCS_availability_and_command_origin",
+        "local_indication_or_event_history_for_mode_change"
+      ],
+      "distinguishes": [
+        "automatic_transfer_inhibited_by_non_AUTO_mode",
+        "local_or_manual_control_authority_active",
+        "control_authority_or_mode_state_unconfirmed",
+        "PMCS_or_controller_command_path_unavailable"
+      ],
+      "cannot_conclude_from": [
+        "PMCS_screen_label_without_freshness_or_source_identity",
+        "assumed_default_AUTO_mode",
+        "command_absence_without_control_authority_and_event_context"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ],
+      "applicability": "The technical description identifies AUTO/LOCAL/MANUAL mode, PMCS command capability and local operation when PMCS is unavailable. The installed selector arrangement, authority arbitration and control logic require site drawings; no mode is presumed."
+    },
+    {
+      "id": "DQ-SWGR-TRANSFER-PERMISSIVES",
+      "title": "Are the documented source, tie and interlock conditions satisfied for the required SWGR transfer?",
+      "component_refs": [
+        "SWGR1",
+        "SWGR2",
+        "1M1",
+        "2M1",
+        "1M2",
+        "2M2",
+        "TIE",
+        "PSG"
+      ],
+      "prerequisites": [
+        "DQ-SOURCE-AVAILABILITY",
+        "DQ-GENERATOR-AVAILABILITY"
+      ],
+      "required_evidence": [
+        "normal_and_standby_source_availability_for_affected_section",
+        "documented_standby_incomer_permissive_state",
+        "tie_breaker_state_and_documented_interlock_evidence",
+        "mutual_interlock_and_no_parallel_source_condition_when_documented",
+        "event_context_and_permissive_state_at_command_time"
+      ],
+      "distinguishes": [
+        "standby_source_not_available",
+        "transfer_permissive_not_satisfied",
+        "tie_or_mutual_interlock_blocks_transfer",
+        "permissive_or_interlock_evidence_missing"
+      ],
+      "cannot_conclude_from": [
+        "generic_transfer_failure_without_specific_permissive_evidence",
+        "assumed_interlock_logic_or_timer_values",
+        "current_state_used_as_proof_of_state_at_past_command_time"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ],
+      "applicability": "The source describes multiple breakers, switching conditions, delays and prohibitions on paralleling sources. Exact permissive equations, timer values, interlock topology and sequence are site-specific and are not encoded."
+    },
+    {
+      "id": "DQ-SWGR-BREAKER-ACTUATION",
+      "title": "Did the SWGR breaker execute the documented command and provide trustworthy position and electrical feedback?",
+      "component_refs": [
+        "SWGR1",
+        "SWGR2",
+        "1M1",
+        "2M1",
+        "1M2",
+        "2M2",
+        "TIE",
+        "DC125",
+        "PMCS"
+      ],
+      "prerequisites": [
+        "DQ-SWGR-CONTROL-MODE",
+        "DQ-SWGR-TRANSFER-PERMISSIVES",
+        "DQ-CONTROL-POWER"
+      ],
+      "required_evidence": [
+        "identified_breaker_command_and_command_timestamp",
+        "documented_control_power_state_for_affected_function",
+        "actuator_or_operating_mechanism_response_when_observable",
+        "breaker_auxiliary_position_feedback_and_signal_quality",
+        "independent_electrical_state_of_relevant_section_or_path"
+      ],
+      "distinguishes": [
+        "command_not_issued_or_not_received",
+        "control_power_or_control_circuit_problem",
+        "actuation_or_mechanism_failure",
+        "position_feedback_or_telemetry_failure",
+        "command_position_and_electrical_state_disagreement",
+        "transfer_result_unconfirmed"
+      ],
+      "cannot_conclude_from": [
+        "CLOSE_or_OPEN_command_alone",
+        "PMCS_position_status_without_freshness_or_independent_confirmation",
+        "auxiliary_contact_alone_as_proof_of_primary_contact_condition",
+        "failure_to_move_as_proof_of_mechanical_failure_without_control_power_cross_check"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        },
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The source identifies command, control circuit, drive, physical contacts, position feedback and DC control power as distinct evidence. No breaker tags, coil ratings, terminal points, actuator design or field test procedure are inferred."
     }
   ],
   "global_constraints": [

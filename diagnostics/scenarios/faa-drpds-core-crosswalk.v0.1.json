@@ -213,6 +213,24 @@
       "coverage": "none",
       "synthetic_modes": [],
       "rationale": "The synthetic fixture contains no load-bank, test switchboard, source-selection, interlock, switching-feedback, or load-response evidence. Existing generator-bus and standby-transfer virtual channels are not load-bank test-path diagnoses."
+    },
+    {
+      "question_id": "DQ-SWGR-CONTROL-MODE",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no SWGR control-mode, transfer-permissive/interlock, breaker actuation, position-feedback or independent electrical-confirmation fault modes."
+    },
+    {
+      "question_id": "DQ-SWGR-TRANSFER-PERMISSIVES",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no SWGR control-mode, transfer-permissive/interlock, breaker actuation, position-feedback or independent electrical-confirmation fault modes."
+    },
+    {
+      "question_id": "DQ-SWGR-BREAKER-ACTUATION",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no SWGR control-mode, transfer-permissive/interlock, breaker actuation, position-feedback or independent electrical-confirmation fault modes."
     }
   ],
   "constraints": [
