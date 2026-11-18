@@ -535,3 +535,27 @@ def test_faa_pdu_input_conversion_and_internal_protection_are_separate_stages():
     for question_id in ("DQ-PDU-INPUT-SUPPLY", "DQ-PDU-VOLTAGE-CONVERSION", "DQ-PDU-INTERNAL-PROTECTION"):
         assert mappings[question_id]["coverage"] == "none"
         assert mappings[question_id]["synthetic_modes"] == []
+
+
+def test_faa_swgr_protection_response_and_selectivity_are_separate_site_bounded_stages():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    response = questions["DQ-SWGR-PROTECTION-RESPONSE"]
+    selectivity = questions["DQ-SWGR-SELECTIVITY-COORDINATION"]
+
+    assert response["prerequisites"] == ["DQ-SWGR-SECTION-SUPPLY"]
+    assert selectivity["prerequisites"] == ["DQ-SWGR-PROTECTION-RESPONSE"]
+    assert "documented_protective_element_pickup_or_operation_and_available_event_record" in response["required_evidence"]
+    assert "zone_selective_interlocking_input_output_or_blocking_event_when_present_and_documented" in response["required_evidence"]
+    assert "trip_or_alarm_message_without_source_identity_and_event_timestamp" in response["cannot_conclude_from"]
+    assert "current_approved_protective_device_coordination_study_and_revision" in selectivity["required_evidence"]
+    assert "timestamped_operation_or_trip_records_for_relevant_downstream_and_upstream_devices" in selectivity["required_evidence"]
+    assert "assumed_time_current_curves_or_numeric_settings" in selectivity["cannot_conclude_from"]
+    assert "Do not calculate, recommend, infer or modify protection settings" in selectivity["applicability"]
+
+    crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
+    crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    for question_id in ("DQ-SWGR-PROTECTION-RESPONSE", "DQ-SWGR-SELECTIVITY-COORDINATION"):
+        assert mappings[question_id]["coverage"] == "none"
+        assert mappings[question_id]["synthetic_modes"] == []
