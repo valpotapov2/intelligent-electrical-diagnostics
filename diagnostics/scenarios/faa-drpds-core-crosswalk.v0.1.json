@@ -137,6 +137,18 @@
       "rationale": "Only a generic downstream output-loss pattern is exercised; dual inputs, source selection, transfer event, and transfer state are absent."
     },
     {
+      "question_id": "DQ-CDP-INCOMING-PATH",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The fixture has no individual SATS output-to-CDP incomer assignment, CDP incomer state, or incoming-path measurement."
+    },
+    {
+      "question_id": "DQ-CDP-OUTGOING-BRANCH",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The fixture has no individual CDP branch, protective-device state, circuit identity, or assigned critical-load evidence."
+    },
+    {
       "question_id": "DQ-CDP-OUTGOING-CIRCUIT",
       "coverage": "none",
       "synthetic_modes": [],
