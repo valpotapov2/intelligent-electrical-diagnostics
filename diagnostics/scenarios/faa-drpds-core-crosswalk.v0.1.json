@@ -315,6 +315,18 @@
       "coverage": "none",
       "synthetic_modes": [],
       "rationale": "The synthetic fixture does not model individual PDU input supply, voltage conversion, or internal protective-device evidence. No PDU instances, internal conversion technology, protective settings, or site wiring are implied."
+    },
+    {
+      "question_id": "DQ-SATS-CONTROL-READINESS",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture does not model individual SATS sensing channels, AUTO mode, controller readiness, control alarms or transfer-decision evidence."
+    },
+    {
+      "question_id": "DQ-SATS-SWITCHING-FUNCTION",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture does not model SATS transfer commands, solid-state switching-element feedback, switching events or output continuity during transfer."
     }
   ],
   "constraints": [
