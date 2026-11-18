@@ -1125,7 +1125,7 @@
     },
     {
       "id": "DQ-PDU-INTERNAL-PROTECTION",
-      "title": "Are the documented PDU input and internal protective devices available and in the expected state?",
+      "title": "Are the documented PDU internal switching and protective functions available and in the expected state?",
       "component_refs": [
         "PDU-GROUP"
       ],
@@ -1133,23 +1133,27 @@
         "DQ-PDU-INPUT-SUPPLY"
       ],
       "required_evidence": [
-        "specific_PDU_identity_and_documented_protective_device_schedule",
+        "specific_PDU_identity_and_documented_internal_switching_and_protective_device_schedule",
         "PDU_main_or_internal_protective_device_identity_and_state_when_documented",
-        "trip_alarm_and_event_history_with_timestamp",
+        "internal_switching_device_identity_and_state_when_documented",
+        "switching_command_and_feedback_state_when_present_and_documented",
+        "trip_alarm_switching_event_history_with_timestamp",
         "protective_device_feedback_or_local_indication_quality",
-        "independent_or_local_confirmation_of_protective_device_state_when_available"
+        "independent_or_local_confirmation_of_switching_or_protective_device_state_when_available"
       ],
       "distinguishes": [
         "documented_PDU_protective_device_operated",
+        "documented_internal_switching_function_unavailable_or_state_disagreement",
         "PDU_protective_device_unavailable_or_state_not_confirmed",
-        "protective_device_feedback_or_telemetry_problem",
-        "protective_device_identity_or_protection_boundary_not_established"
+        "switching_or_protective_device_feedback_or_telemetry_problem",
+        "switching_or_protection_device_identity_or_boundary_not_established"
       ],
       "cannot_conclude_from": [
         "downstream_load_loss_alone_as_proof_of_PDU_protective_device_operation",
         "outgoing_feeder_protection_state_as_proof_of_PDU_main_protection_state",
         "PMCS_trip_or_position_indication_without_freshness_or_independent_confirmation",
-        "protection_selectivity_or_setting_correctness_without_coordination_documents"
+        "protection_selectivity_or_setting_correctness_without_coordination_documents",
+        "assumed_internal_switching_topology_or_device_arrangement"
       ],
       "sources": [
         {
@@ -1157,7 +1161,7 @@
           "page": 4
         }
       ],
-      "applicability": "This question covers only PDU main/internal protective devices identified in the installed schedule. The separately assessed outgoing-feeder protective device belongs to DQ-PDU-OUTGOING-FEEDER. No breaker tags, trip settings, curves, selectivity, or ZSI behavior are inferred."
+      "applicability": "This question covers only PDU main/internal switching and protective functions identified in the installed schedule. A switching device is assessed only when the installed design documents one and exposes usable state/feedback evidence. The separately assessed outgoing-feeder protective device belongs to DQ-PDU-OUTGOING-FEEDER. No breaker tags, trip settings, curves, selectivity, ZSI behavior or internal topology are inferred."
     },
     {
       "id": "DQ-PDU-INPUT-CONDITION",
