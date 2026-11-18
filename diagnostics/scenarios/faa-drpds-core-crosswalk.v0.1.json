@@ -327,6 +327,18 @@
       "coverage": "none",
       "synthetic_modes": [],
       "rationale": "The synthetic fixture does not model SATS transfer commands, solid-state switching-element feedback, switching events or output continuity during transfer."
+    },
+    {
+      "question_id": "DQ-SWGR-PROTECTION-RESPONSE",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no protective-element pickup, trip-output, shunt-trip/undervoltage-release, ZSI signal, breaker trip sequence or protection-event evidence."
+    },
+    {
+      "question_id": "DQ-SWGR-SELECTIVITY-COORDINATION",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no installed protective-device settings, approved coordination study, time-current behavior, upstream/downstream trip sequence or ZSI coordination evidence."
     }
   ],
   "constraints": [
