@@ -144,8 +144,15 @@ def test_faa_sats_dual_input_and_transfer_questions_respect_grouped_source_bound
     for question in (dual, transfer, umbrella):
         assert set(question["component_refs"]) <= set(components)
     assert dual["prerequisites"] == ["DQ-PDU-OUTGOING-FEEDER"]
-    assert transfer["prerequisites"] == ["DQ-SATS-DUAL-INPUT-AVAILABILITY"]
-    assert umbrella["prerequisites"] == ["DQ-SATS-DUAL-INPUT-AVAILABILITY"]
+    assert transfer["prerequisites"] == [
+        "DQ-SATS-DUAL-INPUT-AVAILABILITY",
+        "DQ-SATS-CONTROL-READINESS",
+        "DQ-SATS-SWITCHING-FUNCTION",
+    ]
+    assert umbrella["prerequisites"] == [
+        "DQ-SATS-DUAL-INPUT-AVAILABILITY",
+        "DQ-SATS-SWITCHING-FUNCTION",
+    ]
     assert "DQ-SATS-AUTO-TRANSFER" not in umbrella["prerequisites"]
     assert "documented_source_A_PDU_and_feeder_assignment_to_SATS_input" in dual["required_evidence"]
     assert "documented_source_B_PDU_and_feeder_assignment_to_SATS_input" in dual["required_evidence"]
