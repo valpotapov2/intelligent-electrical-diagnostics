@@ -589,7 +589,14 @@ def test_faa_swgr_commercial_return_is_separate_and_site_bounded():
     assert set(returned["component_refs"]) <= {
         item["id"] for item in json.loads(GRAPH_PATH.read_text(encoding="utf-8"))["components"]
     }
+    assert returned["prerequisites"] == [
+        "DQ-SOURCE-AVAILABILITY",
+        "DQ-TRANSFORMER-INPUT-OUTPUT",
+        "DQ-CONTROL-POWER",
+        "DQ-SWGR-CONTROL-MODE",
+    ]
     assert "DQ-SWGR-STANDBY-TRANSFER" not in returned["prerequisites"]
+    assert "DQ-SWGR-TRANSFER-PERMISSIVES" not in returned["prerequisites"]
     assert "site_approved_return_to_commercial_qualification_criteria_and_stability_interval_when_documented" in returned["required_evidence"]
     assert "configured_return_delay_or_timer_state_and_event_timing_when_present_and_recorded" in returned["required_evidence"]
     assert "generic_or_historical_voltage_or_time_value_as_installed_site_return_criterion" in returned["cannot_conclude_from"]
