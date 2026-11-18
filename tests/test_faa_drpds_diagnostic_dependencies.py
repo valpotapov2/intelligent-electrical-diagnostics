@@ -155,3 +155,27 @@ def test_faa_sats_dual_input_and_transfer_questions_respect_grouped_source_bound
     assert "individual_feeder_mapping" in dual["cannot_conclude_from"]
     assert "SATS-GROUP" in components
     assert "PDU-GROUP" in components
+
+
+def test_faa_cdp_incoming_and_branch_questions_respect_grouped_source_boundary():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    components = {item["id"]: item for item in graph["components"]}
+    incoming = questions["DQ-CDP-INCOMING-PATH"]
+    branch = questions["DQ-CDP-OUTGOING-BRANCH"]
+    umbrella = questions["DQ-CDP-OUTGOING-CIRCUIT"]
+
+    for question in (incoming, branch, umbrella):
+        assert set(question["component_refs"]) <= set(components)
+    assert incoming["prerequisites"] == ["DQ-SATS-SOURCE-SELECTION"]
+    assert branch["prerequisites"] == ["DQ-CDP-INCOMING-PATH"]
+    assert umbrella["prerequisites"] == ["DQ-CDP-INCOMING-PATH", "DQ-CDP-OUTGOING-BRANCH"]
+    assert "specific_CDP_identity_and_documented_SATS_output_assignment" in incoming["required_evidence"]
+    assert "current_site_drawing_for_the_SATS_to_CDP_incoming_path" in incoming["required_evidence"]
+    assert "documented_branch_to_critical_load_assignment" in branch["required_evidence"]
+    assert "outgoing_protective_device_state_and_measurement_validity" in branch["required_evidence"]
+    assert "aggregate_SATS_to_CDP_relationship_without_individual_assignment" in incoming["cannot_conclude_from"]
+    assert "aggregate_CDP_to_critical_loads_relationship_without_individual_branch_mapping" in branch["cannot_conclude_from"]
+    assert "maintenance isolation" in incoming["applicability"]
+    assert "CDP-GROUP" in components
