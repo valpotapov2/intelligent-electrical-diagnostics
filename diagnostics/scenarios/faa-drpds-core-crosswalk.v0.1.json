@@ -92,7 +92,7 @@
       "synthetic_modes": [
         "Essential_feed_loss"
       ],
-      "rationale": "A single virtual essential-output loss is exercised; upstream feeder protection, MCC/control causes, and local-load causes are not distinguished."
+      "rationale": "The virtual essential-output loss remains only a partial endpoint pattern. The fixture does not distinguish switchboard feeder protection, MCC/control faults, local-load/restart conditions, or generator-capacity-related load shedding and restoration."
     },
     {
       "question_id": "DQ-UPS-HEALTH",
@@ -243,6 +243,30 @@
       "coverage": "none",
       "synthetic_modes": [],
       "rationale": "The synthetic fixture has no SWGR control-mode, transfer-permissive/interlock, breaker actuation, position-feedback or independent electrical-confirmation fault modes."
+    },
+    {
+      "question_id": "DQ-ESSENTIAL-SWBD-FEEDER",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "No synthetic mode represents this distinct essential-distribution evidence boundary; absence of fixture coverage is not a healthy result or a diagnostic conclusion."
+    },
+    {
+      "question_id": "DQ-ESSENTIAL-MCC-CONTROL",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "No synthetic mode represents this distinct essential-distribution evidence boundary; absence of fixture coverage is not a healthy result or a diagnostic conclusion."
+    },
+    {
+      "question_id": "DQ-ESSENTIAL-LOAD-RESPONSE",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "No synthetic mode represents this distinct essential-distribution evidence boundary; absence of fixture coverage is not a healthy result or a diagnostic conclusion."
+    },
+    {
+      "question_id": "DQ-ESSENTIAL-LOAD-SHED-RESTORE",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "No synthetic mode represents this distinct essential-distribution evidence boundary; absence of fixture coverage is not a healthy result or a diagnostic conclusion."
     }
   ],
   "constraints": [

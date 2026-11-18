@@ -431,6 +431,157 @@
       "applicability": "Only when the operating mode or observed event requires a transfer to standby supply."
     },
     {
+      "id": "DQ-ESSENTIAL-SWBD-FEEDER",
+      "title": "Is the documented essential switchboard feeder available to supply its assigned downstream section or load group?",
+      "component_refs": [
+        "ESS-SWBD",
+        "SWGR1",
+        "SWGR2"
+      ],
+      "prerequisites": [
+        "DQ-SWGR-SECTION-SUPPLY"
+      ],
+      "required_evidence": [
+        "specific_essential_switchboard_and_feeder_identity_when_documented",
+        "selected_upstream_source_path_and_switchboard_input_state",
+        "feeder_protective_device_state_and_available_trip_or_alarm_evidence",
+        "feeder_output_or_downstream_supply_evidence",
+        "measurement_identity_quality_and_timestamp"
+      ],
+      "distinguishes": [
+        "upstream_switchgear_section_unavailable",
+        "essential_switchboard_input_unavailable",
+        "feeder_protective_device_operated_or_unavailable",
+        "feeder_output_or_measurement_evidence_inconsistent",
+        "installed_feeder_identity_or_assignment_unconfirmed"
+      ],
+      "cannot_conclude_from": [
+        "downstream_load_stopped_as_proof_of_feeder_failure",
+        "switchboard_input_present_as_proof_that_each_outgoing_feeder_is_available",
+        "aggregate_essential_switchboard_family_as_proof_of_an_installed_feeder_map"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ],
+      "applicability": "The documented essential path includes switchgear, switchboards, MCCs, outgoing feeders and loads. Apply to an individual feeder only after current site drawings and schedules establish its identity and assignment."
+    },
+    {
+      "id": "DQ-ESSENTIAL-MCC-CONTROL",
+      "title": "Is the relevant MCC protective and control path available for its assigned motor load?",
+      "component_refs": [
+        "MCC",
+        "ESS-SWBD"
+      ],
+      "prerequisites": [
+        "DQ-ESSENTIAL-SWBD-FEEDER"
+      ],
+      "required_evidence": [
+        "specific_MCC_and_motor_feeder_identity_when_documented",
+        "MCC_incoming_supply_state",
+        "documented_protective_device_trip_or_alarm_state",
+        "contactor_or_motor_starter_state_when_available",
+        "local_or_remote_control_command_and_interlock_state_when_documented"
+      ],
+      "distinguishes": [
+        "MCC_incoming_supply_unavailable",
+        "protective_device_trip_or_fault",
+        "contactor_or_starter_unavailable",
+        "control_or_interlock_condition_preventing_operation",
+        "MCC_or_motor_feeder_identity_unconfirmed"
+      ],
+      "cannot_conclude_from": [
+        "motor_not_running_as_proof_of_MCC_failure",
+        "MCC_supply_present_as_proof_of_contactor_or_control_availability",
+        "generic_MCC_family_as_proof_of_individual_motor_feeder_mapping"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ],
+      "applicability": "The reference identifies MCCs, motor feeders, protection, contactors and local control as diagnostic layers. Individual MCC sections, feeder tags, control logic and protective settings require site drawings and equipment schedules."
+    },
+    {
+      "id": "DQ-ESSENTIAL-LOAD-RESPONSE",
+      "title": "Is the assigned essential load responding as expected when its supply and control path are available?",
+      "component_refs": [
+        "MCC",
+        "ESS-LOADS"
+      ],
+      "prerequisites": [
+        "DQ-ESSENTIAL-MCC-CONTROL"
+      ],
+      "required_evidence": [
+        "documented_load_identity_and_assignment",
+        "available_supply_at_the_load_or_motor_input_when_documented",
+        "local_load_or_motor_operating_state",
+        "available_load_fault_or_alarm_evidence",
+        "restart_inhibit_or_equipment_protection_state_when_documented"
+      ],
+      "distinguishes": [
+        "load_or_motor_local_fault",
+        "load_not_enabled_or_restart_inhibited",
+        "load_response_not_confirmed",
+        "supply_or_control_path_not_yet_proven"
+      ],
+      "cannot_conclude_from": [
+        "stopped_motor_alone_as_local_motor_failure",
+        "absence_of_a_PMCS_alarm_as_proof_of_healthy_load",
+        "generic_load_category_as_proof_of_installed_motor_or_terminal_identity"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ],
+      "applicability": "The reference lists cooling, pumps, chillers, compressors, fans, lighting and receptacles as essential loads and notes that some equipment has its own restart restrictions. Apply only to a documented load; do not infer restart timers or equipment-specific settings."
+    },
+    {
+      "id": "DQ-ESSENTIAL-LOAD-SHED-RESTORE",
+      "title": "Did essential-load shedding and restoration correspond to the documented generator-capacity condition?",
+      "component_refs": [
+        "EGSET",
+        "PSG",
+        "ESS-SWBD",
+        "MCC"
+      ],
+      "prerequisites": [
+        "DQ-GENERATOR-CAPACITY-RESERVE"
+      ],
+      "required_evidence": [
+        "generator_capacity_and_available_unit_assessment_at_event_time",
+        "documented_essential_load_shed_or_restore_event",
+        "affected_feeder_or_load_group_identity_when_documented",
+        "site_specific_load_priority_or_shed_restore_criteria",
+        "event_timestamps_and_feeder_or_load_state_before_and_after_capacity_change"
+      ],
+      "distinguishes": [
+        "load_shed_consistent_with_documented_insufficient_generator_capacity",
+        "load_not_restored_after_documented_capacity_recovery",
+        "feeder_or_load_group_not_identified",
+        "load_shed_or_restore_logic_not_available_in_site_records",
+        "event_or_status_evidence_inconsistent"
+      ],
+      "cannot_conclude_from": [
+        "historical_typical_generator_count_as_a_site_specific_threshold",
+        "load_absence_alone_as_proof_of_automatic_load_shedding",
+        "current_generator_count_as_proof_of_capacity_at_a_past_event",
+        "assumed_load_priority_or_restore_sequence"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The historical reference describes automatic shedding of part of the essential load while generator capacity is insufficient and restoration as additional generators become available. The site's actual thresholds, priorities, feeder identities and sequence must come from current approved records; this question does not define or authorize switching."
+    },
+    {
       "id": "DQ-ESSENTIAL-FEED",
       "title": "Is an essential load unavailable because of its supply path?",
       "component_refs": [
@@ -441,29 +592,33 @@
         "SWGR2"
       ],
       "prerequisites": [
-        "DQ-SWGR-SECTION-SUPPLY"
+        "DQ-ESSENTIAL-SWBD-FEEDER",
+        "DQ-ESSENTIAL-MCC-CONTROL",
+        "DQ-ESSENTIAL-LOAD-RESPONSE"
       ],
       "required_evidence": [
-        "selected_upstream_source_path",
-        "switchboard_feeder_state",
-        "MCC_protective_and_control_state",
-        "load_response"
+        "essential_switchboard_feeder_assessment",
+        "MCC_protection_and_control_assessment",
+        "assigned_load_response_assessment"
       ],
       "distinguishes": [
-        "upstream_supply_loss",
-        "feeder_protection_operation",
-        "MCC_or_control_problem",
-        "local_load_problem"
+        "upstream_supply_or_feeder_problem",
+        "MCC_protection_or_control_problem",
+        "local_load_or_restart_problem",
+        "insufficient_site_mapping_or_evidence"
       ],
       "cannot_conclude_from": [
-        "stopped_motor_alone"
+        "stopped_motor_alone",
+        "switchboard_or_MCC_input_present_as_proof_of_downstream_load_availability",
+        "aggregate_essential_distribution_status_without_feeder_and_load_localization"
       ],
       "sources": [
         {
           "document_id": "faa-jo-6480-22",
           "page": 5
         }
-      ]
+      ],
+      "applicability": "Umbrella assessment. Localize an essential-load interruption through the switchboard feeder, MCC protective/control path and assigned load response. Assess generator-related load shedding/restoration separately when the event occurred during standby operation."
     },
     {
       "id": "DQ-UPS-HEALTH",

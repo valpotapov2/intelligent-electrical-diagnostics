@@ -359,3 +359,37 @@ def test_faa_source_and_transformer_path_are_separate_stages_before_swgr_supply(
     assert "transformer_input_state_and_measurement_channel_validity" in transformer["required_evidence"]
     assert "transformer_output_state_and_measurement_channel_validity" in transformer["required_evidence"]
     assert "physical_source_loss" not in transformer["distinguishes"]
+
+
+def test_faa_essential_distribution_is_localized_by_feeder_mcc_and_load_evidence():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    feeder = questions["DQ-ESSENTIAL-SWBD-FEEDER"]
+    mcc = questions["DQ-ESSENTIAL-MCC-CONTROL"]
+    load = questions["DQ-ESSENTIAL-LOAD-RESPONSE"]
+    shed = questions["DQ-ESSENTIAL-LOAD-SHED-RESTORE"]
+    umbrella = questions["DQ-ESSENTIAL-FEED"]
+
+    assert feeder["prerequisites"] == ["DQ-SWGR-SECTION-SUPPLY"]
+    assert mcc["prerequisites"] == ["DQ-ESSENTIAL-SWBD-FEEDER"]
+    assert load["prerequisites"] == ["DQ-ESSENTIAL-MCC-CONTROL"]
+    assert umbrella["prerequisites"] == [
+        "DQ-ESSENTIAL-SWBD-FEEDER",
+        "DQ-ESSENTIAL-MCC-CONTROL",
+        "DQ-ESSENTIAL-LOAD-RESPONSE",
+    ]
+    assert shed["prerequisites"] == ["DQ-GENERATOR-CAPACITY-RESERVE"]
+    assert "site_specific_load_priority_or_shed_restore_criteria" in shed["required_evidence"]
+    assert "historical_typical_generator_count_as_a_site_specific_threshold" in shed["cannot_conclude_from"]
+
+    crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
+    crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    for question_id in (
+        "DQ-ESSENTIAL-SWBD-FEEDER",
+        "DQ-ESSENTIAL-MCC-CONTROL",
+        "DQ-ESSENTIAL-LOAD-RESPONSE",
+        "DQ-ESSENTIAL-LOAD-SHED-RESTORE",
+    ):
+        assert mappings[question_id]["coverage"] == "none"
+        assert mappings[question_id]["synthetic_modes"] == []
