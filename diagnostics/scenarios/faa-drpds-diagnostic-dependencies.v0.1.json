@@ -791,6 +791,104 @@
       "applicability": "This is the umbrella CDP diagnosis. Localize the fault through the incoming-path and outgoing-branch questions; do not infer an installed circuit map from the generic architecture."
     },
     {
+      "id": "DQ-PMCS-MEASUREMENT-CHANNEL",
+      "title": "Is the PMCS measurement channel reporting a valid instrument value?",
+      "component_refs": [
+        "PMCS"
+      ],
+      "prerequisites": [],
+      "required_evidence": [
+        "identified_measurement_source_and_documented_signal_identity",
+        "PowerLogic_or_meter_measurement_and_available_device_diagnostics",
+        "measurement_timestamp_and_quality",
+        "independent_comparison_at_the_measurement_source_when_available"
+      ],
+      "distinguishes": [
+        "measurement_instrument_or_sensor_fault",
+        "invalid_or_unavailable_measurement_channel",
+        "measurement_source_not_identified",
+        "measurement_value_not_independently_confirmed"
+      ],
+      "cannot_conclude_from": [
+        "PMCS_displayed_value_without_measurement_quality_and_source_identity",
+        "a_missing_value_as_proof_of_physical_equipment_failure"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The source describes PowerLogic devices and measuring instruments but does not identify individual instruments, channels, signal wiring, calibration limits, or installed point tags. Apply only to a documented measurement point; no physical test terminal is defined."
+    },
+    {
+      "id": "DQ-PMCS-PLC-ACQUISITION",
+      "title": "Has the PLC acquired the documented measurement or status signal correctly?",
+      "component_refs": [
+        "PMCS"
+      ],
+      "prerequisites": [
+        "DQ-PMCS-MEASUREMENT-CHANNEL"
+      ],
+      "required_evidence": [
+        "documented_signal_identity_and_source_to_PLC_mapping",
+        "relevant_I_O_channel_state_and_diagnostics",
+        "PLC_operating_and_acquisition_state",
+        "comparison_of_source_value_or_status_with_PLC_acquired_value"
+      ],
+      "distinguishes": [
+        "I_O_channel_fault",
+        "PLC_acquisition_or_processing_fault",
+        "signal_mapping_unconfirmed",
+        "source_measurement_valid_but_PLC_value_unavailable_or_inconsistent"
+      ],
+      "cannot_conclude_from": [
+        "operator_station_display_without_PLC_acquisition_evidence",
+        "aggregate_PMCS_status_without_documented_signal_mapping"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The source identifies PLC and PMCS signal acquisition but provides no I/O list, channel numbers, PLC program mapping, or signal-level topology. These must be obtained from current site documentation before localizing an installed channel."
+    },
+    {
+      "id": "DQ-PMCS-COMMS-OWS-FRESHNESS",
+      "title": "Is the PLC data reaching the active OWS with valid communications and freshness?",
+      "component_refs": [
+        "PMCS"
+      ],
+      "prerequisites": [
+        "DQ-PMCS-PLC-ACQUISITION"
+      ],
+      "required_evidence": [
+        "documented_PLC_to_OWS_data_path_when_available",
+        "communications_or_network_state",
+        "active_operator_station_identity",
+        "displayed_measurement_timestamp_and_quality_or_freshness_indication",
+        "comparison_of_PLC_acquired_value_with_active_OWS_display"
+      ],
+      "distinguishes": [
+        "communications_path_unavailable",
+        "stale_or_delayed_data",
+        "active_OWS_display_or_client_problem",
+        "data_path_or_point_mapping_unconfirmed"
+      ],
+      "cannot_conclude_from": [
+        "a_value_on_screen_without_timestamp_or_quality",
+        "redundant_OWS_presence_as_proof_that_both_stations_show_current_identical_data"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The source describes two redundant OWS stations with one active for control, plus communications networks and monitoring software. It does not define network topology, failover behavior, freshness thresholds, or point-level routing; do not infer these details."
+    },
+    {
       "id": "DQ-PMCS-TRUSTWORTHINESS",
       "title": "Does PMCS telemetry represent the physical equipment state?",
       "component_refs": [
@@ -802,30 +900,42 @@
         "UPS-GROUP"
       ],
       "prerequisites": [
-        "DQ-CONTROL-POWER"
+        "DQ-CONTROL-POWER",
+        "DQ-PMCS-MEASUREMENT-CHANNEL",
+        "DQ-PMCS-PLC-ACQUISITION",
+        "DQ-PMCS-COMMS-OWS-FRESHNESS"
       ],
       "required_evidence": [
         "measurement_timestamp_and_quality",
+        "measurement_channel_and_instrument_validity",
         "I_O_channel_state",
-        "PLC_and_communications_state",
+        "PLC_acquisition_state",
+        "communications_and_active_OWS_state",
         "DC_control_power_state",
         "independent_physical_or_electrical_cross_check"
       ],
       "distinguishes": [
-        "equipment_fault",
-        "sensor_or_I_O_fault",
+        "physical_equipment_fault",
+        "measurement_instrument_or_sensor_fault",
+        "I_O_channel_fault",
+        "PLC_acquisition_or_processing_fault",
         "communications_or_stale_data",
-        "control_power_fault"
+        "active_OWS_display_problem",
+        "control_power_fault",
+        "insufficient_signal_mapping_or_independent_evidence"
       ],
       "cannot_conclude_from": [
-        "displayed_status_without_freshness_and_independent_evidence"
+        "displayed_status_without_freshness_and_independent_evidence",
+        "PMCS_status_without_documented_signal_identity_and_source_mapping",
+        "missing_or_stale_telemetry_as_proof_of_physical_equipment_failure"
       ],
       "sources": [
         {
           "document_id": "faa-jo-6480-22-block",
           "page": 4
         }
-      ]
+      ],
+      "applicability": "Umbrella assessment: combine the measurement-channel, PLC-acquisition and active-OWS communications/freshness assessments with DC control-power status and independent physical/electrical confirmation. A PMCS screen indication alone is not independent confirmation of physical equipment state. Signal-level topology and site-specific points remain unresolved."
     },
     {
       "id": "DQ-LOADBANK-TEST-PATH",
