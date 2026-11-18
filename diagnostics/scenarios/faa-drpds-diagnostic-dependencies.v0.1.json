@@ -2025,7 +2025,7 @@
         "documented_under_or_overvoltage_pickup_or_operation_event",
         "configured_time_delay_and_timer_state_or_elapsed_event_timing_when_recorded",
         "protection_decision_or_trip_request_event_and_its_timestamp",
-        "independent_or_local voltage/electrical confirmation where available"
+        "independent_or_local_voltage_or_electrical_confirmation_when_available"
       ],
       "distinguishes": [
         "voltage_sensing_channel_invalid_or_unavailable",
