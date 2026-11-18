@@ -93,3 +93,7 @@ The source table's rows for starting current and mechanism name are not filled i
 ## Machine-graph scope boundary
 
 The current machine-readable graph models the ten outgoing feeder circuits QF1–QF10, including the QF4 branch to plan position 5. It does **not** yet model the incoming protective devices 1QF/2QF or the upstream power-path connections involving the two supplies, ATS and contactors KM1/KM2. Their visible labels and ratings are transcribed above, but no incoming-side topology should be inferred from their omission in the graph. This is a graph-coverage limitation, not evidence that the equipment is absent from the source drawing.
+
+## Load-schedule value provenance
+
+The machine graph stores installed-power and calculated-current values for plan positions 1–11. The current component source boxes identify the plan labels below the diagram (for example, Щр1), not the corresponding numeric cells in the load-schedule table. The values are transcribed in this review, but cell-level source coordinates have not yet been recorded in the graph. Do not treat the existing component bbox as coordinate evidence for those numeric attributes; preserve the values while this provenance gap remains open.
