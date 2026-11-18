@@ -418,6 +418,83 @@
       ]
     },
     {
+      "id": "DQ-PDU-INPUT-CONDITION",
+      "title": "Is the documented PDU input and internal distribution path available?",
+      "component_refs": ["PDU-GROUP", "BUS-A", "BUS-B"],
+      "prerequisites": ["DQ-CRITICAL-BUS"],
+      "required_evidence": [
+        "specific_PDU_identity_and_documented_upstream_bus_assignment",
+        "PDU_input_source_and_input_state",
+        "PDU_internal_conversion_or_distribution_status_when_available",
+        "PDU_protective_device_state",
+        "input_and_output_measurement_quality_and_freshness"
+      ],
+      "distinguishes": [
+        "upstream_critical_bus_unavailable",
+        "PDU_input_path_or_connection_problem",
+        "PDU_internal_conversion_or_distribution_problem",
+        "PDU_protection_operated_or_unavailable",
+        "measurement_or_telemetry_problem"
+      ],
+      "cannot_conclude_from": [
+        "downstream_load_loss_without_PDU_input_and_output_localization",
+        "PMCS_status_without_measurement_quality_or_independent_confirmation"
+      ],
+      "sources": [{"document_id": "faa-jo-6480-22-block", "page": 4}],
+      "applicability": "The PDU family is grouped in the generic model. Apply to an individual PDU only after its installed identity and upstream bus assignment are established from current site documentation."
+    },
+    {
+      "id": "DQ-PDU-OUTGOING-FEEDER",
+      "title": "Is a documented PDU outgoing feeder available to supply its assigned SATS input?",
+      "component_refs": ["PDU-GROUP", "SATS-GROUP"],
+      "prerequisites": ["DQ-PDU-INPUT-CONDITION"],
+      "required_evidence": [
+        "specific_PDU_identity_and_outgoing_feeder_identity",
+        "documented_PDU_to_SATS_input_assignment",
+        "PDU_outgoing_protective_device_state",
+        "feeder_output_state_and_measurement_validity",
+        "corresponding_SATS_input_state"
+      ],
+      "distinguishes": [
+        "PDU_outgoing_protection_or_feeder_problem",
+        "feeder_path_or_connection_problem",
+        "SATS_input_or_sensing_problem",
+        "upstream_PDU_input_or_internal_distribution_problem"
+      ],
+      "cannot_conclude_from": [
+        "SATS_output_loss_without_both_SATS_input_states",
+        "aggregate_statement_that_each_PDU_feeds_two_SATS_without_individual_feeder_mapping"
+      ],
+      "sources": [{"document_id": "faa-jo-6480-22-block", "page": 4}],
+      "applicability": "The historical description says each PDU feeds two SATS, but the generic graph does not identify individual PDU feeder-to-SATS assignments. Require current site drawings before applying to an installed feeder."
+    },
+    {
+      "id": "DQ-PDU-MAINTENANCE-PAIR",
+      "title": "Is the documented paired-PDU maintenance arrangement available for the intended maintenance state?",
+      "component_refs": ["PDU-GROUP", "SATS-GROUP", "BUS-A", "BUS-B"],
+      "prerequisites": ["DQ-PDU-INPUT-CONDITION", "DQ-PDU-OUTGOING-FEEDER"],
+      "required_evidence": [
+        "documented_identity_of_the_PDU_maintenance_pair",
+        "which_PDU_is_in_or_planned_for_maintenance",
+        "counterpart_PDU_input_and_distribution_state",
+        "affected_SATS_input_assignments_and_availability",
+        "documented_maintenance_configuration_and_output_evidence"
+      ],
+      "distinguishes": [
+        "maintenance_pair_identity_or_assignment_unconfirmed",
+        "counterpart_PDU_unavailable",
+        "affected_SATS_input_path_not_available",
+        "maintenance_configuration_or_status_evidence_inconsistent"
+      ],
+      "cannot_conclude_from": [
+        "PDU_pairing_attribute_without_individual_pair_mapping",
+        "aggregate_PDU_and_SATS_counts",
+        "one_PDU_operating_as_proof_that_the_counterpart_can_support_the_affected_loads"
+      ],
+      "sources": [{"document_id": "faa-jo-6480-22-block", "page": 4}],
+      "applicability": "The historical architecture describes PDUs paired to permit maintenance while maintaining power through the other PDU. It does not provide an individual pair map or authorize maintenance switching; verify site drawings and approved maintenance documentation."
+    },
+    {
       "id": "DQ-SATS-SOURCE-SELECTION",
       "title": "Is a SATS supplying its load from an available intended source?",
       "component_refs": [
