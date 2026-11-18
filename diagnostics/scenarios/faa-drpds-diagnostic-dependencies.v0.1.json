@@ -683,6 +683,79 @@
       "applicability": "The generic model contains only grouped PDU and SATS families. Apply to an individual SATS only after its installed identity, both input assignments and output assignment are established from current site documentation. No transfer thresholds, timing limits, or switching procedures are defined."
     },
     {
+      "id": "DQ-CDP-INCOMING-PATH",
+      "title": "Is the documented SATS-to-CDP incoming supply path available?",
+      "component_refs": [
+        "SATS-GROUP",
+        "CDP-GROUP"
+      ],
+      "prerequisites": [
+        "DQ-SATS-SOURCE-SELECTION"
+      ],
+      "required_evidence": [
+        "specific_CDP_identity_and_documented_SATS_output_assignment",
+        "SATS_output_state_and_measurement_validity",
+        "CDP_incomer_state_and_measurement_validity",
+        "documented_incoming_protective_device_state_when_present",
+        "current_site_drawing_for_the_SATS_to_CDP_incoming_path"
+      ],
+      "distinguishes": [
+        "SATS_output_unavailable",
+        "CDP_incomer_or_incoming_path_problem",
+        "SATS_to_CDP_assignment_unconfirmed",
+        "incoming_measurement_or_telemetry_problem"
+      ],
+      "cannot_conclude_from": [
+        "CDP_downstream_load_loss_without_incoming_path_evidence",
+        "aggregate_SATS_to_CDP_relationship_without_individual_assignment",
+        "PMCS_indication_without_measurement_quality_or_independent_confirmation"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The historical architecture describes SATS outputs feeding CDPs. The generic graph contains only grouped SATS and CDP families and an aggregate connection. Apply to an installed panel only after current site drawings establish the individual CDP identity and incoming assignment. No maintenance isolation or switching procedure is defined."
+    },
+    {
+      "id": "DQ-CDP-OUTGOING-BRANCH",
+      "title": "Is a documented CDP outgoing branch circuit available to supply its assigned critical load?",
+      "component_refs": [
+        "CDP-GROUP",
+        "CRIT-LOADS"
+      ],
+      "prerequisites": [
+        "DQ-CDP-INCOMING-PATH"
+      ],
+      "required_evidence": [
+        "specific_CDP_identity_and_outgoing_branch_circuit_identity",
+        "documented_branch_to_critical_load_assignment",
+        "outgoing_protective_device_state_and_measurement_validity",
+        "downstream_circuit_or_load_side_evidence",
+        "local_critical_load_state"
+      ],
+      "distinguishes": [
+        "outgoing_protective_device_trip_or_unavailable",
+        "outgoing_branch_circuit_problem",
+        "local_critical_load_problem",
+        "branch_or_load_assignment_unconfirmed",
+        "outgoing_measurement_or_telemetry_problem"
+      ],
+      "cannot_conclude_from": [
+        "dead_load_alone",
+        "CDP_incomer_state_as_proof_that_each_outgoing_branch_is_available",
+        "aggregate_CDP_to_critical_loads_relationship_without_individual_branch_mapping"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The historical architecture describes CDP panels feeding critical electronic/computer loads and identifies CDP observation at the panel and selected outgoing circuits. The generic graph contains no individual CDP tags, branch identities, protective-device assignments, or load schedule. Apply only after current site drawings and equipment schedules establish the installed branch and load."
+    },
+    {
       "id": "DQ-CDP-OUTGOING-CIRCUIT",
       "title": "Is a CDP outgoing circuit unavailable?",
       "component_refs": [
@@ -691,29 +764,31 @@
         "CRIT-LOADS"
       ],
       "prerequisites": [
-        "DQ-SATS-SOURCE-SELECTION"
+        "DQ-CDP-INCOMING-PATH",
+        "DQ-CDP-OUTGOING-BRANCH"
       ],
       "required_evidence": [
-        "SATS_output_state",
-        "CDP_incomer_state",
-        "outgoing_protective_device_state",
-        "documented_circuit_and_load_evidence"
+        "CDP_incoming_path_assessment",
+        "individual_outgoing_branch_assessment"
       ],
       "distinguishes": [
         "SATS_output_problem",
         "CDP_incomer_problem",
         "outgoing_protection_or_circuit_problem",
-        "local_load_problem"
+        "local_load_problem",
+        "insufficient_site_mapping_or_measurement_evidence"
       ],
       "cannot_conclude_from": [
-        "dead_load_alone"
+        "dead_load_alone",
+        "aggregate_CDP_status_without_incoming_and_branch_localization"
       ],
       "sources": [
         {
           "document_id": "faa-jo-6480-22-block",
           "page": 4
         }
-      ]
+      ],
+      "applicability": "This is the umbrella CDP diagnosis. Localize the fault through the incoming-path and outgoing-branch questions; do not infer an installed circuit map from the generic architecture."
     },
     {
       "id": "DQ-PMCS-TRUSTWORTHINESS",
