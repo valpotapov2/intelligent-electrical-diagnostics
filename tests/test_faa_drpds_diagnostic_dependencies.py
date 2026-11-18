@@ -152,7 +152,7 @@ def test_faa_sats_dual_input_and_transfer_questions_respect_grouped_source_bound
     assert "selected_source_state_before_and_after_event" in transfer["required_evidence"]
     assert "SATS_output_continuity_and_quality_evidence" in transfer["required_evidence"]
     assert "sensing thresholds" in transfer["applicability"]
-    assert "individual_feeder_mapping" in dual["cannot_conclude_from"]
+    assert "aggregate_PDU_to_SATS_relationship_without_individual_feeder_mapping" in dual["cannot_conclude_from"]
     assert "SATS-GROUP" in components
     assert "PDU-GROUP" in components
 
