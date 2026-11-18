@@ -58,12 +58,12 @@ No live measurement or switching is enabled by this integration.
 
 ## Architecture-question crosswalk
 
-`diagnostics/scenarios/faa-drpds-core-crosswalk.v0.1.json` records coverage between all 47 architecture-level diagnostic questions and the current twelve-mode synthetic engine fixture.
+`diagnostics/scenarios/faa-drpds-core-crosswalk.v0.1.json` records coverage between all 49 architecture-level diagnostic questions and the current twelve-mode synthetic engine fixture.
 
 Current coverage is deliberately limited:
 - **Partial synthetic analogues:** essential-feed endpoint loss, Critical Bus A/B path-loss patterns, and a generic SATS output-loss pattern.
 - **Partial synthetic analogues:** commercial-source evidence channels, generator-bus evidence channel, SWGR-1/2 section-evidence channels, and a standby-transfer evidence channel. These are isolated virtual signal patterns only.
-- **Still not represented:** transformer and sensing-channel discrimination, generator capacity and individual readiness, SWGR incomer/tie/interlock logic, an actual standby-transfer sequence, UPS internal conversion, bypass and DC/battery diagnosis, PDU incoming supply, voltage conversion, internal protection and outgoing feeders, CDP outgoing circuits, and PMCS trustworthiness.
+- **Still not represented:** transformer and sensing-channel discrimination, generator capacity and individual readiness, SWGR incomer/tie/interlock logic, an actual standby-transfer sequence, UPS internal conversion, bypass and DC/battery diagnosis, PDU incoming supply, voltage conversion, internal protection and outgoing feeders, SATS sensing/control readiness and solid-state switching response, CDP outgoing circuits, and PMCS trustworthiness.
 
 “Partial” means only that a simplified software fault shape is exercised. It does not mean the engine can resolve the corresponding architecture question or distinguish its required hypotheses. “Not represented” is a coverage gap, not a healthy result.
 
