@@ -1906,6 +1906,101 @@
         }
       ],
       "applicability": "The source identifies command, control circuit, drive, physical contacts, position feedback and DC control power as distinct evidence. No breaker tags, coil ratings, terminal points, actuator design or field test procedure are inferred."
+    },
+    {
+      "id": "DQ-SWGR-PROTECTION-RESPONSE",
+      "title": "Did the documented SWGR protective function detect the condition and produce the expected trip response?",
+      "component_refs": [
+        "SWGR1",
+        "SWGR2",
+        "1M1",
+        "2M1",
+        "1M2",
+        "2M2",
+        "TIE"
+      ],
+      "prerequisites": [
+        "DQ-SWGR-SECTION-SUPPLY"
+      ],
+      "required_evidence": [
+        "identified_affected_switchgear_section_and_protective_device_when_documented",
+        "measured_or_recorded_voltage_or_fault_condition_at_the_protection_boundary_with_channel_quality_and_timestamp",
+        "documented_protective_element_pickup_or_operation_and_available_event_record",
+        "documented_trip_output_or_trip_circuit_state_when_exposed",
+        "shunt_trip_or_undervoltage_release_state_only_when_present_in_the_installed_design",
+        "zone_selective_interlocking_input_output_or_blocking_event_when_present_and_documented",
+        "associated_breaker_command_position_and_independent_electrical_state",
+        "control_supply_and_trip_circuit_evidence_when_relevant_to_the_installed_design"
+      ],
+      "distinguishes": [
+        "protected_condition_not_confirmed_at_the_relevant_boundary",
+        "documented_protective_element_did_not_pick_up_or_operation_not_recorded",
+        "protective_operation_recorded_but_trip_output_or_trip_circuit_response_not_confirmed",
+        "trip_output_present_but_breaker_or_electrical_interruption_not_confirmed",
+        "documented_ZSI_or_blocking_signal_missing_or_inconsistent",
+        "protection_or_trip_event_evidence_unavailable_or_untrustworthy"
+      ],
+      "cannot_conclude_from": [
+        "breaker_open_indication_alone_as_proof_of_correct_protective_detection",
+        "trip_or_alarm_message_without_source_identity_and_event_timestamp",
+        "missing_PMCS_event_as_proof_that_protection_did_not_operate",
+        "assumed_relay_model_protection_elements_or_trip_circuit_topology",
+        "assumed_shunt_trip_or_undervoltage_release_presence",
+        "assumed_ZSI_wiring_or_blocking_logic"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ],
+      "applicability": "The historical technical description identifies voltage protection, time delays, shunt trip, undervoltage release and ZSI as protection/control functions. Assess only functions and event evidence documented for the identified installed SWGR. Separate condition detection, protective decision, trip output, breaker response and electrical interruption. Exact relay elements, thresholds, delays, trip-circuit design, device tags and test points require current site documents; this question defines no test or switching procedure."
+    },
+    {
+      "id": "DQ-SWGR-SELECTIVITY-COORDINATION",
+      "title": "Does the documented SWGR protection response preserve the approved coordination and zone-selective behavior for the recorded event?",
+      "component_refs": [
+        "SWGR1",
+        "SWGR2",
+        "1M1",
+        "2M1",
+        "1M2",
+        "2M2",
+        "TIE"
+      ],
+      "prerequisites": [
+        "DQ-SWGR-PROTECTION-RESPONSE"
+      ],
+      "required_evidence": [
+        "identified_fault_or_protection_event_and_affected_electrical_zone",
+        "current_approved_protective_device_coordination_study_and_revision",
+        "installed_protective_device_identity_and_settings_record_for_devices_in_the_event_path",
+        "timestamped_operation_or_trip_records_for_relevant_downstream_and_upstream_devices",
+        "documented_ZSI_blocking_or_interlocking_signal_state_when_present",
+        "actual_trip_sequence_and_breaker_electrical_interruption_evidence",
+        "event_time_and_record_quality_for_all_compared_devices"
+      ],
+      "distinguishes": [
+        "downstream_protective_device_operated_with_upstream_device_remaining_in_expected_delayed_or_blocked_state",
+        "upstream_device_operated_without_confirmed_downstream_clearing",
+        "documented_ZSI_signal_or_blocking_path_not_confirmed",
+        "observed_trip_sequence_cannot_be_compared_with_the_approved_coordination_basis",
+        "event_records_or_installed_settings_are_incomplete_or_inconsistent"
+      ],
+      "cannot_conclude_from": [
+        "single_breaker_trip_without_the_relevant_upstream_and_downstream_event_context",
+        "device_nameplate_or_generic_FAA_description_as_proof_of_installed_coordination",
+        "assumed_time_current_curves_or_numeric_settings",
+        "ZSI_label_or_alarm_without_signal_path_and_event_evidence",
+        "normal_load_operation_as_proof_of_protection_selectivity"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ],
+      "applicability": "The source describes time-current coordination and zone-selective interlocking, but installed settings and coordination are facility-specific. Compare an observed event only with the current approved site coordination study and installed device records. Do not calculate, recommend, infer or modify protection settings; no live fault test or switching procedure is defined."
     }
   ],
   "global_constraints": [
