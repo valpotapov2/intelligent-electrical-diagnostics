@@ -2086,6 +2086,19 @@
         "load-plan-10",
         "load-plan-11"
       ]
+    },
+    {
+      "id": "SVG-005",
+      "severity": "medium",
+      "description": "The source review transcribes incoming protective devices 1QF and 2QF (3C200, ВА88-35, 35 kA) and the incoming ATS/contactor arrangement, but these upstream devices and connections are not represented in this machine graph. The current graph covers outgoing feeders QF1–QF10 only; omission from the graph does not mean the equipment is absent.",
+      "status": "open",
+      "related_ids": [
+        "supply-1",
+        "supply-2",
+        "ats",
+        "contactor-km1",
+        "contactor-km2"
+      ]
     }
   ],
   "totals": {
