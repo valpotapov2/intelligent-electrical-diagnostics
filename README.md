@@ -58,6 +58,19 @@ edi-ingest path/to/diagram.png --lang rus+eng -o model.draft.json
 pytest
 ```
 
+## Diagnostic evidence validation
+
+Для проверки одной записи состояния диагностического свидетельства доступна команда `edi-evidence-validate`. Она проверяет JSON Schema и точную привязку `question_id/evidence_key` к dependency model. Команда не устанавливает исправность оборудования и не формирует диагноз.
+
+```bash
+edi-evidence-validate \
+  --record evidence-record.json \
+  --dependency-model diagnostics/scenarios/faa-drpds-diagnostic-dependencies.v0.1.json \
+  --schema schema/diagnostic-evidence.schema.json
+```
+
+При успехе команда печатает JSON с `valid: true` и идентификаторами записи/требования. При ошибке возвращает код завершения 2 и сообщение в stderr. На вход подаётся один JSON-объект записи; пакетная обработка и хранение истории этим CLI не реализованы.
+
 ## Объекты для демонстрации диагностического ядра
 
 Объекты и их модели располагаются в `docs/objects` и `examples/objects`.
