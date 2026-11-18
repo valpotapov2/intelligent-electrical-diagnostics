@@ -8,14 +8,14 @@
 | Layer | Current inventory | What it demonstrates |
 |---|---:|---|
 | Generic electrical object graph | 29 components, 36 connections | Historical FAA functional architecture with source references; not an as-built one-line |
-| Diagnostic dependency model | 47 questions | Evidence prerequisites and limits on conclusions; not executable causal hypotheses |
-| Architecture-to-synthetic crosswalk | 47 mappings | Traceability of software-only analogue coverage |
+| Diagnostic dependency model | 49 questions | Evidence prerequisites and limits on conclusions; not executable causal hypotheses |
+| Architecture-to-synthetic crosswalk | 49 mappings | Traceability of software-only analogue coverage |
 | Crosswalk coverage: partial | 7 questions | Simplified virtual endpoint/evidence patterns only |
-| Crosswalk coverage: none | 40 questions | No synthetic analogue for that question |
+| Crosswalk coverage: none | 42 questions | No synthetic analogue for that question |
 | Crosswalk coverage: full | 0 questions | No architecture question has validated full diagnostic coverage |
 | Generic graph open issues | 5 | Site evidence and engineering limitations recorded in graph |
 
-**Interpretation:** 7/47 is **not** a 17.9% diagnostic success rate or field readiness score. A partial mapping is not a validated fault diagnosis. The crosswalk is not executable and does not itself create measurement requests.
+**Interpretation:** 7/49 is **not** a 17.9% diagnostic success rate or field readiness score. A partial mapping is not a validated fault diagnosis. The crosswalk is not executable and does not itself create measurement requests.
 
 ## 2. Readiness gates for interface trials
 
@@ -43,6 +43,7 @@ These are *display and state-handling* cases, not electrical diagnosis validatio
 7. For a partial synthetic analogue, show that the virtual mode does not localize the listed physical failure hypotheses.
 8. Select `DQ-UPS-HEALTH`; show the UPS input feeder, rectifier/inverter, bypass and DC/battery evidence as separate prerequisites. Output voltage alone must not be displayed as proof of inverter operation or battery autonomy.
 9. Select `DQ-PDU-INPUT-CONDITION`; show incoming supply, voltage conversion, and main/internal protection as separate prerequisites, then the individually documented outgoing feeder. Keep PDU outgoing-feeder protection distinct from main/internal protection.
+10. Select `DQ-SATS-SOURCE-SELECTION`; show both source inputs, sensing/control readiness, solid-state switching evidence and output state as distinct stages. Do not equate AUTO mode or a selected-source indication with successful transfer.
 
 ## 4. Priority gaps before advancing beyond architecture UI
 
