@@ -65,6 +65,24 @@
       "rationale": "UPS input, rectifier, inverter, bypass, battery/DC subsystem, and output-switchboard states are not modeled."
     },
     {
+      "question_id": "DQ-UPS-1-BYPASS-RESERVE",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no individual UPS 1, UPS 2/3 bypass-reserve role, bypass path, or bypass-state evidence."
+    },
+    {
+      "question_id": "DQ-UPS-2-OUTPUT-PATH",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no UPS 2 input, conversion, DC/battery, output-switchboard, or assigned Critical Bus A path evidence."
+    },
+    {
+      "question_id": "DQ-UPS-3-OUTPUT-PATH",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no UPS 3 input, conversion, DC/battery, output-switchboard, or assigned Critical Bus B path evidence."
+    },
+    {
       "question_id": "DQ-CRITICAL-BUS",
       "coverage": "partial",
       "synthetic_modes": [
