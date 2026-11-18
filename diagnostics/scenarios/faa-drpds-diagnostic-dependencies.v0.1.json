@@ -1318,6 +1318,85 @@
       "applicability": "The historical architecture describes two independent SATS sources associated with Critical Bus A and Critical Bus B. The generic model does not identify individual SATS inputs or PDU feeder assignments. Apply to an installed SATS only after current site drawings establish both input identities and assignments."
     },
     {
+      "id": "DQ-SATS-CONTROL-READINESS",
+      "title": "Is the documented SATS sensing and automatic-transfer control function ready?",
+      "component_refs": [
+        "SATS-GROUP"
+      ],
+      "prerequisites": [
+        "DQ-SATS-DUAL-INPUT-AVAILABILITY"
+      ],
+      "required_evidence": [
+        "specific_SATS_identity_and_documented_control_configuration",
+        "both_SATS_source_input_sensing_states_and_measurement_quality",
+        "documented_operating_mode_and_AUTO_availability_state",
+        "control_power_or_controller_ready_state_when_documented",
+        "source_sensing_disagreement_alarm_and_control_fault_history",
+        "documented_transfer_decision_or_control_event_evidence_when_available",
+        "event_timestamp_and_status_feedback_quality"
+      ],
+      "distinguishes": [
+        "SATS_not_in_documented_automatic_mode",
+        "one_or_both_source_sensing_channels_unavailable_or_unreliable",
+        "documented_control_power_or_controller_readiness_problem",
+        "source_sensing_disagreement_or_control_alarm",
+        "control_readiness_or_event_evidence_not_available"
+      ],
+      "cannot_conclude_from": [
+        "AUTO_mode_indication_alone_as_proof_of_successful_transfer",
+        "input_voltage_presence_without_valid_source_sensing_evidence",
+        "assumed_sensing_thresholds_or_transfer_decision_logic",
+        "aggregate_SATS_group_status_as_proof_of_individual_controller_readiness"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "Assess only the SATS control, sensing and operating-mode evidence exposed and documented for the identified unit. The historical description establishes automatic transfer as a function, but does not specify sensing thresholds, control-power architecture, logic equations, permissives, firmware behavior or test points."
+    },
+    {
+      "id": "DQ-SATS-SWITCHING-FUNCTION",
+      "title": "Is the documented SATS solid-state source-switching function available and responding to control?",
+      "component_refs": [
+        "SATS-GROUP"
+      ],
+      "prerequisites": [
+        "DQ-SATS-CONTROL-READINESS"
+      ],
+      "required_evidence": [
+        "specific_SATS_identity_and_documented_power_switching_design",
+        "transfer_command_or_source_selection_request_when_documented",
+        "power_switching_element_state_or_feedback_when_exposed",
+        "switching_event_and_alarm_history_with_timestamp",
+        "both_source_input_states_at_the_switching_event",
+        "SATS_output_continuity_and_quality_during_and_after_switching",
+        "output_measurement_and_event_timestamp_quality"
+      ],
+      "distinguishes": [
+        "control_requests_transfer_but_switching_response_not_confirmed",
+        "switching_feedback_disagrees_with_selected_source_state",
+        "switching_event_recorded_but_output_continuity_or_quality_is_abnormal",
+        "switching_function_or_feedback_evidence_unavailable",
+        "upstream_alternate_source_unavailable"
+      ],
+      "cannot_conclude_from": [
+        "controller_AUTO_or_ready_state_as_proof_of_power_switching",
+        "selected_source_indication_alone_as_proof_of_actual_output_supply",
+        "output_present_without_source_and_switching_event_context_as_proof_of_transfer",
+        "assumed_semiconductor_device_count_or_internal_switching_topology",
+        "assumed_transfer_time_limit_or_switching_overlap_behavior"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The source identifies SATS as solid-state automatic transfer switches but does not describe their internal power circuit. Assess only documented command, state/feedback, event and output evidence. Do not infer SCR/thyristor arrangement, semiconductor count, commutation circuit, overlap behavior, transfer-time acceptance limits or physical test points."
+    },
+    {
       "id": "DQ-SATS-AUTO-TRANSFER",
       "title": "Did the SATS respond to a documented loss of one source by transferring to the other source?",
       "component_refs": [
@@ -1327,14 +1406,16 @@
         "BUS-B"
       ],
       "prerequisites": [
-        "DQ-SATS-DUAL-INPUT-AVAILABILITY"
+        "DQ-SATS-DUAL-INPUT-AVAILABILITY",
+        "DQ-SATS-CONTROL-READINESS",
+        "DQ-SATS-SWITCHING-FUNCTION"
       ],
       "required_evidence": [
         "documented_source_loss_or_unavailability_event",
         "both_SATS_input_states_at_the_relevant_event",
-        "SATS_operating_mode_and_automatic_transfer_availability",
+        "SATS_automatic_mode_and_control_readiness_at_event_time",
         "selected_source_state_before_and_after_event",
-        "transfer_event_or_status_record",
+        "transfer_command_and_switching_feedback_or_event_record_when_available",
         "SATS_output_continuity_and_quality_evidence",
         "measurement_and_event_timestamp_quality"
       ],
@@ -1349,7 +1430,8 @@
       "cannot_conclude_from": [
         "SATS_output_present_without_event_and_input_history",
         "selected_source_indication_without_independent_output_evidence",
-        "absence_of_event_record_as_proof_that_no_transfer_occurred"
+        "absence_of_event_record_as_proof_that_no_transfer_occurred",
+        "controller_AUTO_state_without_switching_response_as_proof_of_transfer"
       ],
       "sources": [
         {
@@ -1369,7 +1451,8 @@
         "BUS-B"
       ],
       "prerequisites": [
-        "DQ-SATS-DUAL-INPUT-AVAILABILITY"
+        "DQ-SATS-DUAL-INPUT-AVAILABILITY",
+        "DQ-SATS-SWITCHING-FUNCTION"
       ],
       "required_evidence": [
         "documented_individual_SATS_identity_and_output_assignment",
