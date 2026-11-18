@@ -99,6 +99,24 @@
       "rationale": "No PDU input, protection, or documented outgoing-feeder boundary exists in the fixture."
     },
     {
+      "question_id": "DQ-PDU-INPUT-CONDITION",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no individual PDU input, internal conversion/distribution, protective-device, or measurement-quality evidence."
+    },
+    {
+      "question_id": "DQ-PDU-OUTGOING-FEEDER",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no individual PDU outgoing feeder, protective device, PDU-to-SATS assignment, or SATS input evidence."
+    },
+    {
+      "question_id": "DQ-PDU-MAINTENANCE-PAIR",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no individual PDU pair map, maintenance state, counterpart capacity/availability, or affected SATS input assignment."
+    },
+    {
       "question_id": "DQ-SATS-SOURCE-SELECTION",
       "coverage": "partial",
       "synthetic_modes": [
