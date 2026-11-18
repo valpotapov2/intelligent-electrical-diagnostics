@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/valpotapov2/intelligent-electrical-diagnostics/blob/main/schema/diagnostic-evidence.schema.json",
+  "title": "Diagnostic Evidence Record",
+  "description": "UI and integration contract for the state of evidence supporting one diagnostic requirement. Evidence state is not a fault or health conclusion.",
+  "type": "object",
+  "required": [
+    "evidence_id",
+    "question_id",
+    "evidence_key",
+    "state",
+    "observations"
+  ],
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "question_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_key": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Exact requirement key from the selected diagnostic question's required_evidence list."
+    },
+    "state": {
+      "enum": [
+        "unknown",
+        "unavailable",
+        "stale",
+        "contradicted",
+        "observed"
+      ]
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/observation"
+      }
+    },
+    "reason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Reason for unavailability or a concise explanation of a conflict/limitation."
+    },
+    "checked_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "freshness_basis": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Reference to the site/source-defined freshness rule used to classify evidence as stale. No universal age threshold is implied."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "unknown"
+          }
+        },
+        "required": ["state"]
+      },
+      "then": {
+        "properties": {
+          "observations": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "unavailable"
+          }
+        },
+        "required": ["state"]
+      },
+      "then": {
+        "required": ["reason", "checked_at"],
+        "properties": {
+          "observations": {
+            "maxItems": 0
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "checked_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "stale"
+          }
+        },
+        "required": ["state"]
+      },
+      "then": {
+        "required": ["freshness_basis"],
+        "properties": {
+          "observations": {
+            "minItems": 1
+          },
+          "freshness_basis": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "contradicted"
+          }
+        },
+        "required": ["state"]
+      },
+      "then": {
+        "required": ["reason"],
+        "properties": {
+          "observations": {
+            "minItems": 2
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "observed"
+          }
+        },
+        "required": ["state"]
+      },
+      "then": {
+        "properties": {
+          "observations": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "observation": {
+      "type": "object",
+      "required": [
+        "observation_id",
+        "source",
+        "observed_at",
+        "quality"
+      ],
+      "properties": {
+        "observation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "object",
+          "required": ["kind", "ref"],
+          "properties": {
+            "kind": {
+              "enum": [
+                "measurement",
+                "event_record",
+                "device_diagnostic",
+                "document",
+                "operator_record",
+                "other"
+              ]
+            },
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "value": {},
+        "unit": {
+          "type": ["string", "null"]
+        },
+        "quality": {
+          "enum": [
+            "valid",
+            "invalid",
+            "uncertain",
+            "not_assessed"
+          ]
+        },
+        "note": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
