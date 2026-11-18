@@ -46,6 +46,39 @@
       ]
     },
     {
+      "id": "DQ-GENERATOR-START-READINESS",
+      "title": "Can the documented generator start and reach its run/ready state?",
+      "component_refs": [
+        "EGSET"
+      ],
+      "prerequisites": [],
+      "required_evidence": [
+        "individual_generator_identity_and_start_request_or_automatic_start_context",
+        "starting_battery_and_starting_system_state_when_documented",
+        "fuel_lubrication_temperature_and_cooling_evidence",
+        "engine_controller_run_ready_and_alarm_state"
+      ],
+      "distinguishes": [
+        "start_sequence_not_initiated_or_not_completed",
+        "starting_system_or_battery_problem",
+        "fuel_or_engine_auxiliary_problem",
+        "controller_or_alarm_inhibit",
+        "run_ready_state_unconfirmed"
+      ],
+      "cannot_conclude_from": [
+        "start_command_alone",
+        "engine_cranking_as_proof_of_run_ready_state",
+        "PMCS_status_without_independent_or_local_confirmation"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The reference identifies start circuits, starting batteries, fuel, lubrication, temperature, coolant, controller and alarms. Individual generator tags, detailed start permissives, thresholds and approved test procedures are not modeled; use only documented installed evidence."
+    },
+    {
       "id": "DQ-GENERATOR-AVAILABILITY",
       "title": "Is generator capacity electrically available?",
       "component_refs": [
