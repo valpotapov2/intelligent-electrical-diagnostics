@@ -13,6 +13,39 @@
   "source_model": "examples/objects/faa-drpds.generic.json",
   "questions": [
     {
+      "id": "DQ-COMMERCIAL-SOURCE-INDEPENDENCE",
+      "title": "Are the two documented commercial sources independent at the facility supply boundary?",
+      "component_refs": [
+        "U1",
+        "U2"
+      ],
+      "prerequisites": [],
+      "required_evidence": [
+        "documented_identity_of_utility_feeder_1_and_utility_feeder_2",
+        "current_site_one_line_or_utility_records_showing_upstream_source_origins_when_available",
+        "documented_common_upstream_substations_or_shared_supply_elements_if_any",
+        "independent_or_utility_confirmation_of_each_source_boundary_when_available"
+      ],
+      "distinguishes": [
+        "separate_upstream_sources_supported_by_current_site_documentation",
+        "documented_shared_upstream_supply_dependency",
+        "two_feeder_labels_with_common_origin_or_dependency",
+        "source_independence_not_verifiable_from_available_records"
+      ],
+      "cannot_conclude_from": [
+        "U1_and_U2_labels_alone_as_proof_of_independent_upstream_sources",
+        "separate_transformers_or_SWGR_sections_alone_as_proof_of_utility_source_independence",
+        "historical_reference_architecture_as_proof_of_a_current_site_supply_arrangement"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ],
+      "applicability": "The historical FAA reference describes two independent three-phase commercial sources. Treat that as the reference architecture claim, not proof of a named site's current upstream utility topology. Confirm independence from current site one-line diagrams and utility records where available; do not invent upstream substations, shared buses, or utility arrangements."
+    },
+    {
       "id": "DQ-TRANSFORMER-INPUT-OUTPUT",
       "title": "Is each documented commercial transformer providing supported input/output evidence to its corresponding SWGR incomer?",
       "component_refs": [
@@ -25,7 +58,9 @@
         "2M1",
         "SWGR2"
       ],
-      "prerequisites": [],
+      "prerequisites": [
+        "DQ-SOURCE-AVAILABILITY"
+      ],
       "required_evidence": [
         "transformer_identity_and_corresponding_commercial_source_when_documented",
         "transformer_input_state_and_measurement_channel_validity",
@@ -35,7 +70,7 @@
         "independent_or_local_confirmation_of_input_and_output_evidence_when_available"
       ],
       "distinguishes": [
-        "upstream_commercial_source_unavailable_or_out_of_documented_condition",
+        "commercial_source_assessed_unavailable_or_out_of_documented_condition",
         "transformer_input_present_but_output_evidence_inconsistent",
         "documented_transformer_protection_or_condition_indication",
         "input_or_output_sensing_channel_or_fuse_problem",
@@ -45,7 +80,7 @@
         "SWGR_incomer_or_PMCS_status_alone_as_proof_of_transformer_output",
         "single_voltage_indication_without_measurement_source_quality_and_timestamp",
         "assumed_primary_voltage_transformer_rating_or_impedance",
-        "transformer_fault_without_separating_upstream_source_and_sensing_evidence"
+        "transformer_fault_without_separating_commercial_source_condition_and_sensing_evidence"
       ],
       "sources": [
         {
@@ -60,34 +95,33 @@
       "title": "Is a commercial source unavailable?",
       "component_refs": [
         "U1",
-        "T1",
-        "U2",
-        "T2",
-        "SWGR1",
-        "SWGR2"
+        "U2"
       ],
-      "prerequisites": [
-        "DQ-TRANSFORMER-INPUT-OUTPUT"
-      ],
+      "prerequisites": [],
       "required_evidence": [
-        "source_measurement_channel_validity",
-        "independent_source_state_evidence",
-        "sensing_channel_or_fuse_state_if_present"
+        "identified_commercial_source_and_source_boundary",
+        "source_side_measurement_identity_quality_and_timestamp",
+        "independent_or_local_source_side_state_confirmation_when_available",
+        "documented_sensing_fuse_or_measurement_channel_state_if_present"
       ],
       "distinguishes": [
-        "physical_source_loss",
-        "measurement_channel_failure",
-        "sensing_fuse_or_channel_failure"
+        "physical_commercial_source_loss_or_out_of_documented_condition",
+        "source_measurement_channel_or_instrument_failure",
+        "sensing_fuse_or_voltage_measurement_circuit_failure",
+        "source_state_not_confirmed_by_independent_evidence"
       ],
       "cannot_conclude_from": [
-        "single_zero_value_in_PMCS"
+        "single_zero_or_stale_PMCS_value_as_proof_of_commercial_source_loss",
+        "transformer_output_or_SWGR_section_state_alone_as_localization_of_a_utility_source_fault",
+        "missing_telemetry_as_proof_of_physical_source_failure"
       ],
       "sources": [
         {
           "document_id": "faa-jo-6480-22",
           "page": 5
         }
-      ]
+      ],
+      "applicability": "Assess each documented commercial source at its source boundary. Separate actual source condition from instrument, sensing-fuse and telemetry faults. Transformer input/output and corresponding incomer evidence are assessed in the downstream transformer-path question; site-specific source boundaries and approved measurement methods must be verified."
     },
     {
       "id": "DQ-GENERATOR-START-READINESS",
@@ -319,7 +353,8 @@
         "T2"
       ],
       "prerequisites": [
-        "DQ-SOURCE-AVAILABILITY"
+        "DQ-SOURCE-AVAILABILITY",
+        "DQ-TRANSFORMER-INPUT-OUTPUT"
       ],
       "required_evidence": [
         "selected_source_path_for_relevant_section",
@@ -358,6 +393,7 @@
       ],
       "prerequisites": [
         "DQ-SOURCE-AVAILABILITY",
+        "DQ-TRANSFORMER-INPUT-OUTPUT",
         "DQ-GENERATOR-AVAILABILITY",
         "DQ-CONTROL-POWER",
         "DQ-SWGR-CONTROL-MODE",
@@ -1226,6 +1262,7 @@
       ],
       "prerequisites": [
         "DQ-SOURCE-AVAILABILITY",
+        "DQ-TRANSFORMER-INPUT-OUTPUT",
         "DQ-GENERATOR-AVAILABILITY"
       ],
       "required_evidence": [
