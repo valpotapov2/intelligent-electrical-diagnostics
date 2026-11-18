@@ -77,3 +77,53 @@ def test_cli_returns_nonzero_and_explains_invalid_record(tmp_path, monkeypatch, 
     captured = capsys.readouterr()
     assert "Invalid evidence record:" in captured.err
     assert captured.out == ""
+
+
+def test_cli_validates_current_state_array(tmp_path, monkeypatch, capsys):
+    model = json.loads(DEPENDENCIES.read_text(encoding="utf-8"))
+    first = valid_record()
+    question = model["questions"][1]
+    second = {
+        "evidence_id": "cli-ev-2",
+        "question_id": question["id"],
+        "evidence_key": question["required_evidence"][0],
+        "state": "unknown",
+        "observations": [],
+    }
+    record_path = write_json(tmp_path / "snapshot.json", [first, second])
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "edi-evidence-validate",
+            "--record",
+            record_path,
+            "--dependency-model",
+            str(DEPENDENCIES),
+            "--schema",
+            str(SCHEMA),
+        ],
+    )
+
+    assert main() == 0
+    assert json.loads(capsys.readouterr().out) == {"valid": True, "record_count": 2}
+
+
+def test_cli_rejects_duplicate_requirement_in_snapshot(tmp_path, monkeypatch, capsys):
+    first = valid_record()
+    second = dict(first, evidence_id="cli-ev-duplicate")
+    record_path = write_json(tmp_path / "snapshot.json", [first, second])
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "edi-evidence-validate",
+            "--record",
+            record_path,
+            "--dependency-model",
+            str(DEPENDENCIES),
+            "--schema",
+            str(SCHEMA),
+        ],
+    )
+
+    assert main() == 2
+    assert "duplicate current-state requirement" in capsys.readouterr().err

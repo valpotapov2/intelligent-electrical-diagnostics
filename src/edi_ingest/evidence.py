@@ -1,11 +1,11 @@
 """Validation for diagnostic evidence records and their model references.
 
-Successful validation confirms only that a record conforms to the data contract
-and points to a declared requirement. It is not a diagnostic conclusion.
+Successful validation confirms only that records conform to the data contract
+and point to declared requirements. It is not a diagnostic conclusion.
 """
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker
@@ -15,11 +15,7 @@ def validate_evidence_reference(
     record: Mapping[str, Any],
     dependency_model: Mapping[str, Any],
 ) -> None:
-    """Raise ValueError unless the record points to a declared question/evidence key.
-
-    The question identifier and evidence key are matched exactly. This function
-    does not validate observation payloads, freshness, quality, or diagnosis.
-    """
+    """Raise ValueError unless the record points to a declared question/evidence key."""
     if not isinstance(record, Mapping):
         raise ValueError("evidence record must be an object")
     if not isinstance(dependency_model, Mapping):
@@ -60,19 +56,11 @@ def validate_evidence_record(
     dependency_model: Mapping[str, Any],
     schema: Mapping[str, Any],
 ) -> None:
-    """Validate one evidence record's JSON Schema shape and model references.
-
-    Raises ValueError with the first deterministic schema or reference error.
-    JSON Schema validation and cross-file reference validation remain distinct
-    checks, but callers can now invoke them through one integration boundary.
-    """
+    """Validate one record's JSON Schema shape and model references."""
     if not isinstance(schema, Mapping):
         raise ValueError("evidence schema must be an object")
 
-    validator = Draft202012Validator(
-        schema,
-        format_checker=FormatChecker(),
-    )
+    validator = Draft202012Validator(schema, format_checker=FormatChecker())
     errors = sorted(
         validator.iter_errors(record),
         key=lambda error: (list(map(str, error.absolute_path)), error.message),
@@ -83,3 +71,40 @@ def validate_evidence_record(
         raise ValueError(f"invalid evidence record at {location}: {error.message}")
 
     validate_evidence_reference(record, dependency_model)
+
+
+def validate_evidence_records(
+    records: Sequence[Mapping[str, Any]],
+    dependency_model: Mapping[str, Any],
+    schema: Mapping[str, Any],
+) -> None:
+    """Validate a current-state batch and reject duplicate record identities.
+
+    A batch is a snapshot, not an event history: it may contain at most one
+    record for each (question_id, evidence_key), and evidence_id values must
+    be unique within that batch.
+    """
+    if isinstance(records, (str, bytes)) or not isinstance(records, Sequence):
+        raise ValueError("evidence records must be an array")
+    if not records:
+        raise ValueError("evidence records array must not be empty")
+
+    seen_ids: set[str] = set()
+    seen_requirements: set[tuple[str, str]] = set()
+    for index, record in enumerate(records):
+        try:
+            validate_evidence_record(record, dependency_model, schema)
+        except ValueError as exc:
+            raise ValueError(f"invalid evidence record at index {index}: {exc}") from exc
+
+        evidence_id = record["evidence_id"]
+        identity = (record["question_id"], record["evidence_key"])
+        if evidence_id in seen_ids:
+            raise ValueError(f"duplicate evidence_id in batch: {evidence_id}")
+        if identity in seen_requirements:
+            raise ValueError(
+                "duplicate current-state requirement in batch: "
+                f"question_id={identity[0]}, evidence_key={identity[1]}"
+            )
+        seen_ids.add(evidence_id)
+        seen_requirements.add(identity)

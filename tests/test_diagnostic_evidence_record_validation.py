@@ -90,3 +90,65 @@ def test_combined_validator_does_not_turn_observation_quality_into_diagnosis():
     )
 
     validate_evidence_record(record, DEPENDENCIES, SCHEMA)
+
+
+def test_batch_validator_accepts_distinct_current_state_requirements():
+    from edi_ingest.evidence import validate_evidence_records
+
+    first, second = DEPENDENCIES["questions"][:2]
+    records = [
+        valid_record(),
+        {
+            "evidence_id": "ev-integration-2",
+            "question_id": second["id"],
+            "evidence_key": second["required_evidence"][0],
+            "state": "unknown",
+            "observations": [],
+        },
+    ]
+
+    validate_evidence_records(records, DEPENDENCIES, SCHEMA)
+
+
+def test_batch_validator_rejects_duplicate_evidence_ids():
+    from edi_ingest.evidence import validate_evidence_records
+
+    first = valid_record()
+    second_question = DEPENDENCIES["questions"][1]
+    second = {
+        "evidence_id": first["evidence_id"],
+        "question_id": second_question["id"],
+        "evidence_key": second_question["required_evidence"][0],
+        "state": "unknown",
+        "observations": [],
+    }
+
+    with pytest.raises(ValueError, match="duplicate evidence_id"):
+        validate_evidence_records([first, second], DEPENDENCIES, SCHEMA)
+
+
+def test_batch_validator_rejects_duplicate_current_state_requirement():
+    from edi_ingest.evidence import validate_evidence_records
+
+    first = valid_record()
+    second = dict(first, evidence_id="ev-integration-duplicate")
+
+    with pytest.raises(ValueError, match="duplicate current-state requirement"):
+        validate_evidence_records([first, second], DEPENDENCIES, SCHEMA)
+
+
+def test_batch_validator_rejects_invalid_record_with_index():
+    from edi_ingest.evidence import validate_evidence_records
+
+    first = valid_record()
+    second = dict(valid_record(), evidence_id="ev-invalid", state="healthy")
+
+    with pytest.raises(ValueError, match="index 1"):
+        validate_evidence_records([first, second], DEPENDENCIES, SCHEMA)
+
+
+def test_batch_validator_rejects_empty_batch():
+    from edi_ingest.evidence import validate_evidence_records
+
+    with pytest.raises(ValueError, match="must not be empty"):
+        validate_evidence_records([], DEPENDENCIES, SCHEMA)
