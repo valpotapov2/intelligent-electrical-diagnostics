@@ -437,6 +437,42 @@
           "page": 4
         }
       ]
+    },
+    {
+      "id": "DQ-LOADBANK-TEST-PATH",
+      "title": "Is the documented load-bank test path in the intended source and switching state?",
+      "component_refs": [
+        "PSG",
+        "UPS-SWBD",
+        "LOADBANK-SWBD",
+        "LOADBANK"
+      ],
+      "prerequisites": [],
+      "required_evidence": [
+        "test_context_and_intended_source_identity",
+        "documented_source_switching_state",
+        "load_bank_switchboard_interlock_state",
+        "source_connection_and_feedback_state",
+        "load_bank_status_and_response"
+      ],
+      "distinguishes": [
+        "generator_test_source_path_unavailable",
+        "UPS_test_source_path_unavailable",
+        "interlock_or_switching_state_prevents_expected_connection",
+        "switching_command_or_feedback_disagreement",
+        "load_bank_or_load_response_problem"
+      ],
+      "cannot_conclude_from": [
+        "load_bank_nonresponse_without_source_and_interlock_evidence",
+        "single_switch_position_indication_without_independent_confirmation"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "Only when a documented generator or UPS load-bank test path is under review; this question does not define or authorize a test procedure."
     }
   ],
   "global_constraints": [
@@ -446,6 +482,7 @@
     "Do not invent individual device mappings inside grouped equipment families.",
     "A missing prerequisite produces insufficient evidence, not an assumed healthy state.",
     "Do not require generator readiness for a diagnosis under normal commercial-source operation; generator prerequisites apply only when standby operation or transfer is relevant.",
-    "Control-power availability is a separate evidence question; do not infer it from the commanded or displayed state of the equipment whose control function is under investigation."
+    "Control-power availability is a separate evidence question; do not infer it from the commanded or displayed state of the equipment whose control function is under investigation.",
+    "Load-bank test-path questions describe architecture-level evidence only; they do not authorize switching, load testing, source paralleling, or field operations."
   ]
 }

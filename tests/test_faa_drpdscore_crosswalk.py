@@ -59,3 +59,11 @@ def test_faa_core_crosswalk_does_not_claim_execution_or_physical_measurements():
     assert '"value":' not in serialized
     assert "not evidence that the synthetic mode diagnoses" in " ".join(crosswalk["constraints"]).lower()
     assert "unmapped questions" in " ".join(crosswalk["constraints"]).lower()
+
+
+def test_faa_loadbank_question_is_explicitly_uncovered_by_synthetic_core():
+    crosswalk = json.loads(CROSSWALK_PATH.read_text(encoding="utf-8"))
+    mapping = next(item for item in crosswalk["mappings"] if item["question_id"] == "DQ-LOADBANK-TEST-PATH")
+    assert mapping["coverage"] == "none"
+    assert mapping["synthetic_modes"] == []
+    assert "load-bank" in mapping["rationale"].lower()

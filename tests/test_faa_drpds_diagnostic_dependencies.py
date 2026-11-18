@@ -67,3 +67,16 @@ def test_faa_control_power_is_an_explicit_prerequisite_where_relevant():
     assert "DQ-CONTROL-POWER" in questions["DQ-SWGR-STANDBY-TRANSFER"]["prerequisites"]
     assert "DQ-CONTROL-POWER" in questions["DQ-PMCS-TRUSTWORTHINESS"]["prerequisites"]
     assert "DQ-CONTROL-POWER" not in questions["DQ-SWGR-SECTION-SUPPLY"]["prerequisites"]
+
+
+def test_faa_loadbank_test_path_is_architecture_only_and_not_synthetic():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
+    question = next(item for item in model["questions"] if item["id"] == "DQ-LOADBANK-TEST-PATH")
+    component_ids = {item["id"] for item in graph["components"]}
+    assert set(question["component_refs"]) <= component_ids
+    assert set(question["component_refs"]) == {"PSG", "UPS-SWBD", "LOADBANK-SWBD", "LOADBANK"}
+    assert "load_bank_switchboard_interlock_state" in question["required_evidence"]
+    assert "load_bank_nonresponse_without_source_and_interlock_evidence" in question["cannot_conclude_from"]
+    assert "does not define or authorize a test procedure" in question["applicability"]
+    assert "load testing" in " ".join(model["global_constraints"]).lower()
