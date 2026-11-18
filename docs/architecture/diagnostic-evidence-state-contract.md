@@ -1,0 +1,60 @@
+# Diagnostic evidence-state contract
+
+**Status:** interface/data contract proposal. It does not change the diagnostic engine, create measurements, or authorize field work.
+
+Schema: `schema/diagnostic-evidence.schema.json`.
+
+## Purpose
+
+A diagnostic question lists evidence requirements. The interface needs to show whether each requirement is known, observed, stale, unavailable, or contradicted without turning missing data into a healthy/faulty conclusion.
+
+One record represents the current evidence state for one exact `evidence_key` belonging to one `question_id`. The key must match an item in that question's `required_evidence` list. This contract does not redefine those requirements.
+
+## States
+
+| State | Meaning | UI treatment |
+|---|---|---|
+| `unknown` | No observation has been recorded for this requirement. | Show as not yet known; do not infer a normal condition. |
+| `unavailable` | An attempt to obtain the evidence was made, but it could not be obtained. Record the attempt time and reason. | Show unavailable, distinct from not yet checked. |
+| `stale` | An observation exists but is outside the applicable freshness rule. | Retain and display the observation and the source/site-defined freshness basis; do not silently reuse it as current. |
+| `contradicted` | Two or more observations conflict and the conflict has not been resolved. | Show all conflicting observations; do not average, choose the newest automatically, or hide one. |
+| `observed` | At least one observation is recorded for the requirement. | Show its value and provenance. This state alone says nothing about whether the value is normal, abnormal, healthy, or faulty. |
+
+## Observation and quality are separate
+
+Each observation records its source reference, timestamp and quality:
+
+- `valid`: the source's documented validity checks passed.
+- `invalid`: the source or acquisition reports an invalid observation.
+- `uncertain`: validity cannot be established.
+- `not_assessed`: no validity assessment has been made.
+
+An `observed` record may therefore contain an invalid or uncertain observation. The state answers whether evidence exists; quality answers whether that observation can be relied upon. Neither field is a diagnosis.
+
+## Rules
+
+1. Keep the original observations and provenance. A derived state must not erase its inputs.
+2. `unknown` has no observations. `unavailable` has no observation and must include an attempt time and reason.
+3. `stale` requires an observation and an explicit freshness basis. No universal time-to-live is defined here.
+4. `contradicted` requires at least two observations and a reason identifying the unresolved conflict.
+5. `observed` requires at least one observation, but does not assert that the observation is valid or that the equipment is healthy.
+6. A state transition must preserve prior observations in the record/history layer. This schema describes the current snapshot; it does not prescribe storage or event sourcing.
+7. An evidence record must refer to an existing diagnostic question and one of its declared requirement keys. Cross-file referential validation is an integration responsibility.
+8. Do not derive a physical measurement point, equipment tag, threshold, freshness interval, or acceptance criterion from this contract.
+
+## Deliberately out of scope
+
+- Fault hypotheses, probabilities, posterior updates, or diagnostic conclusions.
+- Automatic evidence collection and instrument control.
+- Site-specific signal maps, measurement points, freshness policies, thresholds, and protection settings.
+- Resolution policy for contradictory observations.
+- Authorization for switching, testing, or live measurements.
+
+## Interface acceptance checks
+
+- Every required evidence row can be rendered in any of the five states.
+- `unknown` and `unavailable` are visibly different.
+- Stale observations remain visible with the basis for staleness.
+- Contradictory observations remain side by side with their source and timestamps.
+- An observed value is not styled or worded as a pass/fail result unless a separate, approved diagnostic rule establishes that result.
+- A question with missing evidence is shown as insufficient evidence, not as a negative diagnosis.
