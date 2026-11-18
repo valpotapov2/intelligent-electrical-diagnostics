@@ -92,6 +92,32 @@ def test_faa_ups_roles_are_separated_without_inventing_site_instances():
     assert "verify the installed site's" in ups3["applicability"]
 
 
+def test_faa_pdu_input_feeder_and_pair_questions_respect_grouped_source_boundary():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    components = {item["id"]: item for item in graph["components"]}
+    pdu = components["PDU-GROUP"]["attributes"]
+
+    input_question = questions["DQ-PDU-INPUT-CONDITION"]
+    feeder = questions["DQ-PDU-OUTGOING-FEEDER"]
+    pair = questions["DQ-PDU-MAINTENANCE-PAIR"]
+
+    for question in (input_question, feeder, pair):
+        assert set(question["component_refs"]) <= set(components)
+    assert pdu["typical_count"] == 8
+    assert pdu["hcf_count"] == 6
+    assert pdu["input"] == "480/277 V three-wire"
+    assert pdu["output"] == "208/120 V four-wire"
+    assert pdu["paired_for_maintenance"] is True
+    assert pdu["each_pdu_feeds_two_sats"] is True
+    assert "specific_PDU_identity_and_documented_upstream_bus_assignment" in input_question["required_evidence"]
+    assert "documented_PDU_to_SATS_input_assignment" in feeder["required_evidence"]
+    assert "documented_identity_of_the_PDU_maintenance_pair" in pair["required_evidence"]
+    assert "individual pair map" in pair["applicability"]
+    assert "aggregate_PDU_and_SATS_counts" in pair["cannot_conclude_from"]
+
+
 def test_faa_loadbank_test_path_is_architecture_only_and_not_synthetic():
     model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
     graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
