@@ -155,6 +155,31 @@ def test_faa_sats_dual_input_and_transfer_questions_respect_grouped_source_bound
     assert "aggregate_PDU_to_SATS_relationship_without_individual_feeder_mapping" in dual["cannot_conclude_from"]
     assert "SATS-GROUP" in components
     assert "PDU-GROUP" in components
+    control = questions["DQ-SATS-CONTROL-READINESS"]
+    switching = questions["DQ-SATS-SWITCHING-FUNCTION"]
+    assert control["prerequisites"] == ["DQ-SATS-DUAL-INPUT-AVAILABILITY"]
+    assert switching["prerequisites"] == ["DQ-SATS-CONTROL-READINESS"]
+    assert transfer["prerequisites"] == [
+        "DQ-SATS-DUAL-INPUT-AVAILABILITY",
+        "DQ-SATS-CONTROL-READINESS",
+        "DQ-SATS-SWITCHING-FUNCTION",
+    ]
+    assert umbrella["prerequisites"] == [
+        "DQ-SATS-DUAL-INPUT-AVAILABILITY",
+        "DQ-SATS-SWITCHING-FUNCTION",
+    ]
+    assert "documented_operating_mode_and_AUTO_availability_state" in control["required_evidence"]
+    assert "power_switching_element_state_or_feedback_when_exposed" in switching["required_evidence"]
+    assert "assumed_semiconductor_device_count_or_internal_switching_topology" in switching["cannot_conclude_from"]
+    assert "assumed_sensing_thresholds_or_transfer_decision_logic" in control["cannot_conclude_from"]
+    assert "controller_AUTO_state_without_switching_response_as_proof_of_transfer" in transfer["cannot_conclude_from"]
+    crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
+    crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    for question_id in ("DQ-SATS-CONTROL-READINESS", "DQ-SATS-SWITCHING-FUNCTION"):
+        assert mappings[question_id]["coverage"] == "none"
+        assert mappings[question_id]["synthetic_modes"] == []
+
 
 
 def test_faa_cdp_incoming_and_branch_questions_respect_grouped_source_boundary():
