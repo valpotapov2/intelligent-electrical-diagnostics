@@ -58,7 +58,7 @@ No live measurement or switching is enabled by this integration.
 
 ## Architecture-question crosswalk
 
-`diagnostics/scenarios/faa-drpds-core-crosswalk.v0.1.json` records coverage between all 11 architecture-level diagnostic questions and the current twelve-mode synthetic engine fixture.
+`diagnostics/scenarios/faa-drpds-core-crosswalk.v0.1.json` records coverage between all 35 architecture-level diagnostic questions and the current twelve-mode synthetic engine fixture.
 
 Current coverage is deliberately limited:
 - **Partial synthetic analogues:** essential-feed endpoint loss, Critical Bus A/B path-loss patterns, and a generic SATS output-loss pattern.
