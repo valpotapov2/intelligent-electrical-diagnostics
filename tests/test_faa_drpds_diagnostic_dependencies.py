@@ -559,3 +559,23 @@ def test_faa_swgr_protection_response_and_selectivity_are_separate_site_bounded_
     for question_id in ("DQ-SWGR-PROTECTION-RESPONSE", "DQ-SWGR-SELECTIVITY-COORDINATION"):
         assert mappings[question_id]["coverage"] == "none"
         assert mappings[question_id]["synthetic_modes"] == []
+
+
+def test_faa_swgr_voltage_protection_separates_sensing_pickup_and_time_delay():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    voltage = questions["DQ-SWGR-VOLTAGE-PROTECTION"]
+
+    assert voltage["prerequisites"] == ["DQ-SWGR-SECTION-SUPPLY"]
+    assert "voltage_sensing_source_and_channel_identity_with_timestamp_and_quality" in voltage["required_evidence"]
+    assert "current_approved_protection_settings_record_for_the_installed_voltage_elements" in voltage["required_evidence"]
+    assert "configured_time_delay_and_timer_state_or_elapsed_event_timing_when_recorded" in voltage["required_evidence"]
+    assert "generic_nominal_voltage_as_a_site_specific_protection_threshold" in voltage["cannot_conclude_from"]
+    assert "assumed_under_or_overvoltage_pickup_threshold_or_time_delay" in voltage["cannot_conclude_from"]
+    assert "Breaker/trip execution is assessed separately under DQ-SWGR-PROTECTION-RESPONSE" in voltage["applicability"]
+
+    crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
+    crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    assert mappings["DQ-SWGR-VOLTAGE-PROTECTION"]["coverage"] == "none"
+    assert mappings["DQ-SWGR-VOLTAGE-PROTECTION"]["synthetic_modes"] == []

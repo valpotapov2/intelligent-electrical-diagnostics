@@ -2001,6 +2001,55 @@
         }
       ],
       "applicability": "The source describes time-current coordination and zone-selective interlocking, but installed settings and coordination are facility-specific. Compare an observed event only with the current approved site coordination study and installed device records. Do not calculate, recommend, infer or modify protection settings; no live fault test or switching procedure is defined."
+    },
+    {
+      "id": "DQ-SWGR-VOLTAGE-PROTECTION",
+      "title": "Did the documented SWGR under/overvoltage protection recognize the event and apply its configured time delay?",
+      "component_refs": [
+        "SWGR1",
+        "SWGR2",
+        "1M1",
+        "2M1",
+        "1M2",
+        "2M2",
+        "TIE"
+      ],
+      "prerequisites": [
+        "DQ-SWGR-SECTION-SUPPLY"
+      ],
+      "required_evidence": [
+        "identified_switchgear_section_and_documented_voltage_protection_function",
+        "voltage_sensing_source_and_channel_identity_with_timestamp_and_quality",
+        "event_time_voltage_value_or_relay_recorded_voltage_condition_at_the_relevant_boundary",
+        "current_approved_protection_settings_record_for_the_installed_voltage_elements",
+        "documented_under_or_overvoltage_pickup_or_operation_event",
+        "configured_time_delay_and_timer_state_or_elapsed_event_timing_when_recorded",
+        "protection_decision_or_trip_request_event_and_its_timestamp",
+        "independent_or_local_voltage_or_electrical_confirmation_when_available"
+      ],
+      "distinguishes": [
+        "voltage_sensing_channel_invalid_or_unavailable",
+        "actual_under_or_overvoltage_condition_not_independently_confirmed",
+        "documented_voltage_element_did_not_pick_up_despite_confirmed_condition",
+        "pickup_recorded_but_configured_time_delay_or_timer_completion_not_confirmed",
+        "protection_decision_recorded_but_trip_response_requires_separate_DQ_SWGR_PROTECTION_RESPONSE_assessment",
+        "event_timing_or_measurement_quality_insufficient_for_conclusion"
+      ],
+      "cannot_conclude_from": [
+        "PMCS_voltage_value_without_source_channel_identity_quality_and_timestamp",
+        "generic_nominal_voltage_as_a_site_specific_protection_threshold",
+        "assumed_under_or_overvoltage_pickup_threshold_or_time_delay",
+        "current_voltage_as_proof_of_voltage_condition_at_a_past_event",
+        "missing_alarm_as_proof_that_the_protection_element_did_not_operate",
+        "assumed_VT_fuse_or_voltage_sensing_circuit_topology"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ],
+      "applicability": "The historical source describes minimum- and maximum-voltage protection with time delays. Assess only the installed voltage-protection functions documented for the identified switchgear and compare event evidence with the current approved settings record. Separate sensing validity, voltage condition, pickup, timer behavior and protection decision. Do not infer numeric thresholds, delay values, VT/fuse arrangement, relay model or test points. Breaker/trip execution is assessed separately under DQ-SWGR-PROTECTION-RESPONSE; this question defines no test or switching procedure."
     }
   ],
   "global_constraints": [
