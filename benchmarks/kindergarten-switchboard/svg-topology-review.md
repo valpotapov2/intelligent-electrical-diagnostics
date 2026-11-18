@@ -49,6 +49,8 @@ The plan labels are transcribed as drawn. Their expansions and functional meanin
 
 This corrects the earlier rough transcription: QF2 and QF3 read 3C25 (not 3C32); QF7 and QF8 read 1C10; QF9 reads 3C80.
 
+The graph preserves these strings as source markings. It does not separately normalize a pole count: the SVG review establishes the printed marking, but this benchmark does not use that marking alone to assert an independently verified device pole configuration.
+
 ## Outgoing cable inscriptions
 
 All ten outgoing cable labels are placed beside their corresponding vertical feeder columns in the SVG.

@@ -298,7 +298,6 @@
       "attributes": {
         "marking": "3C25",
         "rated_current_a": 25,
-        "poles": 4,
         "breaking_capacity_ka": 4.5,
         "model_marking": "ВА47-29"
       },
@@ -325,7 +324,6 @@
       "attributes": {
         "marking": "3C25",
         "rated_current_a": 25,
-        "poles": 4,
         "breaking_capacity_ka": 4.5,
         "model_marking": "ВА47-29"
       },
@@ -352,7 +350,6 @@
       "attributes": {
         "marking": "3C25",
         "rated_current_a": 25,
-        "poles": 4,
         "breaking_capacity_ka": 4.5,
         "model_marking": "ВА47-29"
       },
@@ -379,7 +376,6 @@
       "attributes": {
         "marking": "3C32",
         "rated_current_a": 32,
-        "poles": 4,
         "breaking_capacity_ka": 4.5,
         "model_marking": "ВА47-29"
       },
@@ -406,7 +402,6 @@
       "attributes": {
         "marking": "3C10",
         "rated_current_a": 10,
-        "poles": 4,
         "breaking_capacity_ka": 4.5,
         "model_marking": "ВА47-29"
       },
@@ -433,7 +428,6 @@
       "attributes": {
         "marking": "3C10",
         "rated_current_a": 10,
-        "poles": 4,
         "breaking_capacity_ka": 4.5,
         "model_marking": "ВА47-29"
       },
@@ -460,7 +454,6 @@
       "attributes": {
         "marking": "1C10",
         "rated_current_a": 10,
-        "poles": 1,
         "breaking_capacity_ka": 4.5,
         "model_marking": "ВА47-29"
       },
@@ -487,7 +480,6 @@
       "attributes": {
         "marking": "1C10",
         "rated_current_a": 10,
-        "poles": 1,
         "breaking_capacity_ka": 4.5,
         "model_marking": "ВА47-29"
       },
@@ -514,7 +506,6 @@
       "attributes": {
         "marking": "3C80",
         "rated_current_a": 80,
-        "poles": 4,
         "breaking_capacity_ka": 4.5,
         "model_marking": "ВА47-29"
       },
@@ -541,7 +532,6 @@
       "attributes": {
         "marking": "3C10",
         "rated_current_a": 10,
-        "poles": 4,
         "breaking_capacity_ka": 4.5,
         "model_marking": "ВА47-29"
       },
