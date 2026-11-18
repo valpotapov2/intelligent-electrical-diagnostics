@@ -117,6 +117,18 @@
       "rationale": "The synthetic fixture has no individual PDU pair map, maintenance state, counterpart capacity/availability, or affected SATS input assignment."
     },
     {
+      "question_id": "DQ-SATS-DUAL-INPUT-AVAILABILITY",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no individual SATS identity, dual input states, source A/B assignment, or PDU feeder-to-SATS mapping."
+    },
+    {
+      "question_id": "DQ-SATS-AUTO-TRANSFER",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no source-loss event history, SATS source selection, automatic transfer state, event timing, or output-continuity evidence."
+    },
+    {
       "question_id": "DQ-SATS-SOURCE-SELECTION",
       "coverage": "partial",
       "synthetic_modes": [

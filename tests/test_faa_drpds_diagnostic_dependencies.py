@@ -129,3 +129,29 @@ def test_faa_loadbank_test_path_is_architecture_only_and_not_synthetic():
     assert "load_bank_nonresponse_without_source_and_interlock_evidence" in question["cannot_conclude_from"]
     assert "does not define or authorize a test procedure" in question["applicability"]
     assert "load testing" in " ".join(model["global_constraints"]).lower()
+
+
+
+def test_faa_sats_dual_input_and_transfer_questions_respect_grouped_source_boundary():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    components = {item["id"]: item for item in graph["components"]}
+    dual = questions["DQ-SATS-DUAL-INPUT-AVAILABILITY"]
+    transfer = questions["DQ-SATS-AUTO-TRANSFER"]
+    umbrella = questions["DQ-SATS-SOURCE-SELECTION"]
+
+    for question in (dual, transfer, umbrella):
+        assert set(question["component_refs"]) <= set(components)
+    assert dual["prerequisites"] == ["DQ-PDU-OUTGOING-FEEDER"]
+    assert transfer["prerequisites"] == ["DQ-SATS-DUAL-INPUT-AVAILABILITY"]
+    assert umbrella["prerequisites"] == ["DQ-SATS-DUAL-INPUT-AVAILABILITY"]
+    assert "DQ-SATS-AUTO-TRANSFER" not in umbrella["prerequisites"]
+    assert "documented_source_A_PDU_and_feeder_assignment_to_SATS_input" in dual["required_evidence"]
+    assert "documented_source_B_PDU_and_feeder_assignment_to_SATS_input" in dual["required_evidence"]
+    assert "selected_source_state_before_and_after_event" in transfer["required_evidence"]
+    assert "SATS_output_continuity_and_quality_evidence" in transfer["required_evidence"]
+    assert "sensing thresholds" in transfer["applicability"]
+    assert "individual_feeder_mapping" in dual["cannot_conclude_from"]
+    assert "SATS-GROUP" in components
+    assert "PDU-GROUP" in components

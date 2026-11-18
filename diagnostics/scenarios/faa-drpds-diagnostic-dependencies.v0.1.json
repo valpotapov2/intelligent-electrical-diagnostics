@@ -274,8 +274,13 @@
     {
       "id": "DQ-UPS-1-BYPASS-RESERVE",
       "title": "Is the documented UPS 1 bypass-reserve role available to support UPS 2 and UPS 3?",
-      "component_refs": ["UPS-GROUP", "UPS-SWBD"],
-      "prerequisites": ["DQ-SWGR-SECTION-SUPPLY"],
+      "component_refs": [
+        "UPS-GROUP",
+        "UPS-SWBD"
+      ],
+      "prerequisites": [
+        "DQ-SWGR-SECTION-SUPPLY"
+      ],
       "required_evidence": [
         "documented_UPS_1_bypass_reserve_role_for_UPS_2_and_UPS_3",
         "UPS_1_availability_and_operating_state",
@@ -292,14 +297,25 @@
         "UPS_2_or_UPS_3_output_present_alone",
         "UPS_1_status_without_confirmation_of_the_relevant_bypass_path"
       ],
-      "sources": [{"document_id": "faa-jo-6480-22-block", "page": 4}],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
       "applicability": "Applies only to the historical typical architecture where UPS 1 is documented as the bypass reserve for UPS 2 and UPS 3; the installed site's bypass design and operating procedure must be verified separately."
     },
     {
       "id": "DQ-UPS-2-OUTPUT-PATH",
       "title": "Is the documented UPS 2 output path to Critical Bus A available?",
-      "component_refs": ["UPS-GROUP", "UPS-SWBD", "BUS-A"],
-      "prerequisites": ["DQ-SWGR-SECTION-SUPPLY"],
+      "component_refs": [
+        "UPS-GROUP",
+        "UPS-SWBD",
+        "BUS-A"
+      ],
+      "prerequisites": [
+        "DQ-SWGR-SECTION-SUPPLY"
+      ],
       "required_evidence": [
         "UPS_2_input_and_operating_state",
         "UPS_2_rectifier_inverter_bypass_and_DC_battery_evidence_when_available",
@@ -319,16 +335,28 @@
         "Critical_Bus_A_PMCS_indication_without_independent_confirmation"
       ],
       "sources": [
-        {"document_id": "faa-jo-6480-22", "page": 5},
-        {"document_id": "faa-jo-6480-22-block", "page": 4}
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        },
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
       ],
       "applicability": "The UPS 2 to Critical Bus A assignment is a historical typical role; verify the installed site's equipment assignment and topology before applying."
     },
     {
       "id": "DQ-UPS-3-OUTPUT-PATH",
       "title": "Is the documented UPS 3 output path to Critical Bus B available?",
-      "component_refs": ["UPS-GROUP", "UPS-SWBD", "BUS-B"],
-      "prerequisites": ["DQ-SWGR-SECTION-SUPPLY"],
+      "component_refs": [
+        "UPS-GROUP",
+        "UPS-SWBD",
+        "BUS-B"
+      ],
+      "prerequisites": [
+        "DQ-SWGR-SECTION-SUPPLY"
+      ],
       "required_evidence": [
         "UPS_3_input_and_operating_state",
         "UPS_3_rectifier_inverter_bypass_and_DC_battery_evidence_when_available",
@@ -348,8 +376,14 @@
         "Critical_Bus_B_PMCS_indication_without_independent_confirmation"
       ],
       "sources": [
-        {"document_id": "faa-jo-6480-22", "page": 5},
-        {"document_id": "faa-jo-6480-22-block", "page": 4}
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        },
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
       ],
       "applicability": "The UPS 3 to Critical Bus B assignment is a historical typical role; verify the installed site's equipment assignment and topology before applying."
     },
@@ -420,8 +454,14 @@
     {
       "id": "DQ-PDU-INPUT-CONDITION",
       "title": "Is the documented PDU input and internal distribution path available?",
-      "component_refs": ["PDU-GROUP", "BUS-A", "BUS-B"],
-      "prerequisites": ["DQ-CRITICAL-BUS"],
+      "component_refs": [
+        "PDU-GROUP",
+        "BUS-A",
+        "BUS-B"
+      ],
+      "prerequisites": [
+        "DQ-CRITICAL-BUS"
+      ],
       "required_evidence": [
         "specific_PDU_identity_and_documented_upstream_bus_assignment",
         "PDU_input_source_and_input_state",
@@ -440,14 +480,24 @@
         "downstream_load_loss_without_PDU_input_and_output_localization",
         "PMCS_status_without_measurement_quality_or_independent_confirmation"
       ],
-      "sources": [{"document_id": "faa-jo-6480-22-block", "page": 4}],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
       "applicability": "The PDU family is grouped in the generic model. Apply to an individual PDU only after its installed identity and upstream bus assignment are established from current site documentation."
     },
     {
       "id": "DQ-PDU-OUTGOING-FEEDER",
       "title": "Is a documented PDU outgoing feeder available to supply its assigned SATS input?",
-      "component_refs": ["PDU-GROUP", "SATS-GROUP"],
-      "prerequisites": ["DQ-PDU-INPUT-CONDITION"],
+      "component_refs": [
+        "PDU-GROUP",
+        "SATS-GROUP"
+      ],
+      "prerequisites": [
+        "DQ-PDU-INPUT-CONDITION"
+      ],
       "required_evidence": [
         "specific_PDU_identity_and_outgoing_feeder_identity",
         "documented_PDU_to_SATS_input_assignment",
@@ -465,14 +515,27 @@
         "SATS_output_loss_without_both_SATS_input_states",
         "aggregate_statement_that_each_PDU_feeds_two_SATS_without_individual_feeder_mapping"
       ],
-      "sources": [{"document_id": "faa-jo-6480-22-block", "page": 4}],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
       "applicability": "The historical description says each PDU feeds two SATS, but the generic graph does not identify individual PDU feeder-to-SATS assignments. Require current site drawings before applying to an installed feeder."
     },
     {
       "id": "DQ-PDU-MAINTENANCE-PAIR",
       "title": "Is the documented paired-PDU maintenance arrangement available for the intended maintenance state?",
-      "component_refs": ["PDU-GROUP", "SATS-GROUP", "BUS-A", "BUS-B"],
-      "prerequisites": ["DQ-PDU-INPUT-CONDITION", "DQ-PDU-OUTGOING-FEEDER"],
+      "component_refs": [
+        "PDU-GROUP",
+        "SATS-GROUP",
+        "BUS-A",
+        "BUS-B"
+      ],
+      "prerequisites": [
+        "DQ-PDU-INPUT-CONDITION",
+        "DQ-PDU-OUTGOING-FEEDER"
+      ],
       "required_evidence": [
         "documented_identity_of_the_PDU_maintenance_pair",
         "which_PDU_is_in_or_planned_for_maintenance",
@@ -491,8 +554,95 @@
         "aggregate_PDU_and_SATS_counts",
         "one_PDU_operating_as_proof_that_the_counterpart_can_support_the_affected_loads"
       ],
-      "sources": [{"document_id": "faa-jo-6480-22-block", "page": 4}],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
       "applicability": "The historical architecture describes PDUs paired to permit maintenance while maintaining power through the other PDU. It does not provide an individual pair map or authorize maintenance switching; verify site drawings and approved maintenance documentation."
+    },
+    {
+      "id": "DQ-SATS-DUAL-INPUT-AVAILABILITY",
+      "title": "Are both documented independent source inputs available at the relevant SATS?",
+      "component_refs": [
+        "SATS-GROUP",
+        "PDU-GROUP",
+        "BUS-A",
+        "BUS-B"
+      ],
+      "prerequisites": [
+        "DQ-PDU-OUTGOING-FEEDER"
+      ],
+      "required_evidence": [
+        "specific_SATS_identity_and_documented_output_assignment",
+        "documented_source_A_PDU_and_feeder_assignment_to_SATS_input",
+        "documented_source_B_PDU_and_feeder_assignment_to_SATS_input",
+        "source_A_SATS_input_state_and_measurement_validity",
+        "source_B_SATS_input_state_and_measurement_validity",
+        "corresponding_upstream_PDU_output_evidence"
+      ],
+      "distinguishes": [
+        "source_A_input_unavailable",
+        "source_B_input_unavailable",
+        "both_inputs_unavailable",
+        "input_assignment_or_identity_unconfirmed",
+        "input_measurement_or_telemetry_problem"
+      ],
+      "cannot_conclude_from": [
+        "SATS_output_present_as_proof_of_both_inputs_healthy",
+        "two_input_count_without_documented_source_A_and_source_B_assignments",
+        "aggregate_PDU_to_SATS_relationship_without_individual_feeder_mapping"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The historical architecture describes two independent SATS sources associated with Critical Bus A and Critical Bus B. The generic model does not identify individual SATS inputs or PDU feeder assignments. Apply to an installed SATS only after current site drawings establish both input identities and assignments."
+    },
+    {
+      "id": "DQ-SATS-AUTO-TRANSFER",
+      "title": "Did the SATS respond to a documented loss of one source by transferring to the other source?",
+      "component_refs": [
+        "SATS-GROUP",
+        "PDU-GROUP",
+        "BUS-A",
+        "BUS-B"
+      ],
+      "prerequisites": [
+        "DQ-SATS-DUAL-INPUT-AVAILABILITY"
+      ],
+      "required_evidence": [
+        "documented_source_loss_or_unavailability_event",
+        "both_SATS_input_states_at_the_relevant_event",
+        "SATS_operating_mode_and_automatic_transfer_availability",
+        "selected_source_state_before_and_after_event",
+        "transfer_event_or_status_record",
+        "SATS_output_continuity_and_quality_evidence",
+        "measurement_and_event_timestamp_quality"
+      ],
+      "distinguishes": [
+        "source_loss_without_transfer_requirement_confirmed",
+        "automatic_transfer_not_observed_or_not_completed",
+        "alternate_source_unavailable",
+        "transfer_state_or_event_feedback_unconfirmed",
+        "SATS_output_interruption_or_quality_problem",
+        "event_or_measurement_telemetry_problem"
+      ],
+      "cannot_conclude_from": [
+        "SATS_output_present_without_event_and_input_history",
+        "selected_source_indication_without_independent_output_evidence",
+        "absence_of_event_record_as_proof_that_no_transfer_occurred"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The historical description states that SATS automatically transfers the load to the other source when one source fails. This question does not define sensing thresholds, transfer-time limits, detailed control logic, maintenance bypass behavior, or field switching procedures. Apply only with documented site-specific event and status evidence."
     },
     {
       "id": "DQ-SATS-SOURCE-SELECTION",
@@ -504,28 +654,33 @@
         "BUS-B"
       ],
       "prerequisites": [
-        "DQ-PDU-INPUT-OUTPUT"
+        "DQ-SATS-DUAL-INPUT-AVAILABILITY"
       ],
       "required_evidence": [
+        "documented_individual_SATS_identity_and_output_assignment",
         "both_documented_SATS_input_states",
         "source_selection_state",
-        "transfer_event_or_status",
-        "SATS_output_state"
+        "transfer_event_or_status_when_a_source_loss_event_is_relevant",
+        "SATS_output_state_and_output_measurement_validity"
       ],
       "distinguishes": [
         "one_input_unavailable",
         "source_selection_or_transfer_problem",
-        "output_path_problem"
+        "SATS_output_or_downstream_path_problem",
+        "input_or_output_measurement_or_telemetry_problem"
       ],
       "cannot_conclude_from": [
-        "SATS_output_present_as_proof_of_both_inputs_healthy"
+        "SATS_output_present_as_proof_of_both_inputs_healthy",
+        "aggregate_PDU_to_SATS_relationship_without_individual_input_assignment",
+        "PMCS_status_without_measurement_quality_or_independent_confirmation"
       ],
       "sources": [
         {
           "document_id": "faa-jo-6480-22-block",
           "page": 4
         }
-      ]
+      ],
+      "applicability": "The generic model contains only grouped PDU and SATS families. Apply to an individual SATS only after its installed identity, both input assignments and output assignment are established from current site documentation. No transfer thresholds, timing limits, or switching procedures are defined."
     },
     {
       "id": "DQ-CDP-OUTGOING-CIRCUIT",

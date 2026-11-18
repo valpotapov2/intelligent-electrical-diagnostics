@@ -91,3 +91,12 @@ def test_faa_loadbank_question_is_explicitly_uncovered_by_synthetic_core():
     assert mapping["coverage"] == "none"
     assert mapping["synthetic_modes"] == []
     assert "load-bank" in mapping["rationale"].lower()
+
+
+
+def test_faa_sats_input_and_transfer_questions_are_uncovered_by_synthetic_core():
+    crosswalk = json.loads(CROSSWALK_PATH.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    for question_id in ("DQ-SATS-DUAL-INPUT-AVAILABILITY", "DQ-SATS-AUTO-TRANSFER"):
+        assert mappings[question_id]["coverage"] == "none"
+        assert mappings[question_id]["synthetic_modes"] == []
