@@ -69,6 +69,29 @@ def test_faa_control_power_is_an_explicit_prerequisite_where_relevant():
     assert "DQ-CONTROL-POWER" not in questions["DQ-SWGR-SECTION-SUPPLY"]["prerequisites"]
 
 
+def test_faa_ups_roles_are_separated_without_inventing_site_instances():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    graph_components = {item["id"]: item for item in graph["components"]}
+
+    reserve = questions["DQ-UPS-1-BYPASS-RESERVE"]
+    ups2 = questions["DQ-UPS-2-OUTPUT-PATH"]
+    ups3 = questions["DQ-UPS-3-OUTPUT-PATH"]
+
+    assert set(reserve["component_refs"]) <= set(graph_components)
+    assert set(ups2["component_refs"]) <= set(graph_components)
+    assert set(ups3["component_refs"]) <= set(graph_components)
+    assert graph_components["UPS-GROUP"]["attributes"]["ups_1_role"] == "bypass_source_for_ups_2_and_ups_3"
+    assert graph_components["UPS-GROUP"]["attributes"]["ups_2_output"] == "critical_bus_A"
+    assert graph_components["UPS-GROUP"]["attributes"]["ups_3_output"] == "critical_bus_B"
+    assert "documented_bypass_path_state_for_the_relevant_UPS" in reserve["required_evidence"]
+    assert "documented_UPS_2_to_Critical_Bus_A_assignment" in ups2["required_evidence"]
+    assert "documented_UPS_3_to_Critical_Bus_B_assignment" in ups3["required_evidence"]
+    assert "verify the installed site's" in ups2["applicability"]
+    assert "verify the installed site's" in ups3["applicability"]
+
+
 def test_faa_loadbank_test_path_is_architecture_only_and_not_synthetic():
     model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
     graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
