@@ -621,6 +621,83 @@
       "applicability": "Umbrella assessment. Localize an essential-load interruption through the switchboard feeder, MCC protective/control path and assigned load response. Assess generator-related load shedding/restoration separately when the event occurred during standby operation."
     },
     {
+      "id": "DQ-UPS-SWGR-INPUT",
+      "title": "Is the documented incoming supply path to the UPS supply switchgear available?",
+      "component_refs": [
+        "SWGR1",
+        "SWGR2",
+        "UPS-SWGR"
+      ],
+      "prerequisites": [
+        "DQ-SWGR-SECTION-SUPPLY"
+      ],
+      "required_evidence": [
+        "site_documented_UPS_SWGR_incoming_source_and_connection_identity",
+        "relevant_upstream_SWGR_section_supply_state",
+        "UPS_SWGR_incoming_protective_device_and_switching_state_when_documented",
+        "UPS_SWGR_incoming_voltage_or_supply_indication_with_measurement_quality_and_timestamp",
+        "independent_or_local_confirmation_of_incoming_supply_when_available"
+      ],
+      "distinguishes": [
+        "upstream_SWGR_section_supply_unavailable",
+        "documented_UPS_SWGR_incoming_path_unavailable",
+        "incoming_protective_device_or_switching_state_problem",
+        "incoming_measurement_or_telemetry_untrustworthy",
+        "site_incoming_source_assignment_not_established"
+      ],
+      "cannot_conclude_from": [
+        "UPS_SWGR_aggregate_status_as_proof_of_each_incoming_path",
+        "UPS_input_alarm_as_proof_of_UPS_SWGR_incoming_failure",
+        "assumed_number_or_source_pairing_of_UPS_SWGR_incomers",
+        "PMCS_indication_alone_as_independent_electrical_confirmation"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ],
+      "applicability": "The critical distribution architecture includes an UPS supply switchgear between the main SWGR and UPS equipment. Assess only incoming sources and switching elements identified by current site one-line drawings; the generic model does not establish the number, tags, or pairing of UPS SWGR incomers."
+    },
+    {
+      "id": "DQ-UPS-SWGR-FEEDER",
+      "title": "Is the documented UPS SWGR outgoing feeder supplying the assigned UPS input?",
+      "component_refs": [
+        "UPS-SWGR",
+        "UPS-GROUP"
+      ],
+      "prerequisites": [
+        "DQ-UPS-SWGR-INPUT"
+      ],
+      "required_evidence": [
+        "specific_UPS_and_outgoing_feeder_assignment_from_current_site_records",
+        "UPS_SWGR_bus_or_section_supply_state_relevant_to_the_feeder",
+        "outgoing_feeder_protective_device_and_breaker_state_when_documented",
+        "feeder_output_or_UPS_input_supply_evidence_with_measurement_quality_and_timestamp",
+        "independent_or_local_confirmation_of_UPS_input_supply_when_available"
+      ],
+      "distinguishes": [
+        "UPS_SWGR_bus_or_section_unavailable",
+        "outgoing_feeder_protection_or_breaker_unavailable",
+        "feeder_output_supply_not_confirmed",
+        "UPS_input_measurement_or_telemetry_untrustworthy",
+        "installed_feeder_to_UPS_assignment_not_established"
+      ],
+      "cannot_conclude_from": [
+        "UPS_not_ready_as_proof_of_outgoing_feeder_failure",
+        "UPS_SWGR_bus_voltage_as_proof_that_each_UPS_feeder_is_available",
+        "aggregate_UPS_SWGR_node_as_proof_of_individual_feeder_mapping",
+        "UPS_input_PMCS_indication_alone_as_independent_confirmation"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22",
+          "page": 5
+        }
+      ],
+      "applicability": "The diagnostic boundary separates UPS SWGR distribution from the UPS input itself. Apply to an individual feeder only when current site one-line drawings and equipment schedules establish its tag and assigned UPS; do not infer feeder count, breaker IDs, or source pairing."
+    },
+    {
       "id": "DQ-UPS-HEALTH",
       "title": "Is a UPS maintaining the intended critical supply mode?",
       "component_refs": [
@@ -630,7 +707,7 @@
         "DC125"
       ],
       "prerequisites": [
-        "DQ-SWGR-SECTION-SUPPLY"
+        "DQ-UPS-SWGR-FEEDER"
       ],
       "required_evidence": [
         "UPS_input_state",
@@ -668,7 +745,7 @@
         "UPS-SWBD"
       ],
       "prerequisites": [
-        "DQ-SWGR-SECTION-SUPPLY"
+        "DQ-UPS-SWGR-FEEDER"
       ],
       "required_evidence": [
         "documented_UPS_1_bypass_reserve_role_for_UPS_2_and_UPS_3",
@@ -703,7 +780,7 @@
         "BUS-A"
       ],
       "prerequisites": [
-        "DQ-SWGR-SECTION-SUPPLY"
+        "DQ-UPS-SWGR-FEEDER"
       ],
       "required_evidence": [
         "UPS_2_input_and_operating_state",
@@ -744,7 +821,7 @@
         "BUS-B"
       ],
       "prerequisites": [
-        "DQ-SWGR-SECTION-SUPPLY"
+        "DQ-UPS-SWGR-FEEDER"
       ],
       "required_evidence": [
         "UPS_3_input_and_operating_state",
