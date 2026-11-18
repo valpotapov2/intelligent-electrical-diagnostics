@@ -272,6 +272,88 @@
       ]
     },
     {
+      "id": "DQ-UPS-1-BYPASS-RESERVE",
+      "title": "Is the documented UPS 1 bypass-reserve role available to support UPS 2 and UPS 3?",
+      "component_refs": ["UPS-GROUP", "UPS-SWBD"],
+      "prerequisites": ["DQ-SWGR-SECTION-SUPPLY"],
+      "required_evidence": [
+        "documented_UPS_1_bypass_reserve_role_for_UPS_2_and_UPS_3",
+        "UPS_1_availability_and_operating_state",
+        "documented_bypass_path_state_for_the_relevant_UPS",
+        "independent_confirmation_of_the_relevant_output_path"
+      ],
+      "distinguishes": [
+        "UPS_1_unavailable_for_documented_reserve_role",
+        "documented_bypass_path_unavailable",
+        "bypass_path_state_or_feedback_unconfirmed",
+        "monitoring_or_telemetry_problem"
+      ],
+      "cannot_conclude_from": [
+        "UPS_2_or_UPS_3_output_present_alone",
+        "UPS_1_status_without_confirmation_of_the_relevant_bypass_path"
+      ],
+      "sources": [{"document_id": "faa-jo-6480-22-block", "page": 4}],
+      "applicability": "Applies only to the historical typical architecture where UPS 1 is documented as the bypass reserve for UPS 2 and UPS 3; the installed site's bypass design and operating procedure must be verified separately."
+    },
+    {
+      "id": "DQ-UPS-2-OUTPUT-PATH",
+      "title": "Is the documented UPS 2 output path to Critical Bus A available?",
+      "component_refs": ["UPS-GROUP", "UPS-SWBD", "BUS-A"],
+      "prerequisites": ["DQ-SWGR-SECTION-SUPPLY"],
+      "required_evidence": [
+        "UPS_2_input_and_operating_state",
+        "UPS_2_rectifier_inverter_bypass_and_DC_battery_evidence_when_available",
+        "UPS_2_output_switchboard_state",
+        "documented_UPS_2_to_Critical_Bus_A_assignment",
+        "independent_Critical_Bus_A_state_and_measurement_validity"
+      ],
+      "distinguishes": [
+        "UPS_2_input_or_conversion_problem",
+        "UPS_2_battery_or_DC_subsystem_problem",
+        "UPS_2_bypass_or_operating_mode_issue",
+        "UPS_2_output_switchboard_or_path_problem",
+        "Critical_Bus_A_or_sensing_problem"
+      ],
+      "cannot_conclude_from": [
+        "UPS_2_output_voltage_alone",
+        "Critical_Bus_A_PMCS_indication_without_independent_confirmation"
+      ],
+      "sources": [
+        {"document_id": "faa-jo-6480-22", "page": 5},
+        {"document_id": "faa-jo-6480-22-block", "page": 4}
+      ],
+      "applicability": "The UPS 2 to Critical Bus A assignment is a historical typical role; verify the installed site's equipment assignment and topology before applying."
+    },
+    {
+      "id": "DQ-UPS-3-OUTPUT-PATH",
+      "title": "Is the documented UPS 3 output path to Critical Bus B available?",
+      "component_refs": ["UPS-GROUP", "UPS-SWBD", "BUS-B"],
+      "prerequisites": ["DQ-SWGR-SECTION-SUPPLY"],
+      "required_evidence": [
+        "UPS_3_input_and_operating_state",
+        "UPS_3_rectifier_inverter_bypass_and_DC_battery_evidence_when_available",
+        "UPS_3_output_switchboard_state",
+        "documented_UPS_3_to_Critical_Bus_B_assignment",
+        "independent_Critical_Bus_B_state_and_measurement_validity"
+      ],
+      "distinguishes": [
+        "UPS_3_input_or_conversion_problem",
+        "UPS_3_battery_or_DC_subsystem_problem",
+        "UPS_3_bypass_or_operating_mode_issue",
+        "UPS_3_output_switchboard_or_path_problem",
+        "Critical_Bus_B_or_sensing_problem"
+      ],
+      "cannot_conclude_from": [
+        "UPS_3_output_voltage_alone",
+        "Critical_Bus_B_PMCS_indication_without_independent_confirmation"
+      ],
+      "sources": [
+        {"document_id": "faa-jo-6480-22", "page": 5},
+        {"document_id": "faa-jo-6480-22-block", "page": 4}
+      ],
+      "applicability": "The UPS 3 to Critical Bus B assignment is a historical typical role; verify the installed site's equipment assignment and topology before applying."
+    },
+    {
       "id": "DQ-CRITICAL-BUS",
       "title": "Is Critical Bus A or B available?",
       "component_refs": [
