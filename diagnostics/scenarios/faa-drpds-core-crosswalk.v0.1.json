@@ -26,12 +26,36 @@
       "rationale": "Two independent virtual source-evidence channels can be distinguished in the engine fixture; transformers, sensing fuses, independent physical confirmation, and source-versus-channel fault discrimination are not modeled."
     },
     {
+      "question_id": "DQ-GENERATOR-START-READINESS",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no individual generator start, electrical output, synchronization, output-breaker connection, fleet capacity, or load-shed/restore fault modes."
+    },
+    {
+      "question_id": "DQ-GENERATOR-ELECTRICAL-OUTPUT",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no individual generator start, electrical output, synchronization, output-breaker connection, fleet capacity, or load-shed/restore fault modes."
+    },
+    {
+      "question_id": "DQ-GENERATOR-SYNCHRONIZATION-CONNECTION",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no individual generator start, electrical output, synchronization, output-breaker connection, fleet capacity, or load-shed/restore fault modes."
+    },
+    {
+      "question_id": "DQ-GENERATOR-CAPACITY-RESERVE",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no individual generator start, electrical output, synchronization, output-breaker connection, fleet capacity, or load-shed/restore fault modes."
+    },
+    {
       "question_id": "DQ-GENERATOR-AVAILABILITY",
       "coverage": "partial",
       "synthetic_modes": [
         "Generator_bus_evidence_loss"
       ],
-      "rationale": "A single virtual generator-bus evidence-channel pattern is exercised; individual generator readiness, output breakers, capacity, load shedding, and engine-running versus electrical-availability distinctions are not modeled."
+      "rationale": "The virtual Generator_bus_evidence_loss mode remains partial test-shape correspondence only. It does not cover individual generator start/readiness, electrical output, synchronization/connection, fleet capacity, or load-shed/restore assessment."
     },
     {
       "question_id": "DQ-SWGR-SECTION-SUPPLY",
