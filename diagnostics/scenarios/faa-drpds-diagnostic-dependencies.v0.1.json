@@ -46,34 +46,185 @@
       ]
     },
     {
-      "id": "DQ-GENERATOR-AVAILABILITY",
-      "title": "Is generator capacity electrically available?",
+      "id": "DQ-GENERATOR-START-READINESS",
+      "title": "Can the documented generator start and reach its run/ready state?",
       "component_refs": [
-        "EGSET",
-        "PSG"
+        "EGSET"
       ],
       "prerequisites": [],
       "required_evidence": [
-        "individual_generator_run_ready_alarm_state",
-        "generator_output_evidence",
-        "common_bus_state",
-        "output_breaker_state",
-        "available_unit_count_and_load_shed_state"
+        "individual_generator_identity_and_start_request_or_automatic_start_context",
+        "starting_battery_and_starting_system_state_when_documented",
+        "fuel_lubrication_temperature_and_cooling_evidence",
+        "engine_controller_run_ready_and_alarm_state"
       ],
       "distinguishes": [
-        "engine_running_without_electrical_availability",
-        "generator_output_or_breaker_problem",
-        "insufficient_available_capacity"
+        "start_sequence_not_initiated_or_not_completed",
+        "starting_system_or_battery_problem",
+        "fuel_or_engine_auxiliary_problem",
+        "controller_or_alarm_inhibit",
+        "run_ready_state_unconfirmed"
       ],
       "cannot_conclude_from": [
-        "engine_running_state_alone"
+        "start_command_alone",
+        "engine_cranking_as_proof_of_run_ready_state",
+        "PMCS_status_without_independent_or_local_confirmation"
       ],
       "sources": [
         {
           "document_id": "faa-jo-6480-22-block",
           "page": 4
         }
-      ]
+      ],
+      "applicability": "The reference identifies start circuits, starting batteries, fuel, lubrication, temperature, coolant, controller and alarms. Individual generator tags, detailed start permissives, thresholds and approved test procedures are not modeled; use only documented installed evidence."
+    },
+    {
+      "id": "DQ-GENERATOR-ELECTRICAL-OUTPUT",
+      "title": "Has the running generator reached acceptable electrical output conditions?",
+      "component_refs": [
+        "EGSET"
+      ],
+      "prerequisites": [
+        "DQ-GENERATOR-START-READINESS"
+      ],
+      "required_evidence": [
+        "individual_generator_identity_and_run_ready_state",
+        "generator_terminal_or_output_measurement_identity_when_documented",
+        "generator_voltage_and_frequency_evidence",
+        "measurement_channel_validity_and_timestamp",
+        "independent_output_state_confirmation_when_available"
+      ],
+      "distinguishes": [
+        "engine_running_without_acceptable_electrical_output",
+        "voltage_or_frequency_not_at_documented_operating_condition",
+        "output_measurement_or_sensing_channel_problem",
+        "output_state_unconfirmed"
+      ],
+      "cannot_conclude_from": [
+        "engine_run_state_alone",
+        "generator_voltage_without_frequency_or_measurement_quality",
+        "aggregate_generator_bus_status_as_proof_of_each_unit_output"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The reference states that the first generator reaching nominal speed and voltage connects to the common bus and identifies voltage/frequency monitoring. No numeric acceptance limits, individual terminals or installed sensing channels are supplied; these require current site records."
+    },
+    {
+      "id": "DQ-GENERATOR-SYNCHRONIZATION-CONNECTION",
+      "title": "Has the generator synchronized with and connected to the common generator bus?",
+      "component_refs": [
+        "EGSET",
+        "PSG"
+      ],
+      "prerequisites": [
+        "DQ-GENERATOR-ELECTRICAL-OUTPUT"
+      ],
+      "required_evidence": [
+        "individual_generator_identity_and_electrical_output_state",
+        "common_generator_bus_voltage_and_frequency_state",
+        "documented_synchronization_or_sync_check_evidence",
+        "generator_output_breaker_command_mode_and_position_feedback",
+        "independent_confirmation_of_generator_to_bus_connection"
+      ],
+      "distinguishes": [
+        "generator_output_ready_but_not_synchronized",
+        "synchronization_or_bus_condition_problem",
+        "output_breaker_or_actuation_problem",
+        "breaker_position_feedback_problem",
+        "generator_to_bus_connection_unconfirmed"
+      ],
+      "cannot_conclude_from": [
+        "generator_run_ready_state_alone",
+        "close_command_without_breaker_position_and_electrical_confirmation",
+        "PMCS_breaker_status_without_freshness_or_independent_evidence"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The reference describes the first qualified generator connecting to a common bus and subsequent units synchronizing. It does not provide synchronization limits, breaker tags, detailed interlocks or a site sequence. No switching or synchronization procedure is defined."
+    },
+    {
+      "id": "DQ-GENERATOR-CAPACITY-RESERVE",
+      "title": "Is the connected generator fleet sufficient for the documented load condition?",
+      "component_refs": [
+        "EGSET",
+        "PSG"
+      ],
+      "prerequisites": [
+        "DQ-GENERATOR-SYNCHRONIZATION-CONNECTION"
+      ],
+      "required_evidence": [
+        "documented_load_demand_and_required_reserve_basis",
+        "count_and_identity_of_generators_confirmed_connected_and_available",
+        "common_generator_bus_state_and_available_capacity_evidence_when_documented",
+        "load_shed_or_load_restore_state_and_event_context",
+        "site_specific_capacity_and_load_priority_criteria"
+      ],
+      "distinguishes": [
+        "insufficient_connected_generator_capacity",
+        "generator_count_or_connection_evidence_incomplete",
+        "load_shed_expected_under_current_capacity",
+        "load_restore_not_confirmed_after_capacity_recovery",
+        "capacity_assessment_not_supported_by_site_criteria"
+      ],
+      "cannot_conclude_from": [
+        "generator_nameplate_or_running_count_without_current_load_demand",
+        "historical_typical_unit_count_as_a_site_specific_capacity_threshold",
+        "load_shed_state_without_documented_load_priority_and_control_context"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The historical reference describes load shedding until enough generators are operating and later restoration, and gives a typical redundancy count with a facility exception. Do not encode that typical count as a universal threshold; the installed site's load, capacity, reserve and load-priority criteria are required."
+    },
+    {
+      "id": "DQ-GENERATOR-AVAILABILITY",
+      "title": "Is generator capacity electrically available?",
+      "component_refs": [
+        "EGSET",
+        "PSG"
+      ],
+      "prerequisites": [
+        "DQ-GENERATOR-START-READINESS",
+        "DQ-GENERATOR-ELECTRICAL-OUTPUT",
+        "DQ-GENERATOR-SYNCHRONIZATION-CONNECTION",
+        "DQ-GENERATOR-CAPACITY-RESERVE"
+      ],
+      "required_evidence": [
+        "generator_start_and_run_ready_assessment",
+        "generator_voltage_and_frequency_output_assessment",
+        "synchronization_and_common_bus_connection_assessment",
+        "connected_generator_capacity_and_load_shed_restore_assessment"
+      ],
+      "distinguishes": [
+        "start_or_engine_auxiliary_problem",
+        "generator_electrical_output_problem",
+        "synchronization_or_output_breaker_problem",
+        "insufficient_available_capacity",
+        "insufficient_site_mapping_or_operating_criteria"
+      ],
+      "cannot_conclude_from": [
+        "engine_running_state_alone",
+        "single_generator_bus_indication_without_individual_unit_and_connection_evidence",
+        "historical_typical_generator_count_as_universal_capacity_threshold"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "Umbrella assessment. Localize each unit through start/readiness, electrical output, synchronization/connection and fleet capacity/load response. Apply installed-unit and capacity conclusions only with current site equipment identity, load demand and approved operating criteria."
     },
     {
       "id": "DQ-CONTROL-POWER",
