@@ -393,3 +393,32 @@ def test_faa_essential_distribution_is_localized_by_feeder_mcc_and_load_evidence
     ):
         assert mappings[question_id]["coverage"] == "none"
         assert mappings[question_id]["synthetic_modes"] == []
+
+
+def test_faa_ups_supply_switchgear_input_and_outgoing_feeder_are_separate_stages():
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    questions = {item["id"]: item for item in model["questions"]}
+    incoming = questions["DQ-UPS-SWGR-INPUT"]
+    feeder = questions["DQ-UPS-SWGR-FEEDER"]
+
+    assert incoming["prerequisites"] == ["DQ-SWGR-SECTION-SUPPLY"]
+    assert feeder["prerequisites"] == ["DQ-UPS-SWGR-INPUT"]
+    for question_id in (
+        "DQ-UPS-HEALTH",
+        "DQ-UPS-1-BYPASS-RESERVE",
+        "DQ-UPS-2-OUTPUT-PATH",
+        "DQ-UPS-3-OUTPUT-PATH",
+    ):
+        assert questions[question_id]["prerequisites"] == ["DQ-UPS-SWGR-FEEDER"]
+
+    assert "site_documented_UPS_SWGR_incoming_source_and_connection_identity" in incoming["required_evidence"]
+    assert "assumed_number_or_source_pairing_of_UPS_SWGR_incomers" in incoming["cannot_conclude_from"]
+    assert "specific_UPS_and_outgoing_feeder_assignment_from_current_site_records" in feeder["required_evidence"]
+    assert "aggregate_UPS_SWGR_node_as_proof_of_individual_feeder_mapping" in feeder["cannot_conclude_from"]
+
+    crosswalk_path = ROOT / "diagnostics" / "scenarios" / "faa-drpds-core-crosswalk.v0.1.json"
+    crosswalk = json.loads(crosswalk_path.read_text(encoding="utf-8"))
+    mappings = {item["question_id"]: item for item in crosswalk["mappings"]}
+    for question_id in ("DQ-UPS-SWGR-INPUT", "DQ-UPS-SWGR-FEEDER"):
+        assert mappings[question_id]["coverage"] == "none"
+        assert mappings[question_id]["synthetic_modes"] == []

@@ -267,6 +267,18 @@
       "coverage": "none",
       "synthetic_modes": [],
       "rationale": "No synthetic mode represents this distinct essential-distribution evidence boundary; absence of fixture coverage is not a healthy result or a diagnostic conclusion."
+    },
+    {
+      "question_id": "DQ-UPS-SWGR-INPUT",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture does not model the UPS SWGR incoming supply boundary or an identified outgoing feeder to an individual UPS. No physical feeder assignment or source pairing is implied."
+    },
+    {
+      "question_id": "DQ-UPS-SWGR-FEEDER",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture does not model the UPS SWGR incoming supply boundary or an identified outgoing feeder to an individual UPS. No physical feeder assignment or source pairing is implied."
     }
   ],
   "constraints": [
