@@ -3,6 +3,7 @@
 **Status:** interface/data contract proposal. It does not change the diagnostic engine, create measurements, or authorize field work.
 
 Schema: `schema/diagnostic-evidence.schema.json`.
+Cross-reference validator: `src/edi_ingest/evidence.py`.
 
 ## Purpose
 
@@ -39,8 +40,17 @@ An `observed` record may therefore contain an invalid or uncertain observation. 
 4. `contradicted` requires at least two observations and a reason identifying the unresolved conflict.
 5. `observed` requires at least one observation, but does not assert that the observation is valid or that the equipment is healthy.
 6. A state transition must preserve prior observations in the record/history layer. This schema describes the current snapshot; it does not prescribe storage or event sourcing.
-7. An evidence record must refer to an existing diagnostic question and one of its declared requirement keys. Cross-file referential validation is an integration responsibility.
+7. An evidence record must refer to an existing diagnostic question and one of its declared requirement keys. `validate_evidence_reference()` enforces this exact cross-file linkage; JSON Schema validation remains a separate step.
 8. Do not derive a physical measurement point, equipment tag, threshold, freshness interval, or acceptance criterion from this contract.
+
+## Cross-reference validation
+
+The FAA DRPDS dependency model currently contains **53 questions and 276 declared evidence keys**. The validator checks that:
+- `question_id` resolves to exactly one declared question;
+- `evidence_key` is an exact member of that question's `required_evidence` list;
+- missing or malformed references are rejected.
+
+It does not validate observation payloads or establish diagnostic meaning. Tests enumerate all 276 declared links and check unknown questions, keys borrowed from another question, and malformed references.
 
 ## Deliberately out of scope
 
