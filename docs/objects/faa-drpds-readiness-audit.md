@@ -22,7 +22,7 @@
 | Gate | Status | Evidence / next action |
 |---|---|---|
 | Display generic graph and distinguish family nodes from installed instances | Architecture data available; UI unverified | Show 29 components/36 connections with provenance; never imply a verified site diagram |
-| Browse a diagnostic question and its evidence prerequisites | Architecture data available; UI unverified | Present all 44 questions and prerequisite relationships, including conditional branches |
+| Browse a diagnostic question and its evidence prerequisites | Architecture data available; UI unverified | Present all 47 questions and prerequisite relationships, including conditional branches |
 | Show unsupported/unknown evidence explicitly | Required; UI unverified | `coverage:none`, missing equipment mapping and missing observations must remain unknown |
 | Exercise real diagnostic core on virtual observations | Synthetic integration available | Existing real-core tests; virtual 0–5.5 V signals are not FAA voltages |
 | Diagnose an installed FAA facility | **Blocked** | Current site drawings, equipment/feeder tags, approved measurement points, signal map, settings, validated failure modes and likelihoods required |
