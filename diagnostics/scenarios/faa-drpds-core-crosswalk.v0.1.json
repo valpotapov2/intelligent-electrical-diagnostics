@@ -23,7 +23,13 @@
         "Source_1_evidence_loss",
         "Source_2_evidence_loss"
       ],
-      "rationale": "Two independent virtual source-evidence channels can be distinguished in the engine fixture; transformers, sensing fuses, independent physical confirmation, and source-versus-channel fault discrimination are not modeled."
+      "rationale": "The two virtual source-evidence channels provide only partial source-channel test-shape correspondence; transformer input/output, transformer protection, sensing-fuse discrimination and independent physical confirmation are not modeled."
+    },
+    {
+      "question_id": "DQ-TRANSFORMER-INPUT-OUTPUT",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no transformer input/output, transformer condition/protection, corresponding incomer, or transformer-versus-upstream-source discrimination evidence."
     },
     {
       "question_id": "DQ-GENERATOR-START-READINESS",
@@ -240,6 +246,7 @@
     "Unmapped questions are explicit coverage gaps, not healthy states or negative diagnoses.",
     "New source, generator-bus, SWGR-section, and standby-transfer modes are isolated virtual evidence-channel patterns; they do not encode source-to-section wiring or a transfer sequence.",
     "The control-power prerequisite is architecture-level only; the synthetic fixture does not model AC/DC auxiliary power or battery behavior.",
-    "Load-bank test-path coverage is absent from the synthetic fixture; no load-bank operation or switching sequence is represented."
+    "Load-bank test-path coverage is absent from the synthetic fixture; no load-bank operation or switching sequence is represented.",
+    "Transformer input/output and protection diagnostics are architecture-only; the synthetic fixture has no transformer fault or sensing-fuse discrimination modes."
   ]
 }
