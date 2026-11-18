@@ -152,3 +152,56 @@ def test_batch_validator_rejects_empty_batch():
 
     with pytest.raises(ValueError, match="must not be empty"):
         validate_evidence_records([], DEPENDENCIES, SCHEMA)
+
+
+def complete_unknown_snapshot():
+    records = []
+    for question in DEPENDENCIES["questions"]:
+        for index, evidence_key in enumerate(question["required_evidence"]):
+            records.append(
+                {
+                    "evidence_id": f"ev-{question['id']}-{index}",
+                    "question_id": question["id"],
+                    "evidence_key": evidence_key,
+                    "state": "unknown",
+                    "observations": [],
+                }
+            )
+    return records
+
+
+def test_complete_snapshot_accepts_all_declared_requirements_as_unknown():
+    from edi_ingest.evidence import validate_complete_evidence_snapshot
+
+    records = complete_unknown_snapshot()
+    assert len(records) == 276
+
+    validate_complete_evidence_snapshot(records, DEPENDENCIES, SCHEMA)
+
+
+def test_complete_snapshot_rejects_missing_requirement_even_when_remaining_records_valid():
+    from edi_ingest.evidence import validate_complete_evidence_snapshot
+
+    records = complete_unknown_snapshot()[:-1]
+
+    with pytest.raises(ValueError, match="1 requirements missing"):
+        validate_complete_evidence_snapshot(records, DEPENDENCIES, SCHEMA)
+
+
+def test_complete_snapshot_rejects_duplicate_requirement_declaration():
+    from edi_ingest.evidence import validate_complete_evidence_snapshot
+
+    model = dict(DEPENDENCIES)
+    model["questions"] = [
+        dict(DEPENDENCIES["questions"][0]),
+        *DEPENDENCIES["questions"][1:],
+    ]
+    model["questions"][0]["required_evidence"] = [
+        *model["questions"][0]["required_evidence"],
+        model["questions"][0]["required_evidence"][0],
+    ]
+
+    with pytest.raises(ValueError, match="duplicate declared requirement"):
+        validate_complete_evidence_snapshot(
+            complete_unknown_snapshot(), model, SCHEMA
+        )

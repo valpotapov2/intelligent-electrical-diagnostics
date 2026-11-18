@@ -127,3 +127,60 @@ def test_cli_rejects_duplicate_requirement_in_snapshot(tmp_path, monkeypatch, ca
 
     assert main() == 2
     assert "duplicate current-state requirement" in capsys.readouterr().err
+
+
+def test_cli_require_complete_accepts_all_unknown_requirements(tmp_path, monkeypatch, capsys):
+    model = json.loads(DEPENDENCIES.read_text(encoding="utf-8"))
+    records = []
+    for question in model["questions"]:
+        for index, evidence_key in enumerate(question["required_evidence"]):
+            records.append(
+                {
+                    "evidence_id": f"cli-{question['id']}-{index}",
+                    "question_id": question["id"],
+                    "evidence_key": evidence_key,
+                    "state": "unknown",
+                    "observations": [],
+                }
+            )
+    record_path = write_json(tmp_path / "complete-snapshot.json", records)
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "edi-evidence-validate",
+            "--record",
+            record_path,
+            "--dependency-model",
+            str(DEPENDENCIES),
+            "--schema",
+            str(SCHEMA),
+            "--require-complete",
+        ],
+    )
+
+    assert main() == 0
+    assert json.loads(capsys.readouterr().out) == {
+        "valid": True,
+        "record_count": 276,
+        "complete": True,
+    }
+
+
+def test_cli_require_complete_rejects_partial_snapshot(tmp_path, monkeypatch, capsys):
+    record_path = write_json(tmp_path / "partial-snapshot.json", [valid_record()])
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "edi-evidence-validate",
+            "--record",
+            record_path,
+            "--dependency-model",
+            str(DEPENDENCIES),
+            "--schema",
+            str(SCHEMA),
+            "--require-complete",
+        ],
+    )
+
+    assert main() == 2
+    assert "requirements missing" in capsys.readouterr().err
