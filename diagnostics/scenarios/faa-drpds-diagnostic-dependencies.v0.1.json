@@ -2071,9 +2071,8 @@
       "prerequisites": [
         "DQ-SOURCE-AVAILABILITY",
         "DQ-TRANSFORMER-INPUT-OUTPUT",
-        "DQ-SWGR-CONTROL-MODE",
-        "DQ-SWGR-TRANSFER-PERMISSIVES",
-        "DQ-SWGR-BREAKER-ACTUATION"
+        "DQ-CONTROL-POWER",
+        "DQ-SWGR-CONTROL-MODE"
       ],
       "required_evidence": [
         "affected_SWGR_section_and_active_standby_source_path_identity",
