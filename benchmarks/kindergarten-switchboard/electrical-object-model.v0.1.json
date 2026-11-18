@@ -2122,7 +2122,7 @@
     {
       "id": "SVG-007",
       "severity": "medium",
-      "description": "Several component attributes are transcribed from nearby SVG inscriptions, but component source references use tag/feeder-column boxes and generic text such as 'QF1 cable inscription' or only the device tag (for example 'QF1'). These boxes do not isolate the exact source text for every normalized attribute (breaker current/type/capacity, cable core count/cross-section/length, incoming cable data, contactor current). Attribute-level text and coordinate provenance remains incomplete; values are retained as drawing transcriptions, not independently verified equipment data.",
+      "description": "Several component attributes are transcribed from nearby SVG inscriptions, but component source references use tag/feeder-column boxes and generic text such as 'QF1 cable inscription' or only the device tag (for example 'QF1'). These boxes do not isolate the exact source text for every normalized attribute (breaker current/type/capacity, cable core count/cross-section/length, incoming cable data, contactor current). attribute-level text and coordinate provenance remains incomplete; values are retained as drawing transcriptions, not independently verified equipment data.",
       "status": "open",
       "related_ids": [
         "supply-1",
