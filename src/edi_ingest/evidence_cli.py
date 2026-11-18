@@ -7,7 +7,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from .evidence import (\n    validate_complete_evidence_snapshot,\n    validate_evidence_record,\n    validate_evidence_records,\n)
+from .evidence import (
+    validate_complete_evidence_snapshot,
+    validate_evidence_record,
+    validate_evidence_records,
+)
 
 
 def _load_json_value(path: str) -> Any:
@@ -32,9 +36,26 @@ def main() -> int:
             "against its JSON Schema and diagnostic dependency model."
         )
     )
-    parser.add_argument("--record", required=True, help="Path to one evidence object or an array snapshot")
-    parser.add_argument("--dependency-model", required=True, help="Path to diagnostic dependency-model JSON")
-    parser.add_argument("--schema", required=True, help="Path to diagnostic evidence JSON Schema")\n    parser.add_argument(\n        "--require-complete",\n        action="store_true",\n        help="Require an array snapshot to contain every declared requirement",\n    )
+    parser.add_argument(
+        "--record",
+        required=True,
+        help="Path to one evidence object or an array snapshot",
+    )
+    parser.add_argument(
+        "--dependency-model",
+        required=True,
+        help="Path to diagnostic dependency-model JSON",
+    )
+    parser.add_argument(
+        "--schema",
+        required=True,
+        help="Path to diagnostic evidence JSON Schema",
+    )
+    parser.add_argument(
+        "--require-complete",
+        action="store_true",
+        help="Require an array snapshot to contain every declared requirement",
+    )
     args = parser.parse_args()
 
     try:
@@ -42,6 +63,8 @@ def main() -> int:
         dependency_model = _load_json_object(args.dependency_model)
         schema = _load_json_object(args.schema)
         if isinstance(value, dict):
+            if args.require_complete:
+                raise ValueError("--require-complete requires an array snapshot")
             validate_evidence_record(value, dependency_model, schema)
             result = {
                 "valid": True,
@@ -50,8 +73,20 @@ def main() -> int:
                 "evidence_key": value["evidence_key"],
             }
         elif isinstance(value, list):
-            validate_evidence_records(value, dependency_model, schema)
-            result = {"valid": True, "record_count": len(value)}
+            if args.require_complete:
+                validate_complete_evidence_snapshot(value, dependency_model, schema)
+                result = {
+                    "valid": True,
+                    "record_count": len(value),
+                    "complete": True,
+                }
+            else:
+                validate_evidence_records(value, dependency_model, schema)
+                result = {
+                    "valid": True,
+                    "record_count": len(value),
+                    "complete": False,
+                }
         else:
             raise ValueError("record input must be a JSON object or an array of objects")
     except (ValueError, KeyError) as exc:
