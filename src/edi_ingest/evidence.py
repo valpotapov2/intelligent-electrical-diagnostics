@@ -1,12 +1,14 @@
-"""Cross-file validation for diagnostic evidence references.
+"""Validation for diagnostic evidence records and their model references.
 
-This module validates identity/linkage only. JSON Schema validation remains a
-separate step, and successful linkage is not a diagnostic conclusion.
+Successful validation confirms only that a record conforms to the data contract
+and points to a declared requirement. It is not a diagnostic conclusion.
 """
 from __future__ import annotations
 
 from collections.abc import Mapping
 from typing import Any
+
+from jsonschema import Draft202012Validator, FormatChecker
 
 
 def validate_evidence_reference(
@@ -51,3 +53,33 @@ def validate_evidence_reference(
         raise ValueError(
             f"evidence_key {evidence_key!r} is not declared for question {question_id}"
         )
+
+
+def validate_evidence_record(
+    record: Mapping[str, Any],
+    dependency_model: Mapping[str, Any],
+    schema: Mapping[str, Any],
+) -> None:
+    """Validate one evidence record's JSON Schema shape and model references.
+
+    Raises ValueError with the first deterministic schema or reference error.
+    JSON Schema validation and cross-file reference validation remain distinct
+    checks, but callers can now invoke them through one integration boundary.
+    """
+    if not isinstance(schema, Mapping):
+        raise ValueError("evidence schema must be an object")
+
+    validator = Draft202012Validator(
+        schema,
+        format_checker=FormatChecker(),
+    )
+    errors = sorted(
+        validator.iter_errors(record),
+        key=lambda error: (list(map(str, error.absolute_path)), error.message),
+    )
+    if errors:
+        error = errors[0]
+        location = "/".join(str(part) for part in error.absolute_path) or "<root>"
+        raise ValueError(f"invalid evidence record at {location}: {error.message}")
+
+    validate_evidence_reference(record, dependency_model)
