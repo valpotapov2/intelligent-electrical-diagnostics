@@ -99,6 +99,12 @@
       "coverage": "none",
       "synthetic_modes": [],
       "rationale": "The fixture has no telemetry freshness, I/O, PLC, communications, DC control-power, or independent cross-check fault modes."
+    },
+    {
+      "question_id": "DQ-CONTROL-POWER",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture has no AC/DC auxiliary-supply, 125 V DC bus, battery-subsystem, or control-function evidence. The virtual standby-transfer evidence-loss mode is not a control-power diagnosis."
     }
   ],
   "constraints": [
@@ -106,6 +112,7 @@
     "No architecture question is converted into a MeasurementRequest by this crosswalk.",
     "Synthetic fixture points and values remain software-only and must not be mapped to physical FAA terminals or measurements.",
     "Unmapped questions are explicit coverage gaps, not healthy states or negative diagnoses.",
-    "New source, generator-bus, SWGR-section, and standby-transfer modes are isolated virtual evidence-channel patterns; they do not encode source-to-section wiring or a transfer sequence."
+    "New source, generator-bus, SWGR-section, and standby-transfer modes are isolated virtual evidence-channel patterns; they do not encode source-to-section wiring or a transfer sequence.",
+    "The control-power prerequisite is architecture-level only; the synthetic fixture does not model AC/DC auxiliary power or battery behavior."
   ]
 }
