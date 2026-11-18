@@ -297,6 +297,24 @@
       "coverage": "none",
       "synthetic_modes": [],
       "rationale": "The synthetic fixture does not model UPS rectifier/inverter conversion, the installed bypass path, or the UPS DC/battery subsystem. No internal topology, battery configuration, or site-specific bypass assignment is implied."
+    },
+    {
+      "question_id": "DQ-PDU-INPUT-SUPPLY",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture does not model individual PDU input supply, voltage conversion, or internal protective-device evidence. No PDU instances, internal conversion technology, protective settings, or site wiring are implied."
+    },
+    {
+      "question_id": "DQ-PDU-VOLTAGE-CONVERSION",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture does not model individual PDU input supply, voltage conversion, or internal protective-device evidence. No PDU instances, internal conversion technology, protective settings, or site wiring are implied."
+    },
+    {
+      "question_id": "DQ-PDU-INTERNAL-PROTECTION",
+      "coverage": "none",
+      "synthetic_modes": [],
+      "rationale": "The synthetic fixture does not model individual PDU input supply, voltage conversion, or internal protective-device evidence. No PDU instances, internal conversion technology, protective settings, or site wiring are implied."
     }
   ],
   "constraints": [
