@@ -1024,17 +1024,20 @@
         "BUS-B"
       ],
       "prerequisites": [
-        "DQ-CRITICAL-BUS"
+        "DQ-PDU-INPUT-CONDITION",
+        "DQ-PDU-OUTGOING-FEEDER"
       ],
       "required_evidence": [
-        "PDU_input_source_and_state",
-        "PDU_protection_state",
-        "documented_output_feeder_state"
+        "PDU_input_supply_assessment",
+        "PDU_voltage_conversion_assessment",
+        "PDU_internal_protection_assessment",
+        "documented_output_feeder_assessment"
       ],
       "distinguishes": [
-        "upstream_bus_loss",
-        "PDU_input_or_protection_problem",
-        "downstream_feeder_problem"
+        "upstream_bus_or_PDU_input_supply_problem",
+        "PDU_voltage_conversion_problem",
+        "PDU_internal_protection_problem",
+        "PDU_outgoing_feeder_problem"
       ],
       "cannot_conclude_from": [
         "downstream_load_loss_without_input_output_localization"
@@ -1047,8 +1050,8 @@
       ]
     },
     {
-      "id": "DQ-PDU-INPUT-CONDITION",
-      "title": "Is the documented PDU input and internal distribution path available?",
+      "id": "DQ-PDU-INPUT-SUPPLY",
+      "title": "Is the documented incoming supply to the individual PDU available?",
       "component_refs": [
         "PDU-GROUP",
         "BUS-A",
@@ -1058,22 +1061,23 @@
         "DQ-CRITICAL-BUS"
       ],
       "required_evidence": [
-        "specific_PDU_identity_and_documented_upstream_bus_assignment",
-        "PDU_input_source_and_input_state",
-        "PDU_internal_conversion_or_distribution_status_when_available",
-        "PDU_protective_device_state",
-        "input_and_output_measurement_quality_and_freshness"
+        "specific_PDU_identity_and_documented_upstream_critical_bus_assignment",
+        "PDU_incoming_connection_and_source_identity_from_current_site_records",
+        "PDU_input_voltage_or_supply_state_with_measurement_quality_and_timestamp",
+        "incoming_protective_device_state_when_documented",
+        "independent_or_local_confirmation_of_PDU_input_when_available"
       ],
       "distinguishes": [
         "upstream_critical_bus_unavailable",
-        "PDU_input_path_or_connection_problem",
-        "PDU_internal_conversion_or_distribution_problem",
-        "PDU_protection_operated_or_unavailable",
-        "measurement_or_telemetry_problem"
+        "PDU_incoming_connection_or_supply_path_problem",
+        "incoming_protective_device_operated_or_unavailable",
+        "PDU_input_measurement_or_telemetry_untrustworthy",
+        "PDU_identity_or_upstream_assignment_not_established"
       ],
       "cannot_conclude_from": [
-        "downstream_load_loss_without_PDU_input_and_output_localization",
-        "PMCS_status_without_measurement_quality_or_independent_confirmation"
+        "downstream_PDU_output_loss_as_proof_of_upstream_bus_loss",
+        "aggregate_PDU_group_status_as_proof_of_individual_PDU_input",
+        "PMCS_input_indication_without_measurement_quality_or_independent_confirmation"
       ],
       "sources": [
         {
@@ -1081,7 +1085,119 @@
           "page": 4
         }
       ],
-      "applicability": "The PDU family is grouped in the generic model. Apply to an individual PDU only after its installed identity and upstream bus assignment are established from current site documentation."
+      "applicability": "Assess an individual PDU only after its installed identity and upstream Critical Bus A/B assignment are established from current site drawings. The historical reference describes 480/277 V three-wire input, but this is not proof of the installed PDU's nominal voltage, wiring, or measurement point."
+    },
+    {
+      "id": "DQ-PDU-VOLTAGE-CONVERSION",
+      "title": "Is the documented PDU voltage-conversion function available?",
+      "component_refs": [
+        "PDU-GROUP"
+      ],
+      "prerequisites": [
+        "DQ-PDU-INPUT-SUPPLY"
+      ],
+      "required_evidence": [
+        "specific_PDU_identity_and_documented_input_output_voltage_requirements",
+        "PDU_input_voltage_measurement_with_quality_and_timestamp",
+        "PDU_output_voltage_measurement_with_quality_and_timestamp",
+        "documented_conversion_equipment_status_or_alarm_evidence_when_available",
+        "input_output_phase_and_neutral_reference_identity_when_documented"
+      ],
+      "distinguishes": [
+        "PDU_input_available_but_output_outside_documented_condition",
+        "PDU_conversion_function_or_internal_equipment_problem",
+        "input_or_output_measurement_reference_or_channel_problem",
+        "conversion_state_not_confirmed_from_available_evidence"
+      ],
+      "cannot_conclude_from": [
+        "historical_480_277_to_208_120_V_reference_as_installed_site_rating",
+        "output_measurement_without_corresponding_input_and_reference_identity",
+        "assumed_transformer_or_conversion_technology_inside_the_PDU",
+        "single_phase_or_aggregate_voltage_indication_as_proof_of_all_output_phases"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "The historical reference describes conversion from 480/277 V three-wire input to 208/120 V four-wire output. Treat those values as reference-architecture data only; use current site schedules and manufacturer documentation for installed nominal values, conversion technology, phase configuration, acceptance limits and approved observation methods."
+    },
+    {
+      "id": "DQ-PDU-INTERNAL-PROTECTION",
+      "title": "Are the documented PDU input and internal protective devices available and in the expected state?",
+      "component_refs": [
+        "PDU-GROUP"
+      ],
+      "prerequisites": [
+        "DQ-PDU-INPUT-SUPPLY"
+      ],
+      "required_evidence": [
+        "specific_PDU_identity_and_documented_protective_device_schedule",
+        "PDU_main_or_internal_protective_device_identity_and_state_when_documented",
+        "trip_alarm_and_event_history_with_timestamp",
+        "protective_device_feedback_or_local_indication_quality",
+        "independent_or_local_confirmation_of_protective_device_state_when_available"
+      ],
+      "distinguishes": [
+        "documented_PDU_protective_device_operated",
+        "PDU_protective_device_unavailable_or_state_not_confirmed",
+        "protective_device_feedback_or_telemetry_problem",
+        "protective_device_identity_or_protection_boundary_not_established"
+      ],
+      "cannot_conclude_from": [
+        "downstream_load_loss_alone_as_proof_of_PDU_protective_device_operation",
+        "outgoing_feeder_protection_state_as_proof_of_PDU_main_protection_state",
+        "PMCS_trip_or_position_indication_without_freshness_or_independent_confirmation",
+        "protection_selectivity_or_setting_correctness_without_coordination_documents"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "This question covers only PDU main/internal protective devices identified in the installed schedule. The separately assessed outgoing-feeder protective device belongs to DQ-PDU-OUTGOING-FEEDER. No breaker tags, trip settings, curves, selectivity, or ZSI behavior are inferred."
+    },
+    {
+      "id": "DQ-PDU-INPUT-CONDITION",
+      "title": "Is the documented PDU input, voltage conversion and internal protection available?",
+      "component_refs": [
+        "PDU-GROUP",
+        "BUS-A",
+        "BUS-B"
+      ],
+      "prerequisites": [
+        "DQ-PDU-INPUT-SUPPLY",
+        "DQ-PDU-VOLTAGE-CONVERSION",
+        "DQ-PDU-INTERNAL-PROTECTION"
+      ],
+      "required_evidence": [
+        "specific_PDU_identity_and_documented_upstream_bus_assignment",
+        "PDU_incoming_supply_assessment",
+        "PDU_voltage_conversion_assessment",
+        "PDU_internal_protective_device_assessment",
+        "input_and_output_measurement_quality_and_freshness"
+      ],
+      "distinguishes": [
+        "upstream_critical_bus_or_PDU_input_supply_problem",
+        "PDU_voltage_conversion_problem",
+        "PDU_internal_protection_operated_or_unavailable",
+        "measurement_or_telemetry_problem",
+        "PDU_identity_or_internal_state_evidence_incomplete"
+      ],
+      "cannot_conclude_from": [
+        "downstream_load_loss_without_PDU_input_conversion_protection_and_output_localization",
+        "PMCS_status_without_measurement_quality_or_independent_confirmation",
+        "aggregate_PDU_status_as_proof_of_individual_internal_subsystem_health"
+      ],
+      "sources": [
+        {
+          "document_id": "faa-jo-6480-22-block",
+          "page": 4
+        }
+      ],
+      "applicability": "Umbrella assessment for an identified PDU. It depends on separate incoming-supply, voltage-conversion and internal-protection evidence. Apply to an individual PDU only after its installed identity and upstream bus assignment are established from current site documentation."
     },
     {
       "id": "DQ-PDU-OUTGOING-FEEDER",
